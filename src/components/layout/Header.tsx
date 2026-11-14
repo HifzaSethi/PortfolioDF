@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu } from 'lucide-react';
+import { ChevronDown, Menu, Moon, Sun } from 'lucide-react';
 import { HEADER_CTA, PRIMARY_NAV } from '../../config/nav';
+import { useTheme } from '../../hooks/useTheme';
 import { Logo } from '../brand/Logo';
 import { LinkButton } from '../ui/Button';
 import { MegaMenu } from './MegaMenu';
@@ -14,6 +15,7 @@ export function Header() {
   const headerRef = useRef<HTMLElement | null>(null);
   const closeTimeoutRef = useRef<number | null>(null);
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setCondensed(window.scrollY > 36);
@@ -70,29 +72,29 @@ export function Header() {
       <header
         ref={headerRef}
         onMouseLeave={scheduleCloseMega}
-        className={`sticky top-0 z-[var(--z-header)] border-b border-[var(--border-light)] bg-[var(--off-white)]/95 backdrop-blur-md transition-all duration-200 ${
-          condensed ? 'py-2.5 shadow-sm' : 'py-4'
+        className={`sticky top-0 z-[var(--z-header)] border-b border-[var(--border-subtle)] bg-[var(--header-bg)] backdrop-blur-md transition-all duration-300 ${
+          condensed ? 'py-2 shadow-[var(--shadow-subtle)]' : 'py-3'
         }`}
       >
-        <div className="mx-auto flex max-w-[var(--container-max)] items-center justify-between gap-4 sm:gap-8 px-5 sm:px-8 lg:px-10">
-          {/* Zone 1: Brand Logo Placeholder (Icon on very small viewports, Wordmark on sm+) */}
+        <div className="mx-auto flex max-w-[var(--container-max)] items-center justify-between gap-3 sm:gap-5 px-4 sm:px-8 lg:px-10">
+          {/* Zone 1: Primary Lockup on Desktop (1X clear space), Compact DF Mark on Mobile */}
           <Link
             to="/"
             aria-label="Digital Field. Home"
             className="shrink-0 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)]"
           >
             <span className="hidden sm:inline-flex">
-              <Logo variant="wordmark" theme="light" />
+              <Logo variant="lockup-standard" theme="auto" size="md" />
             </span>
             <span className="inline-flex sm:hidden">
-              <Logo variant="icon" theme="light" />
+              <Logo variant="icon" theme="auto" size="md" />
             </span>
           </Link>
 
-          {/* Zone 2: 5 concise single-line nav links */}
+          {/* Zone 2: Single-line Primary Navigation */}
           <nav
             aria-label="Primary"
-            className="hidden lg:flex items-center gap-7 text-sm font-semibold text-[var(--near-black)]"
+            className="hidden lg:flex items-center gap-4 xl:gap-6 text-[13px] xl:text-sm font-semibold text-[var(--text-primary)]"
           >
             {PRIMARY_NAV.map((item) => {
               const isServices = Boolean(item.children);
@@ -104,14 +106,14 @@ export function Header() {
                 return (
                   <div
                     key={item.path}
-                    className="relative flex items-center"
+                    className="relative flex items-center shrink-0"
                     onMouseEnter={openMega}
                   >
                     <Link
                       to={item.path}
                       onFocus={openMega}
                       className={`df-link-sweep whitespace-nowrap shrink-0 py-1.5 transition-colors ${
-                        isActive ? 'text-[var(--electric-blue)]' : 'hover:text-[var(--electric-blue)]'
+                        isActive ? 'text-[var(--link-accent)]' : 'hover:text-[var(--link-accent)]'
                       }`}
                     >
                       {item.label}
@@ -122,7 +124,7 @@ export function Header() {
                       aria-controls="services-megamenu"
                       aria-label="Toggle Services menu"
                       onClick={() => setMegaOpen((v) => !v)}
-                      className="ml-1 inline-flex h-8 w-6 items-center justify-center text-current hover:text-[var(--electric-blue)] cursor-pointer"
+                      className="ml-0.5 inline-flex h-8 w-6 items-center justify-center text-current hover:text-[var(--link-accent)] cursor-pointer"
                     >
                       <ChevronDown
                         aria-hidden="true"
@@ -141,7 +143,7 @@ export function Header() {
                   to={item.path}
                   onMouseEnter={() => setMegaOpen(false)}
                   className={`df-link-sweep whitespace-nowrap shrink-0 py-1.5 transition-colors ${
-                    isActive ? 'text-[var(--electric-blue)]' : 'hover:text-[var(--electric-blue)]'
+                    isActive ? 'text-[var(--link-accent)]' : 'hover:text-[var(--link-accent)]'
                   }`}
                 >
                   {item.label}
@@ -150,12 +152,48 @@ export function Header() {
             })}
           </nav>
 
-          {/* Zone 3: 1 primary action + mobile menu trigger */}
-          <div className="flex items-center gap-3 shrink-0">
+          {/* Zone 3: Day / Night Segmented Toggle + Primary Skewed CTA + Mobile Drawer Trigger */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <div
+              role="group"
+              aria-label="Theme mode"
+              className="inline-flex items-center border border-[var(--border-strong)] bg-[var(--bg-tint)] p-0.5 shrink-0"
+            >
+              <button
+                type="button"
+                aria-pressed={theme === 'day'}
+                title="Switch to Day theme"
+                onClick={() => setTheme('day')}
+                className={`inline-flex items-center gap-1.5 min-h-[34px] px-2.5 py-1 text-xs font-bold tracking-tight whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2 ${
+                  theme === 'day'
+                    ? 'df-gradient-accent text-[var(--near-black)]'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                <Sun aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                <span>Day</span>
+              </button>
+
+              <button
+                type="button"
+                aria-pressed={theme === 'night'}
+                title="Switch to Night theme"
+                onClick={() => setTheme('night')}
+                className={`inline-flex items-center gap-1.5 min-h-[34px] px-2.5 py-1 text-xs font-bold tracking-tight whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2 ${
+                  theme === 'night'
+                    ? 'df-gradient-accent text-[var(--near-black)]'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                <Moon aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                <span>Night</span>
+              </button>
+            </div>
+
             <LinkButton
               to={HEADER_CTA.path}
-              variant="primary"
-              className="hidden sm:inline-flex"
+              variant={theme === 'night' ? 'gradient' : 'primary'}
+              className="hidden md:inline-flex px-4 xl:px-5 text-xs xl:text-sm"
             >
               {HEADER_CTA.label}
             </LinkButton>
@@ -165,7 +203,7 @@ export function Header() {
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
-              className="inline-flex lg:hidden h-11 w-11 items-center justify-center border border-[var(--border-light-strong)] text-[var(--near-black)] hover:border-[var(--electric-blue)] cursor-pointer"
+              className="inline-flex lg:hidden h-10 w-10 items-center justify-center border border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)] cursor-pointer"
             >
               <Menu aria-hidden="true" className="h-5 w-5" />
             </button>

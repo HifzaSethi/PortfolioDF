@@ -1,14 +1,15 @@
 import type { ReactNode } from 'react';
+import { TridiMark } from '../brand/TridiMark';
 import { Container } from '../layout/Container';
 import { Section, type SectionSurface } from '../layout/Section';
 import { Breadcrumbs } from '../ui/Breadcrumbs';
 import { Eyebrow } from '../ui/Eyebrow';
 import { SectionHeading } from '../ui/SectionHeading';
-import { TridiMark } from '../brand/TridiMark';
 
 interface PracticeHeroProps {
   routePath: string;
   eyebrow: string;
+  number?: string;
   title: ReactNode;
   lead: string;
   principle?: string;
@@ -19,38 +20,43 @@ interface PracticeHeroProps {
 export function PracticeHero({
   routePath,
   eyebrow,
+  number,
   title,
   lead,
   principle,
-  surface = 'off-white',
+  surface = 'hero-adaptive',
   actions,
 }: PracticeHeroProps) {
-  const isDark = surface === 'dark-mesh' || surface === 'hospitality-mesh' || surface === 'near-black';
+  const isDarkMesh =
+    surface === 'dark-mesh' || surface === 'hospitality-mesh' || surface === 'near-black';
+  const showPattern = isDarkMesh || surface === 'hero-adaptive';
 
   return (
-    <Section surface={surface} withPattern={isDark} className="pt-12 pb-14 sm:pt-16 sm:pb-20">
+    <Section surface={surface} withPattern={showPattern} className="pt-12 pb-14 sm:pt-16 sm:pb-20">
       <Container>
-        <Breadcrumbs routePath={routePath} tone={isDark ? 'dark' : 'light'} />
+        <Breadcrumbs routePath={routePath} tone={isDarkMesh ? 'dark' : 'auto'} />
 
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-9 space-y-5">
             <div className="flex items-center gap-3">
-              {isDark && <TridiMark size={24} />}
-              <Eyebrow tone={isDark ? 'dark' : 'light'}>{eyebrow}</Eyebrow>
+              <TridiMark size={26} tone={isDarkMesh ? 'dark' : 'auto'} />
+              <Eyebrow number={number} tone={isDarkMesh ? 'dark' : 'auto'}>
+                {eyebrow}
+              </Eyebrow>
             </div>
 
             <SectionHeading
               as="h1"
               size="display"
               slanted
-              tone={isDark ? 'dark' : 'light'}
+              tone={isDarkMesh ? 'dark' : 'auto'}
             >
               {title}
             </SectionHeading>
 
             <p
               className={`max-w-[64ch] text-lg sm:text-xl leading-relaxed ${
-                isDark ? 'text-[var(--on-dark-muted)]' : 'text-[var(--ink-muted)]'
+                isDarkMesh ? 'text-[var(--on-dark-muted)]' : 'text-[var(--text-muted)]'
               }`}
             >
               {lead}
@@ -61,16 +67,16 @@ export function PracticeHero({
             <div className="lg:col-span-3 space-y-5">
               {principle && (
                 <div
-                  className={`border-t pt-4 ${
-                    isDark ? 'border-[var(--border-dark-strong)]' : 'border-[var(--border-light-strong)]'
+                  className={`df-frame-t pt-4 ${
+                    isDarkMesh ? 'border-[var(--border-dark-strong)]' : 'border-[var(--border-strong)]'
                   }`}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--magenta)]">
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--eyebrow-magenta)]">
                     Core Principle
                   </p>
                   <p
                     className={`mt-1.5 text-sm font-semibold ${
-                      isDark ? 'text-[var(--off-white)]' : 'text-[var(--near-black)]'
+                      isDarkMesh ? 'text-[var(--off-white)]' : 'text-[var(--text-primary)]'
                     }`}
                   >
                     {principle}

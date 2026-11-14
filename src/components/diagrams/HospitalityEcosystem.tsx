@@ -21,18 +21,18 @@ export function HospitalityEcosystem() {
 
   return (
     <div className="space-y-8">
-      {/* Dimension Filter Controls */}
-      <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter hospitality dimensions">
+      {/* Skewed Parallelogram Dimension Filter Controls */}
+      <div className="flex flex-wrap items-center gap-2.5" role="group" aria-label="Filter hospitality dimensions">
         <button
           type="button"
           onClick={() => setSelectedDimension('all')}
-          className={`min-h-[44px] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] border transition-colors cursor-pointer ${
+          className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border transition-colors cursor-pointer df-slant-block ${
             selectedDimension === 'all'
               ? 'bg-[var(--electric-blue)] text-[var(--off-white)] border-[var(--electric-blue)]'
-              : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/80 hover:border-[var(--off-white)]'
+              : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/85 hover:border-[var(--off-white)]'
           }`}
         >
-          All 14 Touchpoints
+          <span className="df-unslant block">All 14 Touchpoints</span>
         </button>
         {HOSPITALITY_DIMENSIONS.map((dim) => (
           <button
@@ -43,13 +43,13 @@ export function HospitalityEcosystem() {
               const firstMatch = HOSPITALITY_TOUCHPOINTS.find((tp) => tp.dimension === dim.id);
               if (firstMatch) setSelectedTouchpoint(firstMatch);
             }}
-            className={`min-h-[44px] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] border transition-colors cursor-pointer ${
+            className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border transition-colors cursor-pointer df-slant-block ${
               selectedDimension === dim.id
-                ? 'bg-[var(--magenta)] text-[var(--off-white)] border-[var(--magenta)]'
-                : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/80 hover:border-[var(--off-white)]'
+                ? 'bg-[var(--magenta)] text-[var(--near-black)] border-[var(--magenta)]'
+                : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/85 hover:border-[var(--off-white)]'
             }`}
           >
-            {dim.title}
+            <span className="df-unslant block">{dim.title}</span>
           </button>
         ))}
       </div>
@@ -72,7 +72,7 @@ export function HospitalityEcosystem() {
             </p>
           </div>
 
-          {/* 14 Touchpoints grouped visually */}
+          {/* 14 Touchpoints */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
             {HOSPITALITY_TOUCHPOINTS.map((tp) => {
               const isSelected = tp.id === selectedTouchpoint.id;
@@ -87,7 +87,7 @@ export function HospitalityEcosystem() {
                   onFocus={() => setSelectedTouchpoint(tp)}
                   className={`p-3.5 text-left border transition-all duration-150 cursor-pointer min-h-[76px] flex flex-col justify-between ${
                     isSelected
-                      ? 'border-[var(--electric-blue)] bg-[color-mix(in_srgb,var(--electric-blue)_22%,var(--near-black))] text-[var(--off-white)]'
+                      ? 'border-[var(--magenta)] bg-[color-mix(in_srgb,var(--violet)_22%,var(--near-black))] text-[var(--off-white)]'
                       : matchesDimension
                         ? 'border-[var(--border-dark-strong)] bg-[var(--near-black)]/65 text-[var(--off-white)] hover:border-[var(--violet)]'
                         : 'border-[var(--border-dark)] bg-[var(--near-black)]/35 text-[var(--off-white)]/40'
@@ -106,7 +106,7 @@ export function HospitalityEcosystem() {
         {/* Active Touchpoint Contribution Panel */}
         <div
           aria-live="polite"
-          className="lg:col-span-4 df-glass-dark p-6 sm:p-7 space-y-4"
+          className="lg:col-span-4 df-glass-dark df-frame-l p-6 sm:p-7 space-y-4"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
             {dimensionTitleMap[selectedTouchpoint.dimension]} Dimension

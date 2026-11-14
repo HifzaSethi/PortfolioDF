@@ -2,30 +2,46 @@ import type { ReactNode } from 'react';
 
 interface EyebrowProps {
   children: ReactNode;
-  tone?: 'light' | 'dark';
-  accent?: 'magenta' | 'blue';
+  number?: string;
+  tone?: 'light' | 'dark' | 'auto';
+  accent?: 'magenta' | 'blue' | 'violet';
   className?: string;
 }
 
 export function Eyebrow({
   children,
-  tone = 'light',
+  number,
+  tone = 'auto',
   accent = 'magenta',
   className = '',
 }: EyebrowProps) {
-  const accentColor = accent === 'blue' ? 'bg-[var(--electric-blue)]' : 'bg-[var(--magenta)]';
+  const accentColor =
+    accent === 'blue'
+      ? 'bg-[var(--electric-blue)]'
+      : accent === 'violet'
+        ? 'bg-[var(--violet)]'
+        : 'bg-[var(--magenta)]';
+
   const textColor =
-    tone === 'dark' ? 'text-[var(--off-white)]/80' : 'text-[var(--ink-muted)]';
+    tone === 'dark'
+      ? 'text-[var(--off-white)]/85'
+      : tone === 'light'
+        ? 'text-[var(--near-black)]/75'
+        : 'text-[var(--text-muted)]';
 
   return (
     <p
-      className={`inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.16em] uppercase ${textColor} ${className}`}
+      className={`inline-flex items-center gap-2.5 text-xs font-bold tracking-[0.18em] uppercase ${textColor} ${className}`}
     >
       <span
         aria-hidden="true"
-        className={`inline-block h-2 w-2 shrink-0 ${accentColor}`}
-        style={{ transform: 'skewX(var(--slant))' }}
+        className={`inline-block h-2.5 w-2.5 shrink-0 df-slant-block ${accentColor}`}
       />
+      {number && (
+        <span className="tabular-nums font-extrabold text-[var(--eyebrow-magenta)]">
+          {number}
+        </span>
+      )}
       <span>{children}</span>
     </p>
   );

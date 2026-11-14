@@ -6,27 +6,27 @@ export function ReportingVsIntelligence() {
   return (
     <div className="space-y-8">
       <div className="max-w-[66ch] space-y-3">
-        <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--near-black)]">
+        <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">
           {lead}
         </h3>
-        <p className="text-base leading-relaxed text-[var(--ink-muted)]">{metricsNote}</p>
+        <p className="text-base leading-relaxed text-[var(--text-muted)]">{metricsNote}</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* Reporting Column */}
-        <div className="border border-[var(--border-light-strong)] bg-[var(--paper-tint)] p-7 sm:p-8 space-y-5">
+        <div className="border border-[var(--border-strong)] bg-[var(--bg-tint)] p-7 sm:p-8 space-y-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-muted)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
               {reporting.subtitle}
             </p>
-            <h4 className="mt-1 text-2xl font-bold text-[var(--near-black)]">{reporting.title}</h4>
+            <h4 className="mt-1 text-2xl font-bold text-[var(--text-primary)]">{reporting.title}</h4>
           </div>
-          <ul className="space-y-3 border-t border-[var(--border-light)] pt-5">
+          <ul className="space-y-3 border-t border-[var(--border-subtle)] pt-5">
             {reporting.points.map((point) => (
-              <li key={point} className="flex items-start gap-3 text-sm text-[var(--ink-muted)]">
+              <li key={point} className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
                 <span
                   aria-hidden="true"
-                  className="mt-2 h-1.5 w-1.5 bg-[var(--ink-subtle)] shrink-0"
+                  className="mt-2 h-1.5 w-1.5 bg-[var(--text-subtle)] shrink-0"
                 />
                 <span>{point}</span>
               </li>
@@ -36,7 +36,7 @@ export function ReportingVsIntelligence() {
 
         {/* Intelligence Column */}
         <div className="df-mesh-dark p-7 sm:p-8 space-y-5 border border-[var(--border-dark)]">
-          <div>
+          <div className="relative z-10">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
               {intelligence.subtitle}
             </p>
@@ -44,7 +44,7 @@ export function ReportingVsIntelligence() {
               {intelligence.title}
             </h4>
           </div>
-          <ul className="space-y-3 border-t border-[var(--border-dark)] pt-5">
+          <ul className="relative z-10 space-y-3 border-t border-[var(--border-dark)] pt-5">
             {intelligence.points.map((point) => (
               <li
                 key={point}

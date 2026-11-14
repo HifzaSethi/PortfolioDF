@@ -1,23 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Digital Field. Open Graph image placeholder">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Digital Field. Performance in Context">
   <defs>
     <radialGradient id="v" cx="0%" cy="100%" r="70%">
-      <stop offset="0%" stop-color="#B34FFF" stop-opacity="0.95"/>
+      <stop offset="0%" stop-color="#B34FFF" stop-opacity="0.92"/>
       <stop offset="100%" stop-color="#010102" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="m" cx="100%" cy="100%" r="70%">
-      <stop offset="0%" stop-color="#E23389" stop-opacity="0.95"/>
+      <stop offset="0%" stop-color="#E23389" stop-opacity="0.92"/>
       <stop offset="100%" stop-color="#010102" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="headlineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B34FFF"/>
+      <stop offset="100%" stop-color="#E23389"/>
+    </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="#010102"/>
   <rect width="1200" height="630" fill="url(#v)"/>
   <rect width="1200" height="630" fill="url(#m)"/>
   <g transform="translate(86, 120)">
-    <text x="0" y="70" fill="#F4F1EA" font-family="sans-serif" font-size="22" font-weight="600" letter-spacing="4">PERFORMANCE IN CONTEXT.</text>
-    <text x="0" y="185" fill="#F4F1EA" font-family="sans-serif" font-size="84" font-weight="800">SEE THE WHOLE FIELD.</text>
-    <text x="0" y="245" fill="#F4F1EA" fill-opacity="0.72" font-family="sans-serif" font-size="24">Digital Performance &amp; Intelligence Consultancy</text>
+    <text x="0" y="64" fill="#F4F1EA" font-family="Sora, sans-serif" font-size="22" font-weight="600" letter-spacing="4">PERFORMANCE IN CONTEXT.</text>
+    <text x="0" y="176" fill="url(#headlineGrad)" font-family="Sora, sans-serif" font-size="82" font-weight="800">SEE THE WHOLE FIELD.</text>
+    <text x="0" y="236" fill="#F4F1EA" fill-opacity="0.78" font-family="Sora, sans-serif" font-size="24">Digital Performance &amp; Intelligence Consultancy</text>
   </g>
-  <rect x="86" y="510" width="230" height="54" fill="none" stroke="#F4F1EA" stroke-opacity="0.35" stroke-dasharray="6 4"/>
-  <text x="201" y="542" text-anchor="middle" fill="#F4F1EA" fill-opacity="0.75" font-family="sans-serif" font-size="13" letter-spacing="2">LOGO PLACEHOLDER</text>
-  <text x="1114" y="545" text-anchor="end" fill="#F4F1EA" font-family="sans-serif" font-size="18" font-weight="600" letter-spacing="3">DIGITALFIELD.CO</text>
+  <g transform="translate(86, 480) scale(0.32)">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M 220.51 136.95 L 314.71 136.95 L 350.52 77.74 L 284.09 77.74 L 270.37 56.32 L 383.71 56.32 L 384.33 55.40 L 419.00 0.00 L 84.60 0.00 L 111.25 36.48 L 0.00 222.67 L 170.08 222.37 Z M 211.37 56.61 L 172.87 119.01 L 145.35 164.04 C 136.55 164.04 127.78 163.88 118.98 164.04 C 110.18 164.04 100.12 164.42 91.16 164.42 C 93.78 160.02 96.86 154.98 99.48 150.58 C 113.69 126.88 128.91 102.33 143.59 77.74 L 129.85 56.32 L 170.45 56.32 C 183.63 56.32 196.96 56.46 210.16 56.46 L 211.37 56.46 Z" fill="#F4F1EA" />
+    <path d="M 263.50 222.68 L 201.22 222.68 L 236.87 164.37 L 299.14 164.37 Z" fill="#E23389" />
+  </g>
+  <text x="1114" y="545" text-anchor="end" fill="#F4F1EA" font-family="Sora, sans-serif" font-size="18" font-weight="600" letter-spacing="3">DIGITALFIELD.CO</text>
 </svg>

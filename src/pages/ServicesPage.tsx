@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { CtaBand } from '../components/sections/CtaBand';
 import { PracticeHero } from '../components/sections/PracticeHero';
+import { LinkButton } from '../components/ui/Button';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { PRACTICES, STUDIO_PRACTICE_SUMMARY } from '../data/practices';
@@ -22,6 +22,7 @@ export default function ServicesPage() {
     <>
       <PracticeHero
         routePath="/services"
+        number="01"
         eyebrow="Consultancy Practices"
         title="Five connected practices. One creative arm."
         lead="As a Digital Performance & Intelligence Consultancy, we help clients build, optimize, and scale their digital ecosystems. We combine strategy, performance, technology, data, creativity, and innovation to drive brand visibility, customer acquisition, revenue growth, and long-term business impact."
@@ -41,24 +42,24 @@ export default function ServicesPage() {
                 Turns activity and cross-channel signals into connected commercial decisions.
               </p>
             </div>
-            <div className="border border-[var(--border-light-strong)] bg-[var(--off-white)] p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--electric-blue)]">
+            <div className="df-card-surface df-frame-t p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--link-accent)]">
                 How DF. Acts
               </p>
-              <h2 className="mt-2 text-2xl font-extrabold text-[var(--near-black)]">
+              <h2 className="mt-2 text-2xl font-extrabold text-[var(--text-primary)]">
                 Four Practices
               </h2>
-              <p className="mt-2 text-sm text-[var(--ink-muted)]">
+              <p className="mt-2 text-sm text-[var(--text-muted)]">
                 Performance Marketing, Search Intelligence, Growth Marketing, and Digital
                 Transformation.
               </p>
             </div>
-            <div className="border border-[var(--border-light-strong)] bg-[var(--off-white)] p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-muted)]">
+            <div className="df-card-surface df-frame-t p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                 How DF. Shows Up
               </p>
-              <h2 className="mt-2 text-2xl font-extrabold text-[var(--near-black)]">DF. Studio</h2>
-              <p className="mt-2 text-sm text-[var(--ink-muted)]">
+              <h2 className="mt-2 text-2xl font-extrabold text-[var(--text-primary)]">DF. Studio</h2>
+              <p className="mt-2 text-sm text-[var(--text-muted)]">
                 Creative, copywriting, photography, video, design, motion, and AI content in
                 context.
               </p>
@@ -71,13 +72,13 @@ export default function ServicesPage() {
       <Section surface="off-white" reveal>
         <Container className="space-y-8">
           <div className="space-y-2">
-            <Eyebrow>Practice Directory</Eyebrow>
+            <Eyebrow number="02">Practice Directory</Eyebrow>
             <SectionHeading as="h2" size="h2">
               Explore each practice in detail.
             </SectionHeading>
           </div>
 
-          <div className="divide-y divide-[var(--border-light-strong)] border-y border-[var(--border-light-strong)]">
+          <div className="divide-y divide-[var(--border-strong)] border-y border-[var(--border-strong)]">
             {[...(core ? [core] : []), ...actionPractices, STUDIO_PRACTICE_SUMMARY].map(
               (practice, idx) => (
                 <article
@@ -85,28 +86,28 @@ export default function ServicesPage() {
                   className="py-10 grid gap-8 lg:grid-cols-12 lg:items-start"
                 >
                   <div className="lg:col-span-5 space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
+                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                       0{idx + 1} · {practice.roleLabel}
                     </p>
-                    <h3 className="text-3xl font-extrabold tracking-tight text-[var(--near-black)]">
+                    <h3 className="text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">
                       {practice.name}
                     </h3>
-                    <p className="text-sm font-semibold text-[var(--electric-blue)]">
+                    <p className="text-sm font-semibold text-[var(--link-accent)]">
                       {practice.tagline}
                     </p>
                   </div>
 
                   <div className="lg:col-span-4 space-y-3">
-                    <p className="text-base leading-relaxed text-[var(--ink-muted)]">
+                    <p className="text-base leading-relaxed text-[var(--text-muted)]">
                       {practice.summary}
                     </p>
                     <ul className="space-y-1.5 pt-1">
                       {practice.keyServices.map((item) => (
                         <li
                           key={item}
-                          className="flex items-center gap-2 text-sm font-medium text-[var(--near-black)]"
+                          className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)]"
                         >
-                          <span aria-hidden="true" className="h-1.5 w-1.5 bg-[var(--electric-blue)]" />
+                          <span aria-hidden="true" className="h-1.5 w-1.5 bg-[var(--link-accent)]" />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -114,13 +115,10 @@ export default function ServicesPage() {
                   </div>
 
                   <div className="lg:col-span-3 lg:flex lg:justify-end">
-                    <Link
-                      to={practice.path}
-                      className="inline-flex min-h-[44px] items-center gap-2 border border-[var(--near-black)] px-5 py-2.5 text-sm font-semibold text-[var(--near-black)] hover:bg-[var(--electric-blue)] hover:border-[var(--electric-blue)] hover:text-[var(--off-white)] transition-colors"
-                    >
+                    <LinkButton to={practice.path} variant="secondary">
                       <span>Explore {practice.name}</span>
                       <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                    </Link>
+                    </LinkButton>
                   </div>
                 </article>
               )

@@ -32,6 +32,9 @@ const SERVICE_OPTIONS = [
 
 const INDUSTRY_OPTIONS = [...INDUSTRIES.map((i) => i.name), 'Other'];
 
+const FIELD_INPUT_CLASSES =
+  'w-full min-h-[44px] border border-[var(--border-strong)] bg-[var(--input-bg)] px-3.5 py-2.5 text-sm text-[var(--input-text)] placeholder:text-[var(--text-subtle)] focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2';
+
 export default function ContactPage() {
   usePageMeta('/contact');
   const [searchParams] = useSearchParams();
@@ -82,7 +85,6 @@ export default function ContactPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Spam honeypot check
     if (values.websiteHoneypot.trim()) {
       return;
     }
@@ -168,6 +170,7 @@ export default function ContactPage() {
     <>
       <PracticeHero
         routePath="/contact"
+        number="01"
         eyebrow="Start a Conversation"
         surface="dark-mesh"
         title="What is the business trying to achieve?"
@@ -180,64 +183,63 @@ export default function ContactPage() {
             {/* Left: Process & Labeled Placeholder Contact Details */}
             <div className="lg:col-span-5 space-y-8">
               <div className="space-y-4">
-                <h2 className="text-2xl font-extrabold tracking-tight text-[var(--near-black)]">
+                <h2 className="text-2xl font-extrabold tracking-tight text-[var(--text-primary)]">
                   What happens next
                 </h2>
-                <p className="text-base leading-relaxed text-[var(--ink-muted)]">
+                <p className="text-base leading-relaxed text-[var(--text-muted)]">
                   Every engagement begins with the commercial objective, the surrounding digital
                   ecosystem, and the signals influencing performance today.
                 </p>
-                <ol className="space-y-3 border-t border-[var(--border-light)] pt-4 text-sm text-[var(--near-black)]">
+                <ol className="space-y-3 border-t border-[var(--border-subtle)] pt-4 text-sm text-[var(--text-primary)]">
                   <li className="flex gap-3">
-                    <span className="font-bold tabular-nums text-[var(--magenta)]">01</span>
+                    <span className="font-bold tabular-nums text-[var(--eyebrow-magenta)]">01</span>
                     <span>Share your business goal, sector context, and current challenges.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-bold tabular-nums text-[var(--magenta)]">02</span>
+                    <span className="font-bold tabular-nums text-[var(--eyebrow-magenta)]">02</span>
                     <span>We examine how search, media, content, technology, and data interact.</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-bold tabular-nums text-[var(--magenta)]">03</span>
+                    <span className="font-bold tabular-nums text-[var(--eyebrow-magenta)]">03</span>
                     <span>We define the ecosystem priorities tied directly to commercial growth.</span>
                   </li>
                 </ol>
               </div>
 
-              <div className="border border-[var(--border-light-strong)] bg-[var(--paper-tint)] p-6 space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-muted)]">
+              <div className="df-card-surface df-frame-l p-6 space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
                   Direct Contact Details
                 </p>
                 <dl className="space-y-3 text-sm">
                   <div>
-                    <dt className="font-bold text-[var(--near-black)]">Email</dt>
-                    <dd className="text-[var(--ink-muted)]">
+                    <dt className="font-bold text-[var(--text-primary)]">Email</dt>
+                    <dd className="text-[var(--text-muted)]">
                       {SITE_CONFIG.contact.email ?? '[placeholder: to be supplied]'}
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-[var(--near-black)]">Phone</dt>
-                    <dd className="text-[var(--ink-muted)]">
+                    <dt className="font-bold text-[var(--text-primary)]">Phone</dt>
+                    <dd className="text-[var(--text-muted)]">
                       {SITE_CONFIG.contact.phone ?? '[placeholder]'}
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-[var(--near-black)]">Office</dt>
-                    <dd className="text-[var(--ink-muted)]">
+                    <dt className="font-bold text-[var(--text-primary)]">Office</dt>
+                    <dd className="text-[var(--text-muted)]">
                       {SITE_CONFIG.location.streetPlaceholder}
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-[var(--near-black)]">Social</dt>
-                    <dd className="text-[var(--ink-muted)]">placeholder</dd>
+                    <dt className="font-bold text-[var(--text-primary)]">Social</dt>
+                    <dd className="text-[var(--text-muted)]">placeholder</dd>
                   </div>
                 </dl>
               </div>
             </div>
 
             {/* Right: Accessible Form + Honest Fallback */}
-            <div className="lg:col-span-7 border border-[var(--border-light-strong)] bg-[var(--paper-elevated)] p-6 sm:p-10 space-y-6">
+            <div className="lg:col-span-7 df-card-surface p-6 sm:p-10 space-y-6">
               <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                {/* Spam Honeypot */}
                 <div className="hidden" aria-hidden="true">
                   <label htmlFor="contact-website">Website</label>
                   <input
@@ -262,7 +264,7 @@ export default function ContactPage() {
                       onBlur={() => handleBlur('name')}
                       aria-invalid={Boolean(errors.name)}
                       aria-describedby={errors.name ? 'contact-name-error' : undefined}
-                      className="w-full min-h-[44px] border border-[var(--border-light-strong)] bg-[var(--off-white)] px-3.5 py-2.5 text-sm text-[var(--near-black)]"
+                      className={FIELD_INPUT_CLASSES}
                     />
                   </FormField>
 
@@ -282,7 +284,7 @@ export default function ContactPage() {
                       onBlur={() => handleBlur('email')}
                       aria-invalid={Boolean(errors.email)}
                       aria-describedby={errors.email ? 'contact-email-error' : undefined}
-                      className="w-full min-h-[44px] border border-[var(--border-light-strong)] bg-[var(--off-white)] px-3.5 py-2.5 text-sm text-[var(--near-black)]"
+                      className={FIELD_INPUT_CLASSES}
                     />
                   </FormField>
                 </div>
@@ -298,7 +300,7 @@ export default function ContactPage() {
                     onBlur={() => handleBlur('company')}
                     aria-invalid={Boolean(errors.company)}
                     aria-describedby={errors.company ? 'contact-company-error' : undefined}
-                    className="w-full min-h-[44px] border border-[var(--border-light-strong)] bg-[var(--off-white)] px-3.5 py-2.5 text-sm text-[var(--near-black)]"
+                    className={FIELD_INPUT_CLASSES}
                   />
                 </FormField>
 
@@ -309,7 +311,7 @@ export default function ContactPage() {
                       name="industry"
                       value={values.industry}
                       onChange={(e) => handleFieldChange('industry', e.target.value)}
-                      className="w-full min-h-[44px] border border-[var(--border-light-strong)] bg-[var(--off-white)] px-3.5 py-2.5 text-sm text-[var(--near-black)]"
+                      className={FIELD_INPUT_CLASSES}
                     >
                       <option value="">Select an industry</option>
                       {INDUSTRY_OPTIONS.map((opt) => (
@@ -326,7 +328,7 @@ export default function ContactPage() {
                       name="service"
                       value={values.service}
                       onChange={(e) => handleFieldChange('service', e.target.value)}
-                      className="w-full min-h-[44px] border border-[var(--border-light-strong)] bg-[var(--off-white)] px-3.5 py-2.5 text-sm text-[var(--near-black)]"
+                      className={FIELD_INPUT_CLASSES}
                     >
                       <option value="">Select a practice</option>
                       {SERVICE_OPTIONS.map((opt) => (
@@ -359,19 +361,19 @@ export default function ContactPage() {
                     aria-describedby={
                       errors.message ? 'contact-message-error' : 'contact-message-hint'
                     }
-                    className="w-full border border-[var(--border-light-strong)] bg-[var(--off-white)] px-3.5 py-3 text-sm text-[var(--near-black)]"
+                    className="w-full border border-[var(--border-strong)] bg-[var(--input-bg)] px-3.5 py-3 text-sm text-[var(--input-text)] placeholder:text-[var(--text-subtle)] focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2"
                   />
                 </FormField>
 
                 {SITE_CONFIG.contact.requirePrivacyConsent && (
                   <FormField id="contact-consent" label="Privacy consent" required error={errors.consent}>
-                    <label className="flex items-start gap-3 text-sm text-[var(--near-black)] cursor-pointer">
+                    <label className="flex items-start gap-3 text-sm text-[var(--text-primary)] cursor-pointer">
                       <input
                         id="contact-consent"
                         type="checkbox"
                         checked={values.consent}
                         onChange={(e) => handleFieldChange('consent', e.target.checked)}
-                        className="mt-1 h-4 w-4"
+                        className="mt-1 h-4 w-4 accent-[var(--electric-blue)]"
                       />
                       <span>{SITE_CONFIG.contact.privacyWordingPlaceholder}</span>
                     </label>
@@ -381,7 +383,7 @@ export default function ContactPage() {
                 <div className="pt-2">
                   <Button
                     type="submit"
-                    variant="primary"
+                    variant="gradient"
                     disabled={status === 'submitting'}
                     className="w-full sm:w-auto"
                   >
@@ -414,7 +416,7 @@ export default function ContactPage() {
                     aria-label="Composed inquiry message"
                     rows={8}
                     value={composedText}
-                    className="w-full border border-[var(--border-light-strong)] bg-[var(--off-white)] p-3 font-mono text-xs text-[var(--near-black)]"
+                    className="w-full border border-[var(--border-strong)] bg-[var(--input-bg)] p-3 font-mono text-xs text-[var(--input-text)]"
                   />
                   <div className="mt-3 flex flex-wrap gap-3">
                     <Button type="button" variant="primary" onClick={handleCopy}>

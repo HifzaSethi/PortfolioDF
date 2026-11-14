@@ -1,64 +1,92 @@
-:root {
-  /* Core Brand Color Tokens */
+:root,
+[data-theme="day"] {
+  /* Core Approved Brand Color Palette */
   --violet: #B34FFF;
   --magenta: #E23389;
+  --electric-blue: #0057FF;
   --off-white: #F4F1EA;
   --near-black: #010102;
-  --electric-blue: #0057FF;
 
-  /* Derived Surface & Text Tints */
-  --ink: var(--near-black);
-  --ink-muted: color-mix(in srgb, var(--near-black) 68%, var(--off-white));
-  --ink-subtle: color-mix(in srgb, var(--near-black) 48%, var(--off-white));
-  --paper: var(--off-white);
-  --paper-elevated: color-mix(in srgb, var(--off-white) 86%, #FFFFFF);
-  --paper-tint: color-mix(in srgb, var(--off-white) 92%, var(--near-black));
-  --border-light: color-mix(in srgb, var(--near-black) 12%, transparent);
-  --border-light-strong: color-mix(in srgb, var(--near-black) 22%, transparent);
+  /* Day Mode Semantic Surfaces (70% Off-White dominance, 15% Near-Black, 15% Electric Blue) */
+  --bg-page: var(--off-white);
+  --bg-tint: color-mix(in srgb, var(--off-white) 93%, var(--near-black));
+  --bg-elevated: color-mix(in srgb, var(--off-white) 86%, #FFFFFF);
+  --bg-card-active: var(--near-black);
+  --text-on-card-active: var(--off-white);
 
+  --text-primary: var(--near-black);
+  --text-muted: color-mix(in srgb, var(--near-black) 68%, var(--off-white));
+  --text-subtle: color-mix(in srgb, var(--near-black) 50%, var(--off-white));
+
+  --border-subtle: color-mix(in srgb, var(--near-black) 13%, transparent);
+  --border-strong: color-mix(in srgb, var(--near-black) 26%, transparent);
+
+  /* Accessible Accent Links & Eyebrows on Day Surface */
+  --link-accent: var(--electric-blue);
+  --eyebrow-magenta: color-mix(in srgb, var(--magenta) 82%, var(--near-black));
+  --eyebrow-blue: var(--electric-blue);
+
+  /* Header & Controls */
+  --header-bg: color-mix(in srgb, var(--off-white) 90%, transparent);
+  --input-bg: var(--off-white);
+  --input-text: var(--near-black);
+  --pattern-opacity-surface: 0.045;
+  --pattern-opacity-mesh: 0.08;
+
+  /* Always-Dark Mesh Constants (Hero sections, Footer, Intelligence bands) */
   --dark-surface: color-mix(in srgb, var(--near-black) 92%, #FFFFFF);
-  --dark-glass: color-mix(in srgb, #FFFFFF 5%, transparent);
+  --dark-glass: color-mix(in srgb, #FFFFFF 6%, transparent);
   --border-dark: color-mix(in srgb, #FFFFFF 14%, transparent);
   --border-dark-strong: color-mix(in srgb, #FFFFFF 28%, transparent);
-  --on-dark-muted: color-mix(in srgb, var(--off-white) 74%, transparent);
-  --on-dark-subtle: color-mix(in srgb, var(--off-white) 52%, transparent);
+  --on-dark-muted: color-mix(in srgb, var(--off-white) 76%, transparent);
+  --on-dark-subtle: color-mix(in srgb, var(--off-white) 56%, transparent);
 
   /* Accessible Accent Tints */
   --violet-soft: color-mix(in srgb, var(--violet) 14%, transparent);
   --magenta-soft: color-mix(in srgb, var(--magenta) 14%, transparent);
   --blue-soft: color-mix(in srgb, var(--electric-blue) 12%, transparent);
 
+  /* Brand Aliases mapped dynamically for theme consistency */
+  --ink: var(--text-primary);
+  --ink-muted: var(--text-muted);
+  --ink-subtle: var(--text-subtle);
+  --paper: var(--bg-page);
+  --paper-elevated: var(--bg-elevated);
+  --paper-tint: var(--bg-tint);
+  --border-light: var(--border-subtle);
+  --border-light-strong: var(--border-strong);
+
   /* Typography */
   --font-sans: 'Sora', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-  /* Fluid Type Scale (Desktop 80px / 30px / 20px -> Mobile 42px / 22px / 17px) */
-  --text-display: clamp(2.625rem, 4.8vw, 5rem);
-  --text-h1-sub: clamp(2.125rem, 3.6vw, 3.75rem);
-  --text-h2: clamp(1.75rem, 2.8vw, 2.75rem);
-  --text-subheading: clamp(1.25rem, 1.8vw, 1.875rem);
-  --text-h3: clamp(1.25rem, 1.5vw, 1.625rem);
-  --text-body-lg: clamp(1.0625rem, 1.15vw, 1.25rem);
-  --text-body: clamp(0.9375rem, 1vw, 1.0625rem);
-  --text-sm: 0.875rem;
+  /* Exact Brand Scale: Heading 80px desktop / Subheading 30px / Body 20px scaling via clamp() */
+  --text-display: clamp(2.5rem, 5.5vw, 5rem);       /* 40px -> 80px */
+  --text-h1-sub: clamp(2rem, 3.8vw, 3.75rem);      /* 32px -> 60px */
+  --text-h2: clamp(1.625rem, 2.8vw, 2.75rem);      /* 26px -> 44px */
+  --text-subheading: clamp(1.25rem, 2vw, 1.875rem); /* 20px -> 30px */
+  --text-h3: clamp(1.25rem, 1.6vw, 1.625rem);      /* 20px -> 26px */
+  --text-body-lg: clamp(1.0625rem, 1.3vw, 1.25rem); /* 17px -> 20px */
+  --text-body: clamp(1rem, 1.15vw, 1.25rem);        /* 16px -> 20px */
+  --text-sm: 0.9375rem;
   --text-xs: 0.75rem;
 
-  /* Brand Slant Angle — single directional axis across the entire identity */
+  /* Single Brand Slant Axis (-12deg forward-leaning identity) */
   --slant: -12deg;
   --slant-unskew: 12deg;
 
-  /* Spacing & Layout */
+  /* 8px Architectural Spacing Grid & Layout */
   --container-max: 82rem;
   --section-py: clamp(4.5rem, 8vw, 7.5rem);
   --section-py-compact: clamp(3rem, 5vw, 4.5rem);
 
-  /* Radii (crisp architectural geometry) */
+  /* Architectural Geometry */
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 
   /* Elevation & Focus */
-  --shadow-subtle: 0 1px 2px color-mix(in srgb, var(--near-black) 5%, transparent),
-                   0 8px 24px color-mix(in srgb, var(--near-black) 4%, transparent);
+  --shadow-subtle: 0 2px 4px color-mix(in srgb, var(--near-black) 6%, transparent),
+                   0 12px 32px color-mix(in srgb, var(--near-black) 5%, transparent);
   --focus-ring: 0 0 0 3px var(--electric-blue);
 
   /* Z-index Scale */
@@ -68,4 +96,38 @@
   --z-megamenu: 55;
   --z-drawer: 70;
   --z-skip: 100;
+}
+
+[data-theme="night"] {
+  --bg-page: var(--near-black);
+  --bg-tint: #090810;
+  --bg-elevated: rgba(255, 255, 255, 0.045);
+  --bg-card-active: color-mix(in srgb, var(--violet) 20%, #090810);
+  --text-on-card-active: var(--off-white);
+
+  --text-primary: var(--off-white);
+  --text-muted: color-mix(in srgb, var(--off-white) 76%, transparent);
+  --text-subtle: color-mix(in srgb, var(--off-white) 56%, transparent);
+
+  --border-subtle: color-mix(in srgb, #FFFFFF 13%, transparent);
+  --border-strong: color-mix(in srgb, #FFFFFF 26%, transparent);
+
+  /* Accessible Accent Links & Eyebrows on Night Surface (>= 5.0:1 contrast) */
+  --link-accent: var(--violet);
+  --eyebrow-magenta: var(--magenta);
+  --eyebrow-blue: color-mix(in srgb, var(--electric-blue) 58%, var(--off-white));
+
+  /* Header & Controls */
+  --header-bg: color-mix(in srgb, var(--near-black) 88%, transparent);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-text: var(--off-white);
+  --pattern-opacity-surface: 0.075;
+  --pattern-opacity-mesh: 0.11;
+
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.65),
+                   0 0 0 1px rgba(179, 79, 255, 0.08);
+
+  --violet-soft: color-mix(in srgb, var(--violet) 22%, transparent);
+  --magenta-soft: color-mix(in srgb, var(--magenta) 22%, transparent);
+  --blue-soft: color-mix(in srgb, var(--electric-blue) 26%, transparent);
 }
