@@ -10,7 +10,7 @@ export interface AccordionItemData {
 
 interface AccordionProps {
   items: AccordionItemData[];
-  tone?: 'light' | 'dark';
+  tone?: 'light' | 'dark' | 'auto';
   allowMultiple?: boolean;
   defaultOpenIds?: string[];
   className?: string;
@@ -18,7 +18,7 @@ interface AccordionProps {
 
 export function Accordion({
   items,
-  tone = 'light',
+  tone = 'auto',
   allowMultiple = false,
   defaultOpenIds = [],
   className = '',
@@ -38,7 +38,9 @@ export function Accordion({
   return (
     <div
       className={`divide-y ${
-        isDark ? 'divide-[var(--border-dark)] border-y border-[var(--border-dark)]' : 'divide-[var(--border-light)] border-y border-[var(--border-light)]'
+        isDark
+          ? 'divide-[var(--border-dark)] border-y border-[var(--border-dark)]'
+          : 'divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]'
       } ${className}`}
     >
       {items.map((item) => {
@@ -57,7 +59,7 @@ export function Accordion({
               className={`flex w-full min-h-[52px] items-center justify-between gap-4 py-4 text-left transition-colors cursor-pointer ${
                 isDark
                   ? 'text-[var(--off-white)] hover:text-[var(--violet)]'
-                  : 'text-[var(--near-black)] hover:text-[var(--electric-blue)]'
+                  : 'text-[var(--text-primary)] hover:text-[var(--link-accent)]'
               }`}
             >
               <div>
@@ -65,7 +67,7 @@ export function Accordion({
                 {item.subtitle && (
                   <span
                     className={`mt-0.5 block text-xs ${
-                      isDark ? 'text-[var(--on-dark-muted)]' : 'text-[var(--ink-muted)]'
+                      isDark ? 'text-[var(--on-dark-muted)]' : 'text-[var(--text-muted)]'
                     }`}
                   >
                     {item.subtitle}

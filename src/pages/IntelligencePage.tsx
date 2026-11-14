@@ -20,6 +20,7 @@ export default function IntelligencePage() {
     <>
       <PracticeHero
         routePath="/services/intelligence"
+        number="01"
         eyebrow="Practice 01 · The Core"
         surface="dark-mesh"
         title="Intelligence."
@@ -46,7 +47,7 @@ export default function IntelligencePage() {
       <Section surface="tint" reveal>
         <Container className="space-y-10">
           <div className="max-w-3xl space-y-3">
-            <Eyebrow>Nine Intelligence Capabilities</Eyebrow>
+            <Eyebrow number="02">Nine Intelligence Capabilities</Eyebrow>
             <SectionHeading as="h2" size="h1">
               From disconnected data to commercial clarity.
             </SectionHeading>
@@ -56,15 +57,15 @@ export default function IntelligencePage() {
             {INTELLIGENCE_SERVICES.map((service, idx) => (
               <article
                 key={service.id}
-                className="border border-[var(--border-light-strong)] bg-[var(--off-white)] p-6 space-y-3"
+                className="df-card-surface df-frame-t p-6 space-y-3"
               >
-                <p className="text-xs font-bold tabular-nums text-[var(--electric-blue)]">
+                <p className="text-xs font-bold tabular-nums text-[var(--link-accent)]">
                   0{idx + 1}
                 </p>
-                <h3 className="text-lg font-extrabold text-[var(--near-black)]">
+                <h3 className="text-lg font-extrabold text-[var(--text-primary)]">
                   {service.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-[var(--ink-muted)]">
+                <p className="text-sm leading-relaxed text-[var(--text-muted)]">
                   {service.outcome}
                 </p>
               </article>
@@ -76,10 +77,12 @@ export default function IntelligencePage() {
       {/* Single Source of Truth + Closing Line */}
       <Section surface="off-white" reveal>
         <Container className="space-y-10">
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-center border border-[var(--border-light-strong)] bg-[var(--paper-elevated)] p-8">
+          <div className="df-card-surface df-frame-l grid gap-8 lg:grid-cols-12 lg:items-center p-8">
             <div className="lg:col-span-5 space-y-3">
-              <Eyebrow accent="blue">Data &amp; Analytics Goal</Eyebrow>
-              <h2 className="text-2xl font-extrabold text-[var(--near-black)]">
+              <Eyebrow number="03" accent="blue">
+                Data &amp; Analytics Goal
+              </Eyebrow>
+              <h2 className="text-2xl font-extrabold text-[var(--text-primary)]">
                 A single source of truth for decision-making.
               </h2>
             </div>
@@ -87,7 +90,7 @@ export default function IntelligencePage() {
               {DATA_SOURCES_SINGLE_TRUTH.map((source) => (
                 <li
                   key={source}
-                  className="border border-[var(--border-light)] bg-[var(--off-white)] px-4 py-3 text-sm font-semibold text-[var(--near-black)]"
+                  className="border border-[var(--border-subtle)] bg-[var(--bg-page)] px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
                 >
                   {source}
                 </li>
@@ -95,7 +98,7 @@ export default function IntelligencePage() {
             </ul>
           </div>
 
-          <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[var(--near-black)] max-w-4xl">
+          <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-primary)] max-w-4xl">
             Every other practice produces activity. Intelligence is what turns that activity into
             decisions.
           </p>

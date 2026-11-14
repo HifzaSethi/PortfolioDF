@@ -43,6 +43,7 @@ export default function SearchIntelligencePage() {
     <>
       <PracticeHero
         routePath="/services/search-intelligence"
+        number="01"
         eyebrow="Practice 03 · How DF. Acts"
         title="Search Intelligence."
         lead={SEARCH_INTELLIGENCE_COPY.lead}
@@ -52,7 +53,7 @@ export default function SearchIntelligencePage() {
       {/* Context + Interactive DisciplineSelector */}
       <Section surface="tint" compact>
         <Container className="space-y-8">
-          <p className="max-w-[66ch] text-lg font-semibold text-[var(--near-black)]">
+          <p className="max-w-[66ch] text-lg font-semibold text-[var(--text-primary)]">
             {SEARCH_INTELLIGENCE_COPY.context}
           </p>
           <DisciplineSelector
@@ -69,26 +70,26 @@ export default function SearchIntelligencePage() {
             <section
               key={discipline.id}
               id={`discipline-${discipline.id}`}
-              className="border-t border-[var(--border-light-strong)] pt-10 grid gap-8 lg:grid-cols-12"
+              className="df-frame-t pt-10 grid gap-8 lg:grid-cols-12"
             >
               <div className="lg:col-span-5 space-y-3">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--magenta)]">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                   Discipline 0{idx + 1} · {discipline.fullName}
                 </p>
-                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--near-black)]">
+                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
                   {discipline.acronym}
                 </h2>
-                <p className="text-xl font-bold text-[var(--electric-blue)]">
+                <p className="text-xl font-bold text-[var(--link-accent)]">
                   {discipline.tagline}
                 </p>
-                <p className="text-base leading-relaxed text-[var(--ink-muted)]">
+                <p className="text-base leading-relaxed text-[var(--text-muted)]">
                   {discipline.explanation}
                 </p>
-                <div className="border-t border-[var(--border-light)] pt-3">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--near-black)]">
+                <div className="border-t border-[var(--border-subtle)] pt-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-primary)]">
                     Where it shows up
                   </p>
-                  <p className="mt-1 text-sm text-[var(--ink-muted)]">
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">
                     {discipline.whereItShowsUp}
                   </p>
                 </div>
@@ -97,7 +98,7 @@ export default function SearchIntelligencePage() {
                   <div className="pt-2">
                     <Link
                       to={discipline.relatedLink.path}
-                      className="inline-flex items-center gap-2 text-sm font-bold text-[var(--electric-blue)] df-link-sweep"
+                      className="inline-flex items-center gap-2 text-sm font-bold text-[var(--link-accent)] df-link-sweep"
                     >
                       <span>{discipline.relatedLink.label}</span>
                       <ArrowRight aria-hidden="true" className="h-4 w-4" />
@@ -107,14 +108,14 @@ export default function SearchIntelligencePage() {
               </div>
 
               <div className="lg:col-span-7">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-muted)] mb-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)] mb-4">
                   Deliverables
                 </p>
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {discipline.deliverables.map((item) => (
                     <li
                       key={item}
-                      className="border border-[var(--border-light)] bg-[var(--paper-elevated)] px-4 py-3 text-sm font-semibold text-[var(--near-black)]"
+                      className="df-card-surface px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
                     >
                       {item}
                     </li>
@@ -130,7 +131,9 @@ export default function SearchIntelligencePage() {
       <Section surface="tint" reveal>
         <Container className="space-y-10">
           <div className="space-y-4">
-            <Eyebrow accent="blue">Search Ecosystem Signals</Eyebrow>
+            <Eyebrow number="02" accent="blue">
+              Search Ecosystem Signals
+            </Eyebrow>
             <SectionHeading as="h2" size="h2">
               Measurement vocabulary across search, AI answers, and booking agents.
             </SectionHeading>
@@ -138,7 +141,7 @@ export default function SearchIntelligencePage() {
               {SEARCH_MEASUREMENT_VOCABULARY.map((item) => (
                 <li
                   key={item}
-                  className="border border-[var(--border-light-strong)] bg-[var(--off-white)] px-4 py-3 text-sm font-semibold text-[var(--near-black)]"
+                  className="df-card-surface px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
                 >
                   {item}
                 </li>
@@ -146,17 +149,17 @@ export default function SearchIntelligencePage() {
             </ul>
           </div>
 
-          <div className="border-t border-[var(--border-light-strong)] pt-8 space-y-4">
-            <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[var(--near-black)] max-w-4xl">
+          <div className="border-t border-[var(--border-strong)] pt-8 space-y-4">
+            <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-primary)] max-w-4xl">
               {SEARCH_INTELLIGENCE_COPY.closingLine}
             </p>
-            <p className="text-xs leading-relaxed text-[var(--ink-muted)] max-w-3xl">
+            <p className="text-xs leading-relaxed text-[var(--text-muted)] max-w-3xl">
               {SEARCH_INTELLIGENCE_COPY.note}
             </p>
             <div>
               <Link
                 to="/hospitality"
-                className="inline-flex items-center gap-2 text-sm font-bold text-[var(--electric-blue)] df-link-sweep"
+                className="inline-flex items-center gap-2 text-sm font-bold text-[var(--link-accent)] df-link-sweep"
               >
                 <span>Hospitality: Be Found and Booked Through AI</span>
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
