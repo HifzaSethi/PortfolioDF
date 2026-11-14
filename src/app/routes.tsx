@@ -1,7 +1,8 @@
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Skeleton } from '../components/ui/Skeleton';
-import HomePage from '../pages/HomePage';
+
+const HomePage = lazy(() => import('../pages/HomePage'));
 const AboutPage = lazy(() => import('../pages/AboutPage'));
 const ServicesPage = lazy(() => import('../pages/ServicesPage'));
 const IntelligencePage = lazy(() => import('../pages/IntelligencePage'));

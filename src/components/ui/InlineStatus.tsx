@@ -22,16 +22,16 @@ export function InlineStatus({
       ? 'border-[var(--magenta)] bg-[var(--magenta-soft)]'
       : variant === 'success'
         ? 'border-[var(--electric-blue)] bg-[var(--blue-soft)]'
-        : 'border-[var(--border-strong)] bg-[var(--bg-elevated)]';
+        : 'border-[var(--border-light-strong)] bg-[var(--paper-elevated)]';
 
   return (
     <div
       role="status"
       aria-live="polite"
-      className={`border p-5 text-[var(--text-primary)] ${borderClass} ${className}`}
+      className={`border p-5 text-[var(--near-black)] ${borderClass} ${className}`}
     >
       <div className="flex items-start gap-3">
-        <Icon aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[var(--text-primary)]" />
+        <Icon aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[var(--near-black)]" />
         <div className="min-w-0 flex-1 space-y-2">
           <p className="text-sm font-bold">{title}</p>
           {children && <div className="text-sm leading-relaxed">{children}</div>}

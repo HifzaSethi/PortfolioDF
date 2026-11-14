@@ -25,7 +25,7 @@ export function CharacterSlot({ name, className = '' }: CharacterSlotProps) {
         referrerPolicy="no-referrer"
         className="block h-auto max-w-full object-contain"
       />
-      <figcaption className="mt-2 text-[11px] text-[var(--text-muted)]">
+      <figcaption className="mt-2 text-[11px] text-[var(--ink-muted)]">
         AI-generated imagery is labeled where disclosure is required.
       </figcaption>
     </figure>

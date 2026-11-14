@@ -34,15 +34,15 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
-          <span className="inline-block h-2.5 w-2.5 bg-[var(--magenta)] df-slant-block" aria-hidden="true" />
+        <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--ink-muted)]">
+          <span className="inline-block h-2.5 w-2.5 bg-[var(--magenta)]" aria-hidden="true" />
           <span>Fixed Objective Anchor: Business Objectives</span>
         </div>
 
         <button
           type="button"
           onClick={() => setShowListView((v) => !v)}
-          className="inline-flex min-h-[40px] items-center gap-2 border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] cursor-pointer"
+          className="inline-flex min-h-[40px] items-center gap-2 border border-[var(--border-light-strong)] px-3.5 py-1.5 text-xs font-semibold text-[var(--near-black)] hover:border-[var(--electric-blue)] hover:text-[var(--electric-blue)] cursor-pointer"
         >
           <ListTree aria-hidden="true" className="h-4 w-4" />
           <span>{showListView ? 'Interactive Chain View' : 'Accessible List View'}</span>
@@ -54,13 +54,13 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
           {ECOSYSTEM_NODES.map((node) => (
             <li
               key={node.id}
-              className="df-card-surface p-4"
+              className="border border-[var(--border-light)] bg-[var(--paper-elevated)] p-4"
             >
-              <p className="text-xs font-bold tabular-nums text-[var(--link-accent)]">
+              <p className="text-xs font-bold tabular-nums text-[var(--electric-blue)]">
                 {String(node.order).padStart(2, '0')}
               </p>
-              <h3 className="mt-1 text-sm font-bold text-[var(--text-primary)]">{node.title}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">{node.summary}</p>
+              <h3 className="mt-1 text-sm font-bold text-[var(--near-black)]">{node.title}</h3>
+              <p className="mt-2 text-xs leading-relaxed text-[var(--ink-muted)]">{node.summary}</p>
             </li>
           ))}
         </ol>
@@ -68,12 +68,13 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
           {/* Desktop Slanted SVG + Connected Chain / Mobile Vertical Stepped Path */}
           <div className="lg:col-span-7">
+            {/* Desktop interactive chain */}
             <div
-              className="hidden md:block relative df-card-surface p-6"
+              className="hidden md:block relative border border-[var(--border-light)] bg-[var(--paper-elevated)] p-6"
               role="group"
               aria-label="Digital Ecosystem Framework 10-node chain"
             >
-              {/* Connecting SVG lines using CSS variables */}
+              {/* Connecting SVG lines */}
               <svg
                 aria-hidden="true"
                 className="w-full h-14 mb-4"
@@ -85,8 +86,8 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                   y1="42"
                   x2="764"
                   y2="14"
-                  stroke="var(--text-primary)"
-                  strokeOpacity="0.2"
+                  stroke="#010102"
+                  strokeOpacity="0.18"
                   strokeWidth="2"
                 />
                 <line
@@ -94,7 +95,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                   y1="42"
                   x2={36 + (activeIndex / 9) * 728}
                   y2={42 - (activeIndex / 9) * 28}
-                  stroke="var(--link-accent)"
+                  stroke="#0057FF"
                   strokeWidth="3"
                 />
                 {ECOSYSTEM_NODES.map((node, idx) => {
@@ -109,14 +110,8 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                       y={cy - (isCurrent ? 6 : 4)}
                       width={isCurrent ? 12 : 8}
                       height={isCurrent ? 12 : 8}
-                      fill={
-                        isAnchor
-                          ? 'var(--magenta)'
-                          : isCurrent
-                            ? 'var(--link-accent)'
-                            : 'var(--text-primary)'
-                      }
-                      fillOpacity={isCurrent || isAnchor ? 1 : 0.38}
+                      fill={isAnchor ? '#E23389' : isCurrent ? '#0057FF' : '#010102'}
+                      fillOpacity={isCurrent || isAnchor ? 1 : 0.35}
                     />
                   );
                 })}
@@ -139,16 +134,16 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                       aria-pressed={isSelected}
                       className={`group text-left p-3 border transition-all duration-150 cursor-pointer min-h-[84px] flex flex-col justify-between ${
                         isSelected
-                          ? 'border-[var(--magenta)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] shadow-sm'
+                          ? 'border-[var(--electric-blue)] bg-[var(--near-black)] text-[var(--off-white)] shadow-sm'
                           : isNeighbor
-                            ? 'border-[var(--border-strong)] bg-[var(--bg-page)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'
-                            : 'border-[var(--border-subtle)] bg-[var(--bg-tint)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]'
+                            ? 'border-[var(--border-light-strong)] bg-[var(--off-white)] text-[var(--near-black)] hover:border-[var(--electric-blue)]'
+                            : 'border-[var(--border-light)] bg-[var(--off-white)]/65 text-[var(--near-black)]/70 hover:text-[var(--near-black)] hover:border-[var(--border-light-strong)]'
                       }`}
                     >
                       <span className="flex items-center justify-between text-[11px] font-bold tabular-nums">
                         <span
                           className={
-                            isSelected ? 'text-[var(--violet)]' : 'text-[var(--link-accent)]'
+                            isSelected ? 'text-[var(--violet)]' : 'text-[var(--electric-blue)]'
                           }
                         >
                           {String(node.order).padStart(2, '0')}
@@ -169,7 +164,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                 })}
               </div>
 
-              <p className="mt-4 text-xs text-[var(--text-muted)]">
+              <p className="mt-4 text-xs text-[var(--ink-muted)]">
                 Use arrow keys, hover, or select any node to trace how signals move from Business
                 Objectives to Commercial Performance.
               </p>
@@ -187,53 +182,53 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                     aria-expanded={isSelected}
                     className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left border min-h-[48px] cursor-pointer ${
                       isSelected
-                        ? 'border-[var(--magenta)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)]'
-                        : 'border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-primary)]'
+                        ? 'border-[var(--electric-blue)] bg-[var(--near-black)] text-[var(--off-white)]'
+                        : 'border-[var(--border-light)] bg-[var(--paper-elevated)] text-[var(--near-black)]'
                     }`}
                   >
                     <span className="flex items-center gap-3">
-                      <span className="text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
+                      <span className="text-xs font-bold tabular-nums text-[var(--magenta)]">
                         {String(node.order).padStart(2, '0')}
                       </span>
                       <span className="text-sm font-bold">{node.title}</span>
                     </span>
-                    <span className="text-xs opacity-75">{index === 0 ? 'Anchor' : 'Inspect'}</span>
+                    <span className="text-xs opacity-70">{index === 0 ? 'Anchor' : 'Inspect'}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Detail Panel with architectural L-frame */}
+          {/* Detail Panel */}
           <div
             aria-live="polite"
-            className={`lg:col-span-5 df-card-surface df-frame-l ${
+            className={`lg:col-span-5 border border-[var(--border-light-strong)] bg-[var(--paper-elevated)] ${
               compact ? 'p-6' : 'p-7 sm:p-8'
             }`}
           >
-            <div className="flex items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
-              <span className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--link-accent)] tabular-nums">
+            <div className="flex items-center justify-between gap-3 border-b border-[var(--border-light)] pb-4">
+              <span className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--electric-blue)] tabular-nums">
                 Node {String(activeNode.order).padStart(2, '0')} / 10
               </span>
-              <span className="text-xs font-semibold text-[var(--text-muted)]">
+              <span className="text-xs font-semibold text-[var(--ink-muted)]">
                 {activeNode.order === 1
                   ? 'Objective Anchor'
                   : `Connected to ${ECOSYSTEM_NODES[activeNode.order - 2]?.shortTitle}`}
               </span>
             </div>
 
-            <h3 className="mt-5 text-2xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            <h3 className="mt-5 text-2xl font-extrabold tracking-tight text-[var(--near-black)]">
               {activeNode.title}
             </h3>
-            <p className="mt-3 text-base leading-relaxed text-[var(--text-primary)]">
+            <p className="mt-3 text-base leading-relaxed text-[var(--near-black)]">
               {activeNode.summary}
             </p>
 
-            <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 border-y border-[var(--border-subtle)] py-4">
+            <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 border-y border-[var(--border-light)] py-4">
               {activeNode.items.map((item) => (
                 <li
                   key={item}
-                  className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--text-muted)]"
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--ink-muted)]"
                 >
                   <span aria-hidden="true" className="h-1.5 w-1.5 bg-[var(--magenta)]" />
                   <span>{item}</span>
@@ -241,7 +236,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
               ))}
             </ul>
 
-            <p className="mt-4 text-sm font-semibold text-[var(--text-primary)]">
+            <p className="mt-4 text-sm font-semibold text-[var(--near-black)]">
               {activeNode.closingLine}
             </p>
 
@@ -249,7 +244,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
               <div className="mt-5">
                 <Link
                   to={activeNode.linkTo.path}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[var(--link-accent)] df-link-sweep"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[var(--electric-blue)] df-link-sweep"
                 >
                   <span>{activeNode.linkTo.label}</span>
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />

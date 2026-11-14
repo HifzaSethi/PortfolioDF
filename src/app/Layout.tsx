@@ -10,7 +10,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--bg-page)] text-[var(--text-primary)]">
+    <div className="flex min-h-screen flex-col bg-[var(--off-white)] text-[var(--near-black)]">
       <ScrollManager />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 outline-none">

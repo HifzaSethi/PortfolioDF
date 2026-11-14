@@ -1,40 +1,49 @@
-import { SITE_CONFIG } from '../../config/site';
-import { useTheme } from '../../hooks/useTheme';
-
 /**
- * TRIDI MARK (DI + TRI — "Triangle + Digital")
- * Official vector emblem extracted from brand guidelines PDF.
- * Decorative secondary emblem for hero and footer surfaces — never replaces the DF logo.
+ * TRIDI MARK (PLACEHOLDER)
+ * Inverted triangle emblem motif.
+ * Strictly secondary emblem for dark and gradient surfaces — never a logo replacement.
  */
 
 interface TridiMarkProps {
   size?: number;
-  tone?: 'light' | 'dark' | 'auto';
   className?: string;
 }
 
-export function TridiMark({ size = 36, tone = 'auto', className = '' }: TridiMarkProps) {
-  const { theme } = useTheme();
-  const resolvedTone: 'light' | 'dark' =
-    tone === 'auto' ? (theme === 'night' ? 'dark' : 'light') : tone;
-
-  const src = resolvedTone === 'dark' ? SITE_CONFIG.assets.tridi.dark : SITE_CONFIG.assets.tridi.light;
-  const height = Math.round(size * (411.97 / 492.62));
-
+export function TridiMark({ size = 36, className = '' }: TridiMarkProps) {
   return (
     <span
       aria-hidden="true"
-      className={`inline-flex items-center justify-center shrink-0 select-none ${className}`}
+      className={`inline-flex items-center gap-2 select-none ${className}`}
+      data-placeholder-asset="official-tridi-mark"
+      title="Tridi Mark placeholder"
     >
-      <img
-        src={src}
-        alt=""
+      <svg
         width={size}
-        height={height}
-        style={{ width: `${size}px`, height: 'auto' }}
-        className="block object-contain select-none"
-        draggable={false}
-      />
+        height={Math.round(size * 0.88)}
+        viewBox="0 0 40 35"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polygon
+          points="3,3 37,3 20,32"
+          stroke="url(#tridi-grad)"
+          strokeWidth="2"
+          fill="none"
+        />
+        <polygon
+          points="11,8 29,8 20,24"
+          stroke="#F4F1EA"
+          strokeOpacity="0.35"
+          strokeWidth="1"
+          fill="none"
+        />
+        <defs>
+          <linearGradient id="tridi-grad" x1="3" y1="3" x2="37" y2="32" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#B34FFF" />
+            <stop offset="1" stopColor="#E23389" />
+          </linearGradient>
+        </defs>
+      </svg>
     </span>
   );
 }

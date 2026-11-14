@@ -28,7 +28,6 @@ export default function HospitalityPage() {
       {/* Hospitality Hero — Distinct Deeper Gradient Treatment */}
       <PracticeHero
         routePath="/hospitality"
-        number="01"
         eyebrow="Core Sector Expertise · Hospitality"
         surface="hospitality-mesh"
         title={HOSPITALITY_COPY.tagline}
@@ -36,13 +35,11 @@ export default function HospitalityPage() {
         principle={`Serving: ${HOSPITALITY_COPY.whoWeServe.join(' · ')}`}
       />
 
-      {/* 01. Interactive 14-Touchpoint Hospitality Ecosystem */}
+      {/* 1. Interactive 14-Touchpoint Hospitality Ecosystem */}
       <Section surface="hospitality-mesh" withPattern>
         <Container className="space-y-8">
           <div className="max-w-3xl space-y-3">
-            <Eyebrow number="01" tone="dark">
-              The Hospitality Ecosystem (14 Touchpoints)
-            </Eyebrow>
+            <Eyebrow tone="dark">01. The Hospitality Ecosystem (14 Touchpoints)</Eyebrow>
             <SectionHeading as="h2" size="h2" tone="dark">
               {HOSPITALITY_COPY.ecosystemMessage}
             </SectionHeading>
@@ -51,11 +48,11 @@ export default function HospitalityPage() {
         </Container>
       </Section>
 
-      {/* 02. Four Interactive Hospitality Dimensions */}
+      {/* 2. Four Interactive Hospitality Dimensions */}
       <Section surface="off-white" reveal>
         <Container className="space-y-10">
           <div className="max-w-3xl space-y-3">
-            <Eyebrow number="02">Hospitality Performance in Context</Eyebrow>
+            <Eyebrow>02. Hospitality Performance in Context</Eyebrow>
             <SectionHeading as="h2" size="h1">
               {HOSPITALITY_COPY.dimensionsCaption}
             </SectionHeading>
@@ -77,8 +74,8 @@ export default function HospitalityPage() {
                   onClick={() => setActiveDimensionId(dim.id)}
                   className={`p-5 text-left border transition-colors cursor-pointer min-h-[76px] ${
                     selected
-                      ? 'bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] border-[var(--link-accent)]'
-                      : 'bg-[var(--bg-elevated)] text-[var(--text-primary)] border-[var(--border-strong)] hover:border-[var(--link-accent)]'
+                      ? 'bg-[var(--near-black)] text-[var(--off-white)] border-[var(--electric-blue)]'
+                      : 'bg-[var(--paper-elevated)] text-[var(--near-black)] border-[var(--border-light-strong)] hover:border-[var(--electric-blue)]'
                   }`}
                 >
                   <span className="text-xs font-extrabold tracking-[0.14em] uppercase">
@@ -92,19 +89,19 @@ export default function HospitalityPage() {
           <div
             role="tabpanel"
             aria-live="polite"
-            className="df-card-surface df-frame-l p-6 sm:p-8 grid gap-6 lg:grid-cols-12 lg:items-center"
+            className="border border-[var(--border-light-strong)] bg-[var(--paper-tint)] p-6 sm:p-8 grid gap-6 lg:grid-cols-12 lg:items-center"
           >
             <div className="lg:col-span-5 space-y-2">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--magenta)]">
                 {activeDim.title}
               </p>
-              <p className="text-xl font-bold text-[var(--text-primary)]">{activeDim.summary}</p>
+              <p className="text-xl font-bold text-[var(--near-black)]">{activeDim.summary}</p>
             </div>
             <ul className="lg:col-span-7 grid gap-2.5 sm:grid-cols-2">
               {activeDim.metrics.map((metric) => (
                 <li
                   key={metric}
-                  className="border border-[var(--border-subtle)] bg-[var(--bg-page)] px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
+                  className="border border-[var(--border-light)] bg-[var(--off-white)] px-4 py-3 text-sm font-semibold text-[var(--near-black)]"
                 >
                   {metric}
                 </li>
@@ -114,13 +111,11 @@ export default function HospitalityPage() {
         </Container>
       </Section>
 
-      {/* 03. Why Hospitality Brands Choose DF. — Commercial Equation */}
+      {/* 3. Why Hospitality Brands Choose DF. — Commercial Equation */}
       <Section surface="tint" reveal>
         <Container className="space-y-10">
           <div className="max-w-3xl space-y-3">
-            <Eyebrow number="03" accent="blue">
-              Why Hospitality Brands Choose DF.
-            </Eyebrow>
+            <Eyebrow accent="blue">03. Why Hospitality Brands Choose DF.</Eyebrow>
             <SectionHeading as="h2" size="h2">
               {HOSPITALITY_COPY.whyChooseLead}
             </SectionHeading>
@@ -140,8 +135,8 @@ export default function HospitalityPage() {
                   )}
                 </div>
               ))}
-              <span className="bg-[var(--electric-blue)] px-5 py-2.5 text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--off-white)] df-slant-block">
-                <span className="df-unslant inline-block">{HOSPITALITY_COPY.equationResult}</span>
+              <span className="bg-[var(--electric-blue)] px-5 py-2.5 text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--off-white)]">
+                {HOSPITALITY_COPY.equationResult}
               </span>
             </div>
             <p className="text-base text-[var(--on-dark-muted)] max-w-2xl">
@@ -151,12 +146,12 @@ export default function HospitalityPage() {
         </Container>
       </Section>
 
-      {/* 04 & 05. Outcomes + Related Practices + Hospitality Photo Slots */}
+      {/* 4 & 5. Outcomes + Related Practices + Hospitality Photo Slots */}
       <Section surface="off-white" reveal>
         <Container className="space-y-14">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5 space-y-4">
-              <Eyebrow number="04">Commercial Outcomes</Eyebrow>
+              <Eyebrow>04. Commercial Outcomes</Eyebrow>
               <SectionHeading as="h2" size="h2">
                 What we help hospitality brands achieve.
               </SectionHeading>
@@ -176,13 +171,13 @@ export default function HospitalityPage() {
             </div>
 
             <div className="lg:col-span-7 space-y-8">
-              <ul className="divide-y divide-[var(--border-strong)] border-y border-[var(--border-strong)]">
+              <ul className="divide-y divide-[var(--border-light-strong)] border-y border-[var(--border-light-strong)]">
                 {HOSPITALITY_OUTCOMES.map((outcome, idx) => (
                   <li
                     key={outcome}
-                    className="py-3.5 flex items-baseline gap-4 text-lg sm:text-xl font-extrabold tracking-tight text-[var(--text-primary)]"
+                    className="py-3.5 flex items-baseline gap-4 text-lg sm:text-xl font-extrabold tracking-tight text-[var(--near-black)]"
                   >
-                    <span className="text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
+                    <span className="text-xs font-bold tabular-nums text-[var(--magenta)]">
                       {String(idx + 1).padStart(2, '0')}
                     </span>
                     <span>{outcome}</span>
@@ -191,7 +186,7 @@ export default function HospitalityPage() {
               </ul>
 
               <div className="space-y-4 pt-2">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink-muted)]">
                   Connected Practices for Hospitality
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -216,7 +211,7 @@ export default function HospitalityPage() {
                     <Link
                       key={link.label}
                       to={link.path}
-                      className="flex min-h-[48px] items-center justify-between gap-3 df-card-surface px-4 py-3 text-sm font-bold text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] transition-colors"
+                      className="flex min-h-[48px] items-center justify-between gap-3 border border-[var(--border-light-strong)] bg-[var(--paper-elevated)] px-4 py-3 text-sm font-bold text-[var(--near-black)] hover:border-[var(--electric-blue)] hover:text-[var(--electric-blue)] transition-colors"
                     >
                       <span>{link.label}</span>
                       <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0" />

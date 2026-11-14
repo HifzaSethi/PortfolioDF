@@ -1,5 +1,4 @@
 import { ArrowRight } from 'lucide-react';
-import { TridiMark } from '../components/brand/TridiMark';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { CtaBand } from '../components/sections/CtaBand';
@@ -13,21 +12,18 @@ export default function NotFoundPage() {
 
   return (
     <>
-      <Section surface="hero-adaptive" withPattern className="py-24 sm:py-32">
+      <Section surface="off-white" className="py-24 sm:py-32">
         <Container className="space-y-6 max-w-3xl">
-          <div className="flex items-center gap-3">
-            <TridiMark size={26} tone="auto" />
-            <Eyebrow number="404">Route Not Found</Eyebrow>
-          </div>
+          <Eyebrow>404 · Route Not Found</Eyebrow>
           <SectionHeading as="h1" size="display" slanted>
             This path is outside the field.
           </SectionHeading>
-          <p className="text-lg leading-relaxed text-[var(--text-muted)]">
+          <p className="text-lg leading-relaxed text-[var(--ink-muted)]">
             The route you requested could not be found. Return to the main site or explore our
             consultancy practices directly.
           </p>
           <div className="flex flex-wrap gap-4 pt-3">
-            <LinkButton to="/" variant="gradient">
+            <LinkButton to="/" variant="primary">
               <span>Home</span>
               <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </LinkButton>

@@ -1,116 +1,130 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SITE_CONFIG } from '../../config/site';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { useTheme } from '../../hooks/useTheme';
-import { Logo } from './Logo';
 
-const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'));
-
-function checkWebGLSupport(): boolean {
-  if (typeof window === 'undefined') return false;
-  try {
-    const canvas = document.createElement('canvas');
-    return Boolean(
-      window.WebGLRenderingContext &&
-        (canvas.getContext('webgl2') || canvas.getContext('webgl'))
-    );
-  } catch {
-    return false;
-  }
-}
-
-function Hero3DBrandLoader() {
-  return (
-    <div
-      className="flex h-full w-full flex-col items-center justify-center gap-4 select-none"
-      role="status"
-      aria-label="Loading Digital Field 3D mark"
-    >
-      <div className="animate-pulse">
-        <Logo variant="icon" size="lg" />
-      </div>
-      <div className="h-0.5 w-24 overflow-hidden bg-[var(--border-subtle)]">
-        <div className="h-full w-1/2 df-gradient-accent animate-pulse" />
-      </div>
-    </div>
-  );
-}
-
-function Hero3DFallback() {
-  const { theme } = useTheme();
-  const iconSrc =
-    theme === 'night' ? SITE_CONFIG.assets.logos.iconDark : SITE_CONFIG.assets.logos.iconLight;
-
-  return (
-    <div className="relative flex h-full w-full items-center justify-center select-none p-8">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-6 rounded-full opacity-35 blur-3xl"
-        style={{
-          background:
-            'radial-gradient(circle at 32% 68%, var(--violet), transparent 62%), radial-gradient(circle at 74% 38%, var(--magenta), transparent 60%)',
-        }}
-      />
-      <img
-        src={iconSrc}
-        alt="Digital Field. DF. monogram mark"
-        className="relative z-10 h-40 sm:h-48 w-auto object-contain"
-        draggable={false}
-      />
-    </div>
-  );
-}
+/**
+ * 3D DF. ICON SLOT
+ * Drop official 3D DF. icon render (.png / .webm) into SITE_CONFIG.assets.hero3dSrc.
+ * Fallback builds an abstract glossy 3D-feeling composition of slanted glass planes
+ * along the single --slant (-12deg) axis. Never fakes the custom 1/D/F logo mark.
+ */
 
 export function Hero3DSlot() {
   const reducedMotion = useReducedMotion();
-  const { theme } = useTheme();
-  const [webGLOk, setWebGLOk] = useState<boolean>(() => checkWebGLSupport());
-  const [canvasReady, setCanvasReady] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const configuredSrc = SITE_CONFIG.assets.hero3dSrc;
 
-  const handleReady = useCallback(() => {
-    setCanvasReady(true);
-  }, []);
-
-  const handleWebGLError = useCallback(() => {
-    setWebGLOk(false);
-  }, []);
-
-  useEffect(() => {
-    setWebGLOk(checkWebGLSupport());
-  }, []);
-
-  if (reducedMotion || !webGLOk) {
+  if (configuredSrc) {
     return (
-      <div className="relative mx-auto aspect-square w-full max-w-[520px] flex items-center justify-center">
-        <Hero3DFallback />
+      <div className="relative flex items-center justify-center aspect-square w-full max-w-[460px] mx-auto">
+        <img
+          src={configuredSrc}
+          alt="Digital Field 3D geometric composition"
+          className="h-full w-full object-contain"
+          referrerPolicy="no-referrer"
+        />
       </div>
     );
   }
 
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (reducedMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: ny * -8, y: nx * 10 });
+  };
+
+  const resetTilt = () => setTilt({ x: 0, y: 0 });
+
   return (
     <div
-      className="relative mx-auto aspect-square w-full max-w-[540px]"
-      aria-label="Interactive 3D extruded Digital Field monogram sculpture"
+      className="relative mx-auto w-full max-w-[460px] aspect-square flex items-center justify-center select-none"
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetTilt}
+      data-placeholder-asset="/src/assets/brand/df-icon-3d.png"
+      aria-label="Abstract 3D field geometry composition placeholder"
     >
-      {!canvasReady && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <Hero3DBrandLoader />
-        </div>
-      )}
+      {/* Ambient radial glow anchored inside composition */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-8 rounded-full opacity-45 blur-3xl pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(circle at 35% 65%, var(--violet), transparent 60%), radial-gradient(circle at 75% 35%, var(--magenta), transparent 58%)',
+        }}
+      />
 
-      <Suspense fallback={<Hero3DBrandLoader />}>
+      {/* Layered 3D CSS perspective planes */}
+      <div
+        className="relative w-[82%] h-[82%] transition-transform duration-300 ease-out"
+        style={{
+          perspective: '900px',
+          transform: reducedMotion
+            ? undefined
+            : `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        }}
+      >
+        {/* Back architectural slab */}
         <div
-          className={`h-full w-full transition-opacity duration-300 ${
-            canvasReady ? 'opacity-100' : 'opacity-0'
-          }`}
+          aria-hidden="true"
+          className="absolute inset-6 df-slant-block border border-[var(--border-dark-strong)] bg-[color-mix(in_srgb,var(--violet)_14%,var(--near-black))]"
+          style={{
+            transform: 'skewX(var(--slant)) translate3d(-14px, -10px, -40px)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2)',
+          }}
+        />
+
+        {/* Mid glossy gradient plane */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-10 df-slant-block border border-[var(--border-dark-strong)] backdrop-blur-md"
+          style={{
+            background:
+              'linear-gradient(135deg, color-mix(in srgb, var(--violet) 32%, transparent), color-mix(in srgb, var(--magenta) 26%, transparent) 60%, color-mix(in srgb, var(--near-black) 70%, transparent))',
+            transform: 'skewX(var(--slant)) translate3d(8px, 6px, 0px)',
+            boxShadow: '0 24px 60px rgba(1, 1, 2, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.28)',
+          }}
+        />
+
+        {/* Foreground translucent glass prism */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-16 df-slant-block df-glass-dark flex flex-col justify-between p-6"
+          style={{
+            transform: 'skewX(var(--slant)) translate3d(20px, 18px, 36px)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.35)',
+          }}
         >
-          <Hero3DCanvas
-            theme={theme}
-            onReady={handleReady}
-            onWebGLError={handleWebGLError}
-          />
+          <div className="df-unslant flex items-center justify-between">
+            <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[var(--off-white)]/70">
+              3D SLOT PLACEHOLDER
+            </span>
+            <span className="h-2.5 w-2.5 bg-[var(--electric-blue)]" />
+          </div>
+
+          {/* Signal vector lines */}
+          <svg
+            className="df-unslant w-full h-24 opacity-85"
+            viewBox="0 0 200 90"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line x1="12" y1="72" x2="100" y2="45" stroke="#B34FFF" strokeWidth="1.5" strokeOpacity="0.8" />
+            <line x1="34" y1="18" x2="100" y2="45" stroke="#F4F1EA" strokeWidth="1.2" strokeOpacity="0.45" />
+            <line x1="168" y1="22" x2="100" y2="45" stroke="#E23389" strokeWidth="1.5" strokeOpacity="0.8" />
+            <line x1="158" y1="74" x2="100" y2="45" stroke="#0057FF" strokeWidth="1.5" strokeOpacity="0.9" />
+            <rect x="94" y="39" width="12" height="12" fill="#E23389" />
+          </svg>
+
+          <div className="df-unslant flex items-end justify-between border-t border-[var(--border-dark)] pt-3">
+            <span className="text-xs font-semibold tracking-[0.12em] uppercase text-[var(--off-white)]">
+              OBJECTIVE ANCHOR
+            </span>
+            <span className="h-3.5 w-3.5 bg-[var(--magenta)]" />
+          </div>
         </div>
-      </Suspense>
+      </div>
     </div>
   );
 }

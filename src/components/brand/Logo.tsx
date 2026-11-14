@@ -1,89 +1,95 @@
 import { SITE_CONFIG } from '../../config/site';
-import { useTheme } from '../../hooks/useTheme';
 
 /**
- * OFFICIAL DIGITAL FIELD. LOGO SYSTEM
- * - Uses ONLY official vector SVG assets extracted from DF_Phase_01_VR_02.pdf.
- * - Enforces minimum 1X clear space on all sides (X = height of the magenta block dot,
- *   which equals ~26.2% of the mark's height).
- * - Never stretches, squashes, recolors, fades, tilts, or adds shadows/outlines/glows.
- * - Light variant (dark ink #010102) on light surfaces; Dark variant (off-white #F4F1EA)
- *   on dark or gradient-mesh surfaces.
+ * LOGO SYSTEM (PLACEHOLDER MODE)
+ *
+ * Official Digital Field. Brand Guidelines:
+ * - Clear space = 1X on all sides where X = the size of the magenta block dot.
+ * - Never stretch, squash, recolor outside the approved palette, add or remove elements,
+ *   fade, add shadows, outlines or glows, or tilt/rotate.
+ * - Below legible size, switch wordmark to icon.
+ * - Drop official SVGs into /src/assets/brand/ and map them in src/config/site.ts.
  */
 
 export type LogoVariant = 'wordmark' | 'icon' | 'lockup-standard' | 'lockup-italic';
-export type LogoTheme = 'light' | 'dark' | 'auto';
+export type LogoTheme = 'light' | 'dark';
 
 interface LogoProps {
   variant?: LogoVariant;
   theme?: LogoTheme;
-  size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
 
-function resolveConfiguredSrc(variant: LogoVariant, resolvedTheme: 'light' | 'dark'): string {
-  const logos = SITE_CONFIG.assets.logos;
-  if (variant === 'wordmark') return resolvedTheme === 'dark' ? logos.wordmarkDark : logos.wordmarkLight;
-  if (variant === 'icon') return resolvedTheme === 'dark' ? logos.iconDark : logos.iconLight;
-  if (variant === 'lockup-standard') {
-    return resolvedTheme === 'dark' ? logos.lockupStandardDark : logos.lockupStandardLight;
-  }
-  return resolvedTheme === 'dark' ? logos.lockupItalicDark : logos.lockupItalicLight;
-}
-
-const HEIGHT_CLASSES: Record<LogoVariant, Record<'sm' | 'md' | 'lg', string>> = {
-  icon: {
-    sm: 'h-6 w-auto',
-    md: 'h-7 w-auto',
-    lg: 'h-9 w-auto',
-  },
+const VARIANT_META: Record<
+  LogoVariant,
+  { label: string; dimensionsClass: string; targetPath: string }
+> = {
   wordmark: {
-    sm: 'h-7 w-auto',
-    md: 'h-8 w-auto',
-    lg: 'h-10 w-auto',
+    label: 'LOGO PLACEHOLDER · WORDMARK',
+    dimensionsClass: 'h-9 min-w-[148px] px-3',
+    targetPath: '/src/assets/brand/logo-wordmark-*.svg',
+  },
+  icon: {
+    label: 'LOGO PLACEHOLDER · ICON',
+    dimensionsClass: 'h-9 w-12 px-2',
+    targetPath: '/src/assets/brand/logo-icon-*.svg',
   },
   'lockup-standard': {
-    sm: 'h-7 w-auto',
-    md: 'h-8 w-auto',
-    lg: 'h-10 w-auto',
+    label: 'LOGO PLACEHOLDER · STANDARD LOCKUP',
+    dimensionsClass: 'h-11 min-w-[220px] px-3.5',
+    targetPath: '/src/assets/brand/logo-lockup-standard-*.svg',
   },
   'lockup-italic': {
-    sm: 'h-7 w-auto',
-    md: 'h-8 w-auto',
-    lg: 'h-10 w-auto',
+    label: 'LOGO PLACEHOLDER · ITALIC LOCKUP',
+    dimensionsClass: 'h-11 min-w-[220px] px-3.5',
+    targetPath: '/src/assets/brand/logo-lockup-italic-*.svg',
   },
 };
 
-// Clear space = 1X around logo where X = magenta dot height (~0.262 of mark height)
-const CLEAR_SPACE_CLASSES: Record<'sm' | 'md' | 'lg', string> = {
-  sm: 'p-[6px]',
-  md: 'p-[8px]',
-  lg: 'p-[10px]',
-};
+function resolveConfiguredSrc(variant: LogoVariant, theme: LogoTheme): string | null {
+  const logos = SITE_CONFIG.assets.logos;
+  if (variant === 'wordmark') return theme === 'dark' ? logos.wordmarkDark : logos.wordmarkLight;
+  if (variant === 'icon') return theme === 'dark' ? logos.iconDark : logos.iconLight;
+  if (variant === 'lockup-standard') {
+    return theme === 'dark' ? logos.lockupStandardDark : logos.lockupStandardLight;
+  }
+  return theme === 'dark' ? logos.lockupItalicDark : logos.lockupItalicLight;
+}
 
-export function Logo({
-  variant = 'lockup-standard',
-  theme = 'auto',
-  size = 'md',
-  className = '',
-}: LogoProps) {
-  const { theme: appTheme } = useTheme();
-  const resolvedTheme: 'light' | 'dark' =
-    theme === 'auto' ? (appTheme === 'night' ? 'dark' : 'light') : theme;
+export function Logo({ variant = 'wordmark', theme = 'light', className = '' }: LogoProps) {
+  const configuredSrc = resolveConfiguredSrc(variant, theme);
+  const meta = VARIANT_META[variant];
 
-  const src = resolveConfiguredSrc(variant, resolvedTheme);
-  const altLabel =
-    variant === 'icon' ? 'Digital Field. DF. mark' : 'Digital Field. primary logo';
+  if (configuredSrc) {
+    return (
+      <img
+        src={configuredSrc}
+        alt="Digital Field."
+        className={`block h-9 w-auto object-contain select-none ${className}`}
+        referrerPolicy="no-referrer"
+      />
+    );
+  }
+
+  const isDark = theme === 'dark';
 
   return (
     <span
-      className={`inline-flex items-center justify-center shrink-0 select-none ${CLEAR_SPACE_CLASSES[size]} ${className}`}
+      className={`inline-flex items-center justify-between gap-2.5 border border-dashed transition-colors ${
+        isDark
+          ? 'border-[var(--border-dark-strong)] bg-[color-mix(in_srgb,var(--off-white)_4%,transparent)] text-[var(--off-white)]'
+          : 'border-[var(--border-light-strong)] bg-[color-mix(in_srgb,var(--near-black)_3%,transparent)] text-[var(--near-black)]'
+      } ${meta.dimensionsClass} ${className}`}
+      data-placeholder-asset={meta.targetPath}
+      aria-label="Digital Field. logo placeholder"
     >
-      <img
-        src={src}
-        alt={altLabel}
-        className={`block ${HEIGHT_CLASSES[variant][size]} object-contain select-none`}
-        draggable={false}
+      <span className="text-[10px] font-semibold tracking-[0.14em] uppercase whitespace-nowrap opacity-85">
+        {meta.label}
+      </span>
+      <span
+        aria-hidden="true"
+        className="inline-block w-2 h-2 shrink-0 bg-[var(--magenta)]"
+        title="Dot anchor reference"
       />
     </span>
   );

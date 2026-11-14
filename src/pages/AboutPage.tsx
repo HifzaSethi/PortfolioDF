@@ -20,37 +20,34 @@ export default function AboutPage() {
     <>
       <PracticeHero
         routePath="/about"
-        number="01"
         eyebrow="About / Our Approach"
         title="Because business performance is never influenced by a single channel."
         lead="Digital Field. (DF.) is a Digital Performance & Intelligence Consultancy — not a traditional digital marketing agency. We connect business objectives, customer behavior, search intelligence, media performance, technology, and data into one integrated growth framework."
         principle="What is the business trying to achieve?"
       />
 
-      {/* 01 & 02. Why We Exist & Positioning */}
+      {/* 1. Why We Exist & Positioning */}
       <Section surface="tint" reveal>
         <Container>
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-6 space-y-4">
-              <Eyebrow number="01">Why We Exist</Eyebrow>
+              <Eyebrow>01. Why We Exist</Eyebrow>
               <SectionHeading as="h2" size="h2">
                 Digital performance is never just paid advertising.
               </SectionHeading>
-              <p className="text-base leading-relaxed text-[var(--text-muted)]">
+              <p className="text-base leading-relaxed text-[var(--ink-muted)]">
                 Every result is shaped by a wider business ecosystem. When agencies work in
                 specialized silos, businesses receive disconnected reports and conflicting advice
                 that miss the real drivers of revenue.
               </p>
             </div>
 
-            <div className="lg:col-span-6 space-y-4 df-frame-l pl-6 pt-4 lg:pt-0 lg:pl-10">
-              <Eyebrow number="02" accent="blue">
-                Our Positioning
-              </Eyebrow>
-              <p className="text-xl font-bold text-[var(--text-primary)]">
+            <div className="lg:col-span-6 space-y-4 border-t lg:border-t-0 lg:border-l border-[var(--border-light)] pt-6 lg:pt-0 lg:pl-10">
+              <Eyebrow accent="blue">02. Our Positioning</Eyebrow>
+              <p className="text-xl font-bold text-[var(--near-black)]">
                 Digital marketing is our expertise. The entire digital field is our perspective.
               </p>
-              <p className="text-base leading-relaxed text-[var(--text-muted)]">
+              <p className="text-base leading-relaxed text-[var(--ink-muted)]">
                 Our mission is to bridge the gap between digital marketing activity and real
                 business performance. Business outcomes always take priority over vanity metrics.
               </p>
@@ -59,16 +56,16 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* 03. Founder and Company Facts */}
+      {/* 3. Founder and Company Facts */}
       <Section surface="off-white" reveal>
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7 space-y-5">
-              <Eyebrow number="03">Origin</Eyebrow>
+              <Eyebrow>03. Origin</Eyebrow>
               <SectionHeading as="h2" size="h2">
                 Founded in 2021 by Islam Helal in Dubai, United Arab Emirates.
               </SectionHeading>
-              <p className="max-w-[58ch] text-base leading-relaxed text-[var(--text-muted)]">
+              <p className="max-w-[58ch] text-base leading-relaxed text-[var(--ink-muted)]">
                 Established to replace fragmented channel execution with intelligence-led digital
                 performance anchored to commercial objectives.
               </p>
@@ -85,13 +82,11 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* 04. The Name & The Dot */}
+      {/* 4. The Name & The Dot */}
       <Section surface="dark-mesh" withPattern reveal>
         <Container className="space-y-12">
           <div className="max-w-3xl space-y-4">
-            <Eyebrow number="04" tone="dark">
-              The Name &ldquo;Digital Field.&rdquo;
-            </Eyebrow>
+            <Eyebrow tone="dark">04. The Name &ldquo;Digital Field.&rdquo;</Eyebrow>
             <SectionHeading as="h2" size="h1" tone="dark">
               {THE_DOT_COPY.closingLine}
             </SectionHeading>
@@ -115,7 +110,8 @@ export default function AboutPage() {
             <div className="lg:col-span-2 flex items-center gap-3">
               <span
                 aria-hidden="true"
-                className="inline-block h-10 w-10 bg-[var(--magenta)] df-slant-block"
+                className="inline-block h-10 w-10 bg-[var(--magenta)]"
+                style={{ transform: 'skewX(var(--slant))' }}
               />
               <span className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--off-white)]">
                 {THE_DOT_COPY.eyebrow}
@@ -133,42 +129,42 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* 05. Five Core Values */}
+      {/* 5. Five Core Values — Distinctive Scroll-Driven Sequence */}
       <Section surface="off-white" reveal>
         <Container className="space-y-10">
           <div className="max-w-3xl space-y-3">
-            <Eyebrow number="05">Five Core Values</Eyebrow>
+            <Eyebrow>05. Five Core Values</Eyebrow>
             <SectionHeading as="h2" size="h1">
               How DF. thinks and operates.
             </SectionHeading>
           </div>
 
-          <ol className="divide-y divide-[var(--border-strong)] border-y border-[var(--border-strong)]">
+          <ol className="divide-y divide-[var(--border-light-strong)] border-y border-[var(--border-light-strong)]">
             {CORE_VALUES.map((val) => (
               <li key={val.id} className="py-8 grid gap-6 lg:grid-cols-12 lg:items-start">
                 <div className="lg:col-span-4 flex items-baseline gap-4">
-                  <span className="text-2xl font-extrabold tabular-nums text-[var(--eyebrow-magenta)]">
+                  <span className="text-2xl font-extrabold tabular-nums text-[var(--magenta)]">
                     {val.number}
                   </span>
-                  <h3 className="text-2xl font-extrabold tracking-tight text-[var(--text-primary)]">
+                  <h3 className="text-2xl font-extrabold tracking-tight text-[var(--near-black)]">
                     {val.title}
                   </h3>
                 </div>
                 <div className="lg:col-span-8 space-y-4">
-                  <p className="text-lg font-bold text-[var(--text-primary)]">{val.summary}</p>
-                  <p className="text-base leading-relaxed text-[var(--text-muted)]">{val.detail}</p>
+                  <p className="text-lg font-bold text-[var(--near-black)]">{val.summary}</p>
+                  <p className="text-base leading-relaxed text-[var(--ink-muted)]">{val.detail}</p>
 
                   {val.timeline && (
                     <div className="grid gap-3 pt-2 sm:grid-cols-2 lg:grid-cols-4">
                       {val.timeline.map((item) => (
                         <div
                           key={item.stage}
-                          className="df-card-surface p-3.5"
+                          className="border border-[var(--border-light-strong)] bg-[var(--paper-tint)] p-3.5"
                         >
-                          <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--link-accent)]">
+                          <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--electric-blue)]">
                             {item.stage}
                           </p>
-                          <p className="mt-1 text-xs font-semibold text-[var(--text-primary)]">
+                          <p className="mt-1 text-xs font-semibold text-[var(--near-black)]">
                             {item.action}
                           </p>
                         </div>
@@ -182,11 +178,11 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* 06. Digital Ecosystem Framework (Compact) */}
+      {/* 6. Digital Ecosystem Framework (Compact) */}
       <Section surface="tint" reveal>
         <Container className="space-y-8">
           <div className="space-y-2">
-            <Eyebrow number="06">Digital Ecosystem Framework</Eyebrow>
+            <Eyebrow>06. Digital Ecosystem Framework</Eyebrow>
             <SectionHeading as="h2" size="h2">
               Ten connected nodes from Business Objectives to Commercial Performance.
             </SectionHeading>
@@ -195,25 +191,25 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* 07. DF. Intelligence Framework™ */}
+      {/* 7. DF. Intelligence Framework™ */}
       <Section surface="dark-mesh" withPattern reveal>
         <Container>
           <IntelligenceFramework />
         </Container>
       </Section>
 
-      {/* 08. Reporting vs Intelligence + Model Comparison + Commercial Philosophy + Value List */}
+      {/* 8 & 9 & 10 & 11. Reporting vs Intelligence + Model Comparison + Commercial Philosophy + Value List */}
       <Section surface="off-white" reveal>
         <Container className="space-y-16">
           <ReportingVsIntelligence />
 
           <ModelComparison />
 
-          <div className="df-card-surface df-frame-l p-8 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
+          <div className="border border-[var(--border-light-strong)] bg-[var(--paper-tint)] p-8 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
               Commercial Philosophy
             </p>
-            <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            <p className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--near-black)]">
               Business outcomes always take priority over vanity metrics.
             </p>
           </div>

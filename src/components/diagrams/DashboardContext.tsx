@@ -15,7 +15,7 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
       className={`border p-6 sm:p-10 ${
         isDark
           ? 'df-glass-dark border-[var(--border-dark)] text-[var(--off-white)]'
-          : 'df-card-surface text-[var(--text-primary)]'
+          : 'border-[var(--border-light-strong)] bg-[var(--paper-elevated)] text-[var(--near-black)]'
       }`}
     >
       <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
@@ -31,13 +31,13 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
             aria-expanded={revealed}
             className={`w-full text-left border p-6 transition-all duration-200 cursor-pointer ${
               isDark
-                ? 'border-[var(--border-dark-strong)] bg-[var(--near-black)]/80 hover:border-[var(--violet)]'
-                : 'border-[var(--border-strong)] bg-[var(--bg-page)] hover:border-[var(--link-accent)]'
+                ? 'border-[var(--border-dark-strong)] bg-[var(--near-black)]/80 hover:border-[var(--electric-blue)]'
+                : 'border-[var(--border-light-strong)] bg-[var(--off-white)] hover:border-[var(--electric-blue)]'
             }`}
           >
             <span
               className={`block text-[11px] font-semibold uppercase tracking-[0.14em] ${
-                isDark ? 'text-[var(--on-dark-subtle)]' : 'text-[var(--text-muted)]'
+                isDark ? 'text-[var(--on-dark-subtle)]' : 'text-[var(--ink-muted)]'
               }`}
             >
               {DASHBOARD_CONTEXT_DATA.illustrativeLabel}
@@ -57,7 +57,7 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
               {DASHBOARD_CONTEXT_DATA.caption}
             </span>
 
-            <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--violet)]">
+            <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--electric-blue)]">
               <HelpCircle aria-hidden="true" className="h-4 w-4" />
               <span>{revealed ? 'Hide context questions' : 'Inspect surrounding context'}</span>
             </span>
@@ -68,7 +68,7 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
         <div className="lg:col-span-7 space-y-5" aria-live="polite">
           <p
             className={`text-base leading-relaxed ${
-              isDark ? 'text-[var(--on-dark-muted)]' : 'text-[var(--text-muted)]'
+              isDark ? 'text-[var(--on-dark-muted)]' : 'text-[var(--ink-muted)]'
             }`}
           >
             {DASHBOARD_CONTEXT_DATA.supportingText}
@@ -85,11 +85,11 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
                 className={`border px-3.5 py-2.5 text-xs font-semibold transition-colors ${
                   revealed
                     ? isDark
-                      ? 'border-[var(--violet)] bg-[color-mix(in_srgb,var(--violet)_16%,transparent)] text-[var(--off-white)]'
-                      : 'border-[var(--link-accent)] bg-[var(--blue-soft)] text-[var(--text-primary)]'
+                      ? 'border-[var(--electric-blue)]/70 bg-[color-mix(in_srgb,var(--electric-blue)_12%,transparent)] text-[var(--off-white)]'
+                      : 'border-[var(--electric-blue)] bg-[var(--blue-soft)] text-[var(--near-black)]'
                     : isDark
                       ? 'border-[var(--border-dark)] text-[var(--on-dark-subtle)]'
-                      : 'border-[var(--border-subtle)] text-[var(--text-muted)]'
+                      : 'border-[var(--border-light)] text-[var(--ink-muted)]'
                 }`}
               >
                 <span className="mr-2 tabular-nums text-[var(--magenta)]">

@@ -1,15 +1,8 @@
 import type { ReactNode } from 'react';
-import { useTheme } from '../../hooks/useTheme';
 import { BrandPattern } from '../brand/BrandPattern';
 import { useInView } from '../../hooks/useInView';
 
-export type SectionSurface =
-  | 'off-white'
-  | 'tint'
-  | 'dark-mesh'
-  | 'hospitality-mesh'
-  | 'near-black'
-  | 'hero-adaptive';
+export type SectionSurface = 'off-white' | 'tint' | 'dark-mesh' | 'hospitality-mesh' | 'near-black';
 
 interface SectionProps {
   id?: string;
@@ -21,9 +14,9 @@ interface SectionProps {
   children: ReactNode;
 }
 
-const SURFACE_CLASSES: Record<Exclude<SectionSurface, 'hero-adaptive'>, string> = {
-  'off-white': 'bg-[var(--bg-page)] text-[var(--text-primary)]',
-  tint: 'bg-[var(--bg-tint)] df-night-mesh-subtle text-[var(--text-primary)]',
+const SURFACE_CLASSES: Record<SectionSurface, string> = {
+  'off-white': 'bg-[var(--off-white)] text-[var(--near-black)]',
+  tint: 'bg-[var(--paper-tint)] text-[var(--near-black)]',
   'dark-mesh': 'df-mesh-dark df-mesh-animate text-[var(--off-white)]',
   'hospitality-mesh': 'df-mesh-hospitality df-mesh-animate text-[var(--off-white)]',
   'near-black': 'bg-[var(--near-black)] text-[var(--off-white)]',
@@ -39,31 +32,17 @@ export function Section({
   children,
 }: SectionProps) {
   const { ref, isInView } = useInView<HTMLElement>({ threshold: 0.08, once: true });
-  const { theme } = useTheme();
-
-  const surfaceClass =
-    surface === 'hero-adaptive'
-      ? theme === 'night'
-        ? 'df-mesh-dark df-mesh-animate text-[var(--off-white)]'
-        : 'df-mesh-day text-[var(--text-primary)]'
-      : SURFACE_CLASSES[surface];
-
-  const isDarkSurface =
-    surface === 'dark-mesh' ||
-    surface === 'hospitality-mesh' ||
-    surface === 'near-black' ||
-    (surface === 'hero-adaptive' && theme === 'night') ||
-    theme === 'night';
+  const isDark = surface === 'dark-mesh' || surface === 'hospitality-mesh' || surface === 'near-black';
 
   return (
     <section
       id={id}
       ref={reveal ? ref : undefined}
-      className={`relative overflow-hidden ${surfaceClass} ${
+      className={`relative overflow-hidden ${SURFACE_CLASSES[surface]} ${
         compact ? 'py-[var(--section-py-compact)]' : 'py-[var(--section-py)]'
       } ${reveal ? `df-reveal ${isInView ? 'is-visible' : ''}` : ''} ${className}`}
     >
-      {withPattern && <BrandPattern tone={isDarkSurface ? 'dark' : 'light'} />}
+      {withPattern && <BrandPattern tone={isDark ? 'dark' : 'light'} opacity={isDark ? 0.07 : 0.04} />}
       <div className="relative z-10">{children}</div>
     </section>
   );

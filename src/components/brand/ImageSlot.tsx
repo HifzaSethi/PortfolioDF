@@ -8,7 +8,7 @@ export interface ImageSlotProps {
   alt: string;
   shotDescription: string;
   aspectRatio?: '16/9' | '4/3' | '3/4' | '1/1' | '21/9';
-  tone?: 'dark' | 'light' | 'auto';
+  tone?: 'dark' | 'light';
   className?: string;
 }
 
@@ -27,12 +27,12 @@ export function ImageSlot({
   alt,
   shotDescription,
   aspectRatio = '4/3',
-  tone = 'auto',
+  tone = 'light',
   className = '',
 }: ImageSlotProps) {
   const [hasError, setHasError] = useState(false);
   const aspectClass = ASPECT_CLASS_MAP[aspectRatio];
-  const isDarkMesh = tone === 'dark';
+  const isDark = tone === 'dark';
 
   if (src && !hasError) {
     return (
@@ -53,37 +53,35 @@ export function ImageSlot({
 
   return (
     <figure
-      className={`relative overflow-hidden df-frame-l border border-[var(--border-strong)] ${aspectClass} ${
-        isDarkMesh
-          ? 'df-mesh-dark text-[var(--off-white)]'
-          : 'df-card-surface text-[var(--text-primary)]'
+      className={`relative overflow-hidden border ${aspectClass} ${
+        isDark
+          ? 'df-mesh-dark border-[var(--border-dark)] text-[var(--off-white)]'
+          : 'border-[var(--border-light-strong)] bg-[var(--paper-tint)] text-[var(--near-black)]'
       } ${className}`}
       aria-label={alt}
     >
-      <BrandPattern tone={isDarkMesh ? 'dark' : 'auto'} />
+      <BrandPattern tone={isDark ? 'dark' : 'light'} opacity={isDark ? 0.08 : 0.06} />
       <div className="relative z-10 flex h-full w-full flex-col justify-between p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <span
-            className={`inline-block px-2.5 py-0.5 text-[10px] font-bold tracking-[0.14em] uppercase df-slant-block ${
-              isDarkMesh
-                ? 'bg-[var(--violet)] text-[var(--near-black)]'
-                : 'bg-[var(--bg-tint)] text-[var(--text-muted)] border border-[var(--border-strong)]'
+            className={`text-[10px] font-semibold tracking-[0.16em] uppercase ${
+              isDark ? 'text-[var(--off-white)]/75' : 'text-[var(--ink-muted)]'
             }`}
           >
-            <span className="df-unslant block">EDITORIAL SLOT</span>
+            PHOTO PLACEHOLDER
           </span>
           <span
             aria-hidden="true"
-            className="h-2.5 w-2.5 bg-[var(--magenta)] shrink-0 df-slant-block"
+            className="h-2 w-2 bg-[var(--magenta)] shrink-0"
           />
         </div>
 
         <figcaption
-          className={`max-w-[36ch] text-sm font-medium leading-relaxed ${
-            isDarkMesh ? 'text-[var(--off-white)]/90' : 'text-[var(--text-muted)]'
+          className={`max-w-[34ch] text-sm leading-relaxed ${
+            isDark ? 'text-[var(--off-white)]/90' : 'text-[var(--near-black)]/85'
           }`}
         >
-          {shotDescription}
+          PHOTO PLACEHOLDER: {shotDescription}
         </figcaption>
       </div>
     </figure>

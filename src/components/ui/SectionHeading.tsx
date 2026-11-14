@@ -4,7 +4,7 @@ interface SectionHeadingProps {
   as?: 'h1' | 'h2' | 'h3';
   size?: 'display' | 'h1' | 'h2' | 'subheading';
   slanted?: boolean;
-  tone?: 'light' | 'dark' | 'auto';
+  tone?: 'light' | 'dark';
   className?: string;
   children: ReactNode;
 }
@@ -20,16 +20,11 @@ export function SectionHeading({
   as: Tag = 'h2',
   size = 'h2',
   slanted = false,
-  tone = 'auto',
+  tone = 'light',
   className = '',
   children,
 }: SectionHeadingProps) {
-  const colorClass =
-    tone === 'dark'
-      ? 'text-[var(--off-white)]'
-      : tone === 'light'
-        ? 'text-[var(--near-black)]'
-        : 'text-[var(--text-primary)]';
+  const colorClass = tone === 'dark' ? 'text-[var(--off-white)]' : 'text-[var(--near-black)]';
 
   return (
     <Tag

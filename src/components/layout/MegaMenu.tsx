@@ -18,33 +18,33 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
       id="services-megamenu"
       role="region"
       aria-label="Services submenu"
-      className="absolute left-0 right-0 top-full z-[var(--z-megamenu)] border-b border-[var(--border-strong)] bg-[var(--bg-page)] text-[var(--text-primary)] shadow-2xl"
+      className="absolute left-0 right-0 top-full z-[var(--z-megamenu)] border-b border-[var(--border-light-strong)] bg-[var(--off-white)] text-[var(--near-black)] shadow-xl"
     >
       <div className="mx-auto grid max-w-[var(--container-max)] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-12 lg:px-10">
         {/* Core Practice */}
         {core && (
-          <div className="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] pb-6 lg:pb-0 lg:pr-8 flex flex-col justify-between">
+          <div className="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-[var(--border-light)] pb-6 lg:pb-0 lg:pr-8 flex flex-col justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
                 {core.roleLabel}
               </p>
               <Link
                 to={core.path}
                 onClick={onClose}
-                className="mt-2 inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight hover:text-[var(--link-accent)] transition-colors"
+                className="mt-2 inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight hover:text-[var(--electric-blue)] transition-colors"
               >
                 <span>{core.name}</span>
                 <ArrowUpRight aria-hidden="true" className="h-5 w-5" />
               </Link>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)]">
+              <p className="mt-3 text-sm leading-relaxed text-[var(--ink-muted)]">
                 {core.summary}
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-[var(--border-subtle)]">
+            <div className="mt-6 pt-4 border-t border-[var(--border-light)]">
               <Link
                 to="/services"
                 onClick={onClose}
-                className="df-link-sweep text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-primary)] hover:text-[var(--link-accent)]"
+                className="df-link-sweep text-xs font-semibold uppercase tracking-[0.14em] text-[var(--near-black)] hover:text-[var(--electric-blue)]"
               >
                 View All Practices Overview
               </Link>
@@ -59,16 +59,16 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
               key={practice.id}
               to={practice.path}
               onClick={onClose}
-              className="group block df-card-surface p-4 transition-colors hover:border-[var(--link-accent)]"
+              className="group block border border-[var(--border-light)] bg-[var(--paper-elevated)] p-4 transition-colors hover:border-[var(--electric-blue)]"
             >
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--ink-muted)]">
                 {practice.roleLabel}
               </p>
-              <p className="mt-1 flex items-center justify-between text-base font-bold group-hover:text-[var(--link-accent)]">
+              <p className="mt-1 flex items-center justify-between text-base font-bold group-hover:text-[var(--electric-blue)]">
                 <span>{practice.name}</span>
                 <ArrowUpRight aria-hidden="true" className="h-4 w-4 opacity-60 group-hover:opacity-100" />
               </p>
-              <p className="mt-1.5 text-xs leading-relaxed text-[var(--text-muted)]">
+              <p className="mt-1.5 text-xs leading-relaxed text-[var(--ink-muted)]">
                 {practice.tagline}
               </p>
             </Link>
@@ -76,9 +76,9 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
         </div>
 
         {/* DF. Studio Creative Arm */}
-        <div className="lg:col-span-3 df-mesh-dark border border-[var(--border-dark)] p-5 flex flex-col justify-between">
-          <div className="relative z-10">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--off-white)]/75">
+        <div className="lg:col-span-3 df-mesh-dark p-5 flex flex-col justify-between">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--off-white)]/70">
               {STUDIO_PRACTICE_SUMMARY.roleLabel}
             </p>
             <Link
@@ -93,7 +93,7 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
               {STUDIO_PRACTICE_SUMMARY.summary}
             </p>
           </div>
-          <p className="relative z-10 mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--magenta)]">
+          <p className="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--magenta)]">
             {STUDIO_PRACTICE_SUMMARY.tagline}
           </p>
         </div>

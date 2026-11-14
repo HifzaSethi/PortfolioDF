@@ -18,7 +18,6 @@ export default function PerformanceMarketingPage() {
     <>
       <PracticeHero
         routePath="/services/performance-marketing"
-        number="01"
         eyebrow="Practice 02 · How DF. Acts"
         title="Performance Marketing."
         lead={PERFORMANCE_MARKETING_LEAD.lead}
@@ -29,8 +28,8 @@ export default function PerformanceMarketingPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
             {/* Sticky Side Index */}
-            <aside className="lg:col-span-4 lg:sticky lg:top-24 df-card-surface df-frame-l p-6 space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
+            <aside className="lg:col-span-4 lg:sticky lg:top-24 border border-[var(--border-light-strong)] bg-[var(--paper-tint)] p-6 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
                 Channel Index
               </p>
               <nav aria-label="Performance Marketing sections">
@@ -40,9 +39,9 @@ export default function PerformanceMarketingPage() {
                       <button
                         type="button"
                         onClick={() => scrollToSection(sec.id)}
-                        className="w-full min-h-[40px] flex items-center gap-3 px-2 py-1.5 text-left text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--link-accent)] cursor-pointer"
+                        className="w-full min-h-[40px] flex items-center gap-3 px-2 py-1.5 text-left text-sm font-semibold text-[var(--near-black)] hover:text-[var(--electric-blue)] cursor-pointer"
                       >
-                        <span className="text-xs tabular-nums text-[var(--text-muted)]">
+                        <span className="text-xs tabular-nums text-[var(--ink-muted)]">
                           0{idx + 1}
                         </span>
                         <span>{sec.title}</span>
@@ -59,14 +58,14 @@ export default function PerformanceMarketingPage() {
                 <section
                   key={section.id}
                   id={section.id}
-                  className="df-frame-t pt-10 space-y-6"
+                  className="border-t border-[var(--border-light-strong)] pt-10 space-y-6"
                 >
                   <div className="space-y-3">
-                    <Eyebrow number={`0${idx + 1}`}>Channel Practice</Eyebrow>
+                    <Eyebrow>0{idx + 1}</Eyebrow>
                     <SectionHeading as="h2" size="h2">
                       {section.title}
                     </SectionHeading>
-                    <p className="max-w-[66ch] text-base leading-relaxed text-[var(--text-muted)]">
+                    <p className="max-w-[66ch] text-base leading-relaxed text-[var(--ink-muted)]">
                       {section.summary}
                     </p>
                   </div>
@@ -76,7 +75,7 @@ export default function PerformanceMarketingPage() {
                       {section.items.map((item) => (
                         <li
                           key={item}
-                          className="df-card-surface px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
+                          className="border border-[var(--border-light)] bg-[var(--paper-elevated)] px-4 py-3 text-sm font-semibold text-[var(--near-black)]"
                         >
                           {item}
                         </li>
@@ -89,23 +88,23 @@ export default function PerformanceMarketingPage() {
                       {section.subBlocks.map((block) => (
                         <div
                           key={block.id}
-                          className="df-card-surface df-frame-l p-6 space-y-4"
+                          className="border border-[var(--border-light-strong)] bg-[var(--paper-tint)] p-6 space-y-4"
                         >
-                          <h3 className="text-xl font-extrabold text-[var(--text-primary)]">
+                          <h3 className="text-xl font-extrabold text-[var(--near-black)]">
                             {block.title}
                           </h3>
-                          <p className="text-sm leading-relaxed text-[var(--text-muted)]">
+                          <p className="text-sm leading-relaxed text-[var(--ink-muted)]">
                             {block.summary}
                           </p>
                           <ul className="grid gap-2.5 sm:grid-cols-2">
                             {block.items.map((item) => (
                               <li
                                 key={item}
-                                className="flex items-center gap-2.5 text-sm font-semibold text-[var(--text-primary)]"
+                                className="flex items-center gap-2.5 text-sm font-semibold text-[var(--near-black)]"
                               >
                                 <span
                                   aria-hidden="true"
-                                  className="h-1.5 w-1.5 bg-[var(--link-accent)] shrink-0"
+                                  className="h-1.5 w-1.5 bg-[var(--electric-blue)] shrink-0"
                                 />
                                 <span>{item}</span>
                               </li>
@@ -118,11 +117,11 @@ export default function PerformanceMarketingPage() {
                 </section>
               ))}
 
-              <div className="border-t border-[var(--border-strong)] pt-8 space-y-3">
-                <p className="text-2xl font-extrabold tracking-tight text-[var(--text-primary)]">
+              <div className="border-t border-[var(--border-light-strong)] pt-8 space-y-3">
+                <p className="text-2xl font-extrabold tracking-tight text-[var(--near-black)]">
                   {PERFORMANCE_MARKETING_LEAD.closingNote}
                 </p>
-                <p className="text-xs leading-relaxed text-[var(--text-muted)]">
+                <p className="text-xs leading-relaxed text-[var(--ink-muted)]">
                   {PERFORMANCE_MARKETING_LEAD.disclaimer}
                 </p>
               </div>

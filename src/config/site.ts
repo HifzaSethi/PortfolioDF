@@ -1,14 +1,3 @@
-import iconLight from '../assets/brand/logo-icon-light.svg';
-import iconDark from '../assets/brand/logo-icon-dark.svg';
-import wordmarkLight from '../assets/brand/logo-wordmark-light.svg';
-import wordmarkDark from '../assets/brand/logo-wordmark-dark.svg';
-import lockupStandardLight from '../assets/brand/logo-lockup-standard-light.svg';
-import lockupStandardDark from '../assets/brand/logo-lockup-standard-dark.svg';
-import lockupItalicLight from '../assets/brand/logo-lockup-italic-light.svg';
-import lockupItalicDark from '../assets/brand/logo-lockup-italic-dark.svg';
-import tridiLight from '../assets/brand/tridi-mark-light.svg';
-import tridiDark from '../assets/brand/tridi-mark-dark.svg';
-
 export const SITE_CONFIG = {
   brandName: 'Digital Field.',
   abbreviation: 'DF.',
@@ -31,30 +20,29 @@ export const SITE_CONFIG = {
     phone: null as string | null,
     phonePlaceholder: 'PLACEHOLDER: replace with verified phone number',
     socialPlaceholder: 'PLACEHOLDER: verified social links to be supplied',
+    // Configure CONTACT_ENDPOINT to POST JSON form submissions to your backend/serverless endpoint.
     contactEndpoint: null as string | null,
+    // Set to true ONLY once the client provides approved privacy policy wording.
     requirePrivacyConsent: false,
     privacyWordingPlaceholder: 'Privacy notice wording to be supplied by client.',
   },
 
-  // Official Brand Vector Assets extracted from DF_Phase_01_VR_02.pdf
+  // Brand Asset Paths — drop official SVGs/renders/photos here to replace placeholders globally.
   assets: {
     logos: {
-      wordmarkLight,
-      wordmarkDark,
-      iconLight,
-      iconDark,
-      lockupStandardLight,
-      lockupStandardDark,
-      lockupItalicLight,
-      lockupItalicDark,
+      wordmarkLight: null as string | null, // Target path: /src/assets/brand/logo-wordmark-light.svg
+      wordmarkDark: null as string | null,  // Target path: /src/assets/brand/logo-wordmark-dark.svg
+      iconLight: null as string | null,     // Target path: /src/assets/brand/logo-icon-light.svg
+      iconDark: null as string | null,      // Target path: /src/assets/brand/logo-icon-dark.svg
+      lockupStandardLight: null as string | null, // /src/assets/brand/logo-lockup-standard-light.svg
+      lockupStandardDark: null as string | null,  // /src/assets/brand/logo-lockup-standard-dark.svg
+      lockupItalicLight: null as string | null,   // /src/assets/brand/logo-lockup-italic-light.svg
+      lockupItalicDark: null as string | null,    // /src/assets/brand/logo-lockup-italic-dark.svg
     },
-    tridi: {
-      light: tridiLight,
-      dark: tridiDark,
-    },
+    hero3dSrc: null as string | null, // Target path: /src/assets/brand/df-icon-3d.png (or .webm)
     characters: {
-      Di: null as string | null,
-      Fi: null as string | null,
+      Di: null as string | null, // Target path: /src/assets/brand/character-di.png
+      Fi: null as string | null, // Target path: /src/assets/brand/character-fi.png
     },
   },
 } as const;

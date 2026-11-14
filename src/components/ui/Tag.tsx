@@ -2,27 +2,28 @@ import type { ReactNode } from 'react';
 
 interface TagProps {
   children: ReactNode;
-  accent?: 'violet' | 'magenta' | 'blue';
   tone?: 'light' | 'dark';
   className?: string;
 }
 
-const ACCENT_FILL: Record<NonNullable<TagProps['accent']>, string> = {
-  violet: 'bg-[var(--violet)] text-[var(--near-black)]',
-  magenta: 'bg-[var(--magenta)] text-[var(--near-black)]',
-  blue: 'bg-[var(--electric-blue)] text-[var(--off-white)]',
-};
-
 /**
- * Skewed parallelogram label chip matching brand --slant (-12deg) geometry.
- * Uses approved Violet, Magenta, or Electric Blue fill with WCAG AA verified ink contrast.
+ * Clean architectural text tag — avoids rounded-full candy pills per Zero-Pill discipline.
  */
-export function Tag({ children, accent = 'violet', className = '' }: TagProps) {
+export function Tag({ children, tone = 'light', className = '' }: TagProps) {
+  const isDark = tone === 'dark';
   return (
     <span
-      className={`inline-flex items-center px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.08em] df-slant-block select-none ${ACCENT_FILL[accent]} ${className}`}
+      className={`inline-flex items-center gap-2 border-b pb-1 text-xs font-semibold tracking-[0.06em] ${
+        isDark
+          ? 'border-[var(--border-dark-strong)] text-[var(--off-white)]/85'
+          : 'border-[var(--border-light-strong)] text-[var(--near-black)]/85'
+      } ${className}`}
     >
-      <span className="df-unslant inline-block">{children}</span>
+      <span
+        aria-hidden="true"
+        className="inline-block h-1.5 w-1.5 bg-[var(--electric-blue)] shrink-0"
+      />
+      <span>{children}</span>
     </span>
   );
 }

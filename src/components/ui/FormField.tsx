@@ -24,24 +24,24 @@ export function FormField({
       <div className="flex items-baseline justify-between gap-2">
         <label
           htmlFor={id}
-          className="block text-sm font-semibold text-[var(--text-primary)]"
+          className="block text-sm font-semibold text-[var(--near-black)]"
         >
           {label}
           {required && (
-            <span className="ml-1 text-[var(--eyebrow-magenta)]" aria-hidden="true">
+            <span className="ml-1 text-[var(--magenta)]" aria-hidden="true">
               *
             </span>
           )}
         </label>
         {counter && (
-          <span className="text-xs tabular-nums text-[var(--text-muted)]">{counter}</span>
+          <span className="text-xs tabular-nums text-[var(--ink-muted)]">{counter}</span>
         )}
       </div>
 
       {children}
 
       {hint && !error && (
-        <p id={`${id}-hint`} className="text-xs text-[var(--text-muted)]">
+        <p id={`${id}-hint`} className="text-xs text-[var(--ink-muted)]">
           {hint}
         </p>
       )}
@@ -49,7 +49,7 @@ export function FormField({
         <p
           id={`${id}-error`}
           role="alert"
-          className="text-xs font-semibold text-[var(--eyebrow-magenta)]"
+          className="text-xs font-semibold text-[var(--magenta)]"
         >
           {error}
         </p>

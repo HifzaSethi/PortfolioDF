@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, X } from 'lucide-react';
 import { HEADER_CTA, PRIMARY_NAV } from '../../config/nav';
-import { useTheme } from '../../hooks/useTheme';
 import { Logo } from '../brand/Logo';
 import { LinkButton } from '../ui/Button';
 
@@ -16,7 +15,6 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const location = useLocation();
-  const { theme } = useTheme();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -64,29 +62,25 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation menu"
-      className={`fixed inset-0 z-[var(--z-drawer)] flex flex-col overflow-y-auto ${
-        theme === 'night'
-          ? 'df-mesh-dark text-[var(--off-white)]'
-          : 'bg-[var(--bg-page)] text-[var(--text-primary)]'
-      }`}
+      className="fixed inset-0 z-[var(--z-drawer)] flex flex-col bg-[var(--near-black)] text-[var(--off-white)] overflow-y-auto"
     >
-      <div className="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] px-5 py-3.5">
+      <div className="flex items-center justify-between border-b border-[var(--border-dark)] px-5 py-4">
         <Link to="/" onClick={onClose} aria-label="Digital Field. Home">
-          <Logo variant="icon" theme="auto" size="md" />
+          <Logo variant="icon" theme="dark" />
         </Link>
         <button
           ref={closeButtonRef}
           type="button"
           onClick={onClose}
           aria-label="Close navigation menu"
-          className="inline-flex h-11 w-11 items-center justify-center border border-[var(--border-strong)] text-current hover:border-[var(--link-accent)] cursor-pointer"
+          className="inline-flex h-11 w-11 items-center justify-center border border-[var(--border-dark)] text-[var(--off-white)] hover:border-[var(--electric-blue)] cursor-pointer"
         >
           <X aria-hidden="true" className="h-5 w-5" />
         </button>
       </div>
 
-      <nav aria-label="Mobile Primary" className="relative z-10 flex-1 px-5 py-8">
-        <ul className="divide-y divide-[var(--border-subtle)]">
+      <nav aria-label="Mobile Primary" className="flex-1 px-5 py-8">
+        <ul className="divide-y divide-[var(--border-dark)]">
           {PRIMARY_NAV.map((item) => {
             const isActive = location.pathname === item.path;
             if (item.children) {
@@ -96,7 +90,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     type="button"
                     aria-expanded={servicesExpanded}
                     onClick={() => setServicesExpanded((v) => !v)}
-                    className="flex min-h-[48px] w-full items-center justify-between text-left text-xl font-bold text-current cursor-pointer"
+                    className="flex min-h-[48px] w-full items-center justify-between text-left text-xl font-bold text-[var(--off-white)] cursor-pointer"
                   >
                     <span>{item.label}</span>
                     <ChevronDown
@@ -107,16 +101,16 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     />
                   </button>
                   {servicesExpanded && (
-                    <ul className="mt-2 mb-3 space-y-1 border-l-2 border-[var(--magenta)] pl-4">
+                    <ul className="mt-2 mb-3 space-y-1 border-l border-[var(--border-dark-strong)] pl-4">
                       {item.children.map((child) => (
                         <li key={child.path}>
                           <Link
                             to={child.path}
                             onClick={onClose}
-                            className={`flex min-h-[44px] items-center text-sm font-semibold ${
+                            className={`flex min-h-[44px] items-center text-sm font-medium ${
                               location.pathname === child.path
-                                ? 'text-[var(--eyebrow-magenta)]'
-                                : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                                ? 'text-[var(--magenta)] font-semibold'
+                                : 'text-[var(--on-dark-muted)] hover:text-[var(--off-white)]'
                             }`}
                           >
                             {child.label}
@@ -135,7 +129,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                   to={item.path}
                   onClick={onClose}
                   className={`flex min-h-[48px] items-center text-xl font-bold ${
-                    isActive ? 'text-[var(--eyebrow-magenta)]' : 'text-current'
+                    isActive ? 'text-[var(--magenta)]' : 'text-[var(--off-white)]'
                   }`}
                 >
                   {item.label}
@@ -146,16 +140,16 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         </ul>
       </nav>
 
-      <div className="relative z-10 border-t border-[var(--border-subtle)] px-5 py-6 space-y-4">
+      <div className="border-t border-[var(--border-dark)] px-5 py-6 space-y-4">
         <LinkButton
           to={HEADER_CTA.path}
-          variant={theme === 'night' ? 'gradient' : 'primary'}
+          variant="on-dark"
           onClick={onClose}
           className="w-full justify-center"
         >
           {HEADER_CTA.label}
         </LinkButton>
-        <p className="text-center text-xs tracking-[0.16em] uppercase text-[var(--text-muted)]">
+        <p className="text-center text-xs tracking-[0.16em] uppercase text-[var(--on-dark-subtle)]">
           Performance in Context.
         </p>
       </div>

@@ -3,15 +3,9 @@
 Multi-page web application for **Digital Field. (DF.)**, a Digital Performance & Intelligence Consultancy founded in 2021 by Islam Helal in Dubai, United Arab Emirates.
 
 ## Stack
-- React 19 + TypeScript (`strict: true`) + Vite + Tailwind CSS v4
-- Three.js (`SVGLoader` + `ExtrudeGeometry` + `RoomEnvironment`) for the interactive 3D DF hero centerpiece
-- `react-router-dom` (configured with `HashRouter` for preview compatibility; includes a one-line switch comment to `BrowserRouter` in `src/app/App.tsx`)
-- `lucide-react` & `motion` (with `MotionConfig reducedMotion="user"`)
-
-## Brand System & Architecture
-- **Day / Night Theme (`data-theme`)**: Defaults strictly to **Day mode** (`#F4F1EA` Off-White / `#010102` Near-Black / `#0057FF` Electric Blue accents) on first visit regardless of OS preference, applied before first paint in `index.html`, toggled cleanly via header controls with `localStorage` persistence (`df-theme`).
-- **Official Vector Marks (`/src/assets/brand/*.svg`)**: Official DF icon, wordmark, standard lockup, italic lockup, and Tridi mark extracted verbatim from the Digital Field Phase 01 brand guidelines, wired via `src/config/site.ts`.
-- **Interactive 3D Hero (`Hero3DSlot` / `Hero3DCanvas`)**: Extrudes the official `df-mark-3d.svg` mark into glossy black-chrome geometry with Violet/Magenta rim lighting, Day/Night reactive illumination, pointer parallax, scroll drift, off-screen `IntersectionObserver` pause, DPR capping, and a compact DF-mark loader + static SVG fallback.
+- React + TypeScript (`strict: true`) + Vite + Tailwind CSS v4
+- `react-router-dom` (configured with `HashRouter` for preview compatibility; includes a one-line commented switch to `BrowserRouter` in `src/app/App.tsx`)
+- `lucide-react` for UI affordance icons
 
 ## Development
 ```bash
@@ -25,15 +19,32 @@ npm run lint
 npm run build
 ```
 
-## Replacing Pending Media & Contact Details
+## Replacing Brand Placeholders
 
-All asset paths and contact details are centralized in `src/config/site.ts`:
+All asset placeholders are centralized in `src/config/site.ts`:
 
-1. **Photography (`<ImageSlot />`)**:
-   - Supply founder portrait, DF. Studio production photos, and hospitality imagery URLs (avoiding generic stock imagery).
-2. **Brand Characters (`<CharacterSlot name="Di" | "Fi" />`)**:
-   - Assign verified character assets in `SITE_CONFIG.assets.characters`. Until configured, `<CharacterSlot />` renders nothing visible.
-3. **Contact Form & Direct Details**:
-   - Configure `SITE_CONFIG.contact.contactEndpoint` (HTTPS POST handler) or `SITE_CONFIG.contact.email` in `src/config/site.ts`, along with verified phone number, Dubai office street address, and social links.
-   - Until configured, the Contact page validates input client-side and provides an honest copy-to-clipboard and `.txt` download fallback.
-   - Update `SITE_CONFIG.contact.privacyWordingPlaceholder` and set `requirePrivacyConsent: true` when approved privacy notice text is ready.
+1. **Logos (`<Logo />`)**:
+   - Place official SVGs under `/src/assets/brand/` (`logo-wordmark-light.svg`, `logo-wordmark-dark.svg`, `logo-icon-light.svg`, `logo-icon-dark.svg`, `logo-lockup-standard-*.svg`, `logo-lockup-italic-*.svg`) and assign their imported URLs in `SITE_CONFIG.assets.logos`.
+   - Review `brand-guidelines.md` for clear-space (`1X` = magenta dot size) and minimum-legibility rules.
+2. **3D DF. Icon (`<Hero3DSlot />`)**:
+   - Assign your rendered `.png` or `.webm` path to `SITE_CONFIG.assets.hero3dSrc`.
+3. **Pattern & Tridi Mark (`<BrandPattern />`, `<TridiMark />`)**:
+   - Replace the placeholder SVGs inside `src/components/brand/BrandPattern.tsx` and `src/components/brand/TridiMark.tsx` with official vector artwork.
+4. **Photography (`<ImageSlot />`)**:
+   - Pass approved image URLs, `srcSet`, `sizes`, and `alt` text where `<ImageSlot />` is rendered (or connect to a media manifest).
+5. **Brand Characters (`<CharacterSlot name="Di" | "Fi" />`)**:
+   - Assign verified character assets in `SITE_CONFIG.assets.characters`. Until configured, `<CharacterSlot />` renders nothing visible. Keep AI-generated imagery disclosure labels active wherever required.
+
+## Connecting the Contact Form & Verified Contact Details
+
+Edit `src/config/site.ts`:
+- **Option A (API / Serverless Endpoint)**: Set `SITE_CONFIG.contact.contactEndpoint` to your HTTPS form handler URL. The form will `POST` JSON and handle success/failure cleanly.
+- **Option B (`mailto:` Fallback)**: Set `SITE_CONFIG.contact.email` to the verified company email address.
+- **Default Honest Fallback**: When neither is configured, the form validates input and renders a clear panel allowing visitors to copy the formatted inquiry or download it as a `.txt` file.
+- **Privacy Consent**: Once approved privacy wording is supplied, update `SITE_CONFIG.contact.privacyWordingPlaceholder` and flip `SITE_CONFIG.contact.requirePrivacyConsent` to `true`.
+
+## Deployment & SEO Notes
+
+- **Router Switch**: Before deploying to a production host with SPA fallback rewrites (`/* -> /index.html`), switch `HashRouter` to `BrowserRouter` in `src/app/App.tsx`.
+- **Production Domain**: Replace the placeholder domain in `public/robots.txt`, `public/sitemap.xml`, and `SITE_CONFIG.baseUrl` in `src/config/site.ts`.
+- **Prerendering / SSR Recommendation**: Client-side SPAs rely on JavaScript execution for route-level meta tags and JSON-LD updates. For maximum search engine and AI-crawler indexability (including AEO, AIO, GEO, GAIO, and AXO discoverability), pair this codebase with Vite SSG / prerendering or an SSR framework before production launch.
