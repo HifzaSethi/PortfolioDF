@@ -1,0 +1,71 @@
+:root {
+  /* Core Brand Color Tokens */
+  --violet: #B34FFF;
+  --magenta: #E23389;
+  --off-white: #F4F1EA;
+  --near-black: #010102;
+  --electric-blue: #0057FF;
+
+  /* Derived Surface & Text Tints */
+  --ink: var(--near-black);
+  --ink-muted: color-mix(in srgb, var(--near-black) 68%, var(--off-white));
+  --ink-subtle: color-mix(in srgb, var(--near-black) 48%, var(--off-white));
+  --paper: var(--off-white);
+  --paper-elevated: color-mix(in srgb, var(--off-white) 86%, #FFFFFF);
+  --paper-tint: color-mix(in srgb, var(--off-white) 92%, var(--near-black));
+  --border-light: color-mix(in srgb, var(--near-black) 12%, transparent);
+  --border-light-strong: color-mix(in srgb, var(--near-black) 22%, transparent);
+
+  --dark-surface: color-mix(in srgb, var(--near-black) 92%, #FFFFFF);
+  --dark-glass: color-mix(in srgb, #FFFFFF 5%, transparent);
+  --border-dark: color-mix(in srgb, #FFFFFF 14%, transparent);
+  --border-dark-strong: color-mix(in srgb, #FFFFFF 28%, transparent);
+  --on-dark-muted: color-mix(in srgb, var(--off-white) 74%, transparent);
+  --on-dark-subtle: color-mix(in srgb, var(--off-white) 52%, transparent);
+
+  /* Accessible Accent Tints */
+  --violet-soft: color-mix(in srgb, var(--violet) 14%, transparent);
+  --magenta-soft: color-mix(in srgb, var(--magenta) 14%, transparent);
+  --blue-soft: color-mix(in srgb, var(--electric-blue) 12%, transparent);
+
+  /* Typography */
+  --font-sans: 'Sora', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Fluid Type Scale (Desktop 80px / 30px / 20px -> Mobile 42px / 22px / 17px) */
+  --text-display: clamp(2.625rem, 4.8vw, 5rem);
+  --text-h1-sub: clamp(2.125rem, 3.6vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 2.8vw, 2.75rem);
+  --text-subheading: clamp(1.25rem, 1.8vw, 1.875rem);
+  --text-h3: clamp(1.25rem, 1.5vw, 1.625rem);
+  --text-body-lg: clamp(1.0625rem, 1.15vw, 1.25rem);
+  --text-body: clamp(0.9375rem, 1vw, 1.0625rem);
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
+
+  /* Brand Slant Angle — single directional axis across the entire identity */
+  --slant: -12deg;
+  --slant-unskew: 12deg;
+
+  /* Spacing & Layout */
+  --container-max: 82rem;
+  --section-py: clamp(4.5rem, 8vw, 7.5rem);
+  --section-py-compact: clamp(3rem, 5vw, 4.5rem);
+
+  /* Radii (crisp architectural geometry) */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Elevation & Focus */
+  --shadow-subtle: 0 1px 2px color-mix(in srgb, var(--near-black) 5%, transparent),
+                   0 8px 24px color-mix(in srgb, var(--near-black) 4%, transparent);
+  --focus-ring: 0 0 0 3px var(--electric-blue);
+
+  /* Z-index Scale */
+  --z-base: 1;
+  --z-sticky: 30;
+  --z-header: 50;
+  --z-megamenu: 55;
+  --z-drawer: 70;
+  --z-skip: 100;
+}

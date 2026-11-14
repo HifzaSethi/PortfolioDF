@@ -1,0 +1,392 @@
+# MASTER BRIEF: BUILD THE COMPLETE MULTI-PAGE WEBSITE FOR "DIGITAL FIELD." (DF.)
+
+You are a senior frontend architect, creative director and UI/UX designer. Build a complete, functional, production-quality, multi-page corporate website for Digital Field. (DF.), a premium Digital Performance & Intelligence Consultancy. This is NOT a one-page landing page and NOT a static mockup. Do not stop after the homepage. Deliver every page, every navigation item, every interaction and every section described below, then test and fix.
+
+Work in the phases listed in Section 9. Everything you need is in this brief.
+
+==================================================
+## 1. NON-NEGOTIABLE RULES
+==================================================
+
+CONTENT INTEGRITY
+- Use ONLY the facts in this brief. Improve phrasing and readability, never the business meaning.
+- Do NOT invent: client names, client logos, testimonials, awards, certifications, case studies, statistics, percentages, campaign results, team members, partnerships, office addresses, phone numbers, email addresses, social URLs, or analytics.
+- The only numbers allowed are those in this brief (founded 2021; five practices; six search disciplines; six Studio disciplines; nine industries; fourteen hospitality touchpoints; the illustrative "CTR up 12%" dashboard example, which must be labeled as an illustrative example).
+- Where information is missing, use clearly labeled, editable placeholders (e.g. a visible "PLACEHOLDER: replace with verified company email" token sourced from one config file).
+- Do not remove technical service detail because it is complex. Make it understandable through layout, hierarchy and writing.
+
+FUNCTIONAL INTEGRITY
+- Every nav item works. Every CTA has a real destination. No dead links, no fake buttons, no decorative controls that do nothing.
+- Every interactive diagram responds to hover, focus, tap and keyboard.
+- No invented APIs, integrations, credentials or analytics.
+- The contact form must NOT pretend to send email (see 5.12).
+
+BRAND VOICE (apply to ALL copy you write)
+- Intelligent. Clear. Commercial. Technical enough to be credible, simple enough to be useful. Every claim ties to a business outcome.
+- Signature move: CLAIM, THEN REFRAME. State the common assumption, then correct it.
+- Words to own: field, signal, context, intelligence, ecosystem, connect.
+- Words and phrases NEVER to use: solutions, holistic, synergy, 360-degree, leverage, game-changing, "comprehensive digital solutions", "take your business to the next level".
+- Test for every line: if it could sit in any competitor's deck, rewrite it.
+- Preferred lines: "We connect the signals others report separately." / "Data tells us what happened. Context tells us what to do next." / "Nothing performs in isolation." / "Performance without context is incomplete." / "Intelligence beyond the dashboard." / "See the Whole Field."
+
+==================================================
+## 2. BRAND FACTS
+==================================================
+
+- Name: Digital Field. Abbreviation: DF. (the full stop is part of the name and is meaningful).
+- Founded 2021 by Islam Helal in Dubai, United Arab Emirates.
+- Positioning: Digital Performance & Intelligence Consultancy. It is not a traditional digital marketing agency.
+- Mission: bridge the gap between digital marketing activity and real business performance.
+- Core philosophy: "Nothing Performs in Isolation."
+- Master proposition: "Performance in Context."
+- Core question DF. starts with: "What is the business trying to achieve?"
+- Contrast line: Most agencies ask "How do we improve the campaign?" DF. asks "What is the business trying to achieve, and what across the digital field is influencing it?"
+- "Digital marketing is our expertise. The entire digital field is our perspective."
+- DF. connects brand, content, media, search, technology, customer experience, data and analytics into one growth framework that drives measurable commercial growth.
+
+CORE VALUES (use on About and echo on Home)
+1. See the Whole Field. Context before conclusions. We look beyond individual campaigns to the forces shaping performance across the ecosystem.
+2. Business Before Metrics. Objectives lead, channels follow. We define success around commercial and strategic goals first, then build the ecosystem required to reach them.
+3. Ask Why. We challenge assumptions and connect signals to find the reason behind every result, not just the result itself.
+4. Think Forward. Today's insight should inform tomorrow's decision. We balance immediate performance with sustainable, long-term growth. (Timeline: NOW Optimize campaigns → NEXT Refine content and audiences → THEN Strengthen the value proposition → FUTURE Inform growth and investment decisions.)
+5. Connect the Dots. Nothing performs in isolation. Every touchpoint creates a signal; we turn disconnected data into actionable intelligence.
+
+THE NAME "DIGITAL FIELD." (for About page; "field" means three things at once)
+- Technical: in data, a field is one discrete unit (a column, a value). Clicks, bookings, reviews and search terms are each just a field of data until connected to something bigger.
+- A vantage point: you survey a field all at once, from above. It implies width, not narrowness.
+- Physics: a field is an invisible force that shapes what happens inside it without touching the object. Nobody sees the field, only its effect. Likewise the real driver of performance is rarely visible on a dashboard.
+- "The name is the story, compressed to two words."
+- THE DOT: every click, search, booking and campaign is a data point floating in the field, meaningless alone. Pulled back to one fixed point (the business objective) it becomes intelligence. In the logo the dot is the magenta block at the foot of the F. "It's not where the name ends; it's where the field begins."
+
+TAGLINES (use strategically, never all together)
+See the Whole Field. · Nothing Performs in Isolation. · Performance in Context. · Performance Beyond Clicks. · Intelligence Beyond the Dashboard. · Bold Ideas. Measurable Results. · Transforming Attention into Revenue. · Where Innovation Meets Performance. · Built for What's Next. · Shape the Future. · Choose to Be Different. · Content in Context. (DF. Studio only)
+
+BRAND PERSONALITY: Innovative, Futuristic, Bold, Intelligent, High-Performance, Technology-Driven, Premium Yet Approachable.
+
+==================================================
+## 3. DESIGN SYSTEM
+==================================================
+
+3.1 COLOR TOKENS (define once as CSS variables and Tailwind theme extensions; never hard-code hex elsewhere)
+- --violet: #B34FFF   --magenta: #E23389
+- --off-white: #F4F1EA   --near-black: #010102   --electric-blue: #0057FF
+- Balance across the site: ~70% off-white surfaces, ~15% near-black, ~15% electric blue. Violet and magenta are used for gradients, highlights, key words and the dot, not as large flat fills. Dark gradient sections are feature moments (hero, intelligence framework, final CTA, hospitality hero), not the default.
+- Electric Blue sparingly: link underlines, focus rings, active states, small accents, diagram highlights.
+- Derived tints (opacity or color-mix of the above) are allowed for borders and muted text. Do not introduce any unrelated hues. No random neon.
+- SIGNATURE GRADIENT MESH (dark-centre): base #010102; radial layers: bottom-left #B34FFF at full strength fading to transparent toward the centre, bottom-right #E23389 at full strength fading toward the centre, top-left and top-right pure #010102. The centre stays dark for depth and text contrast. Build as layered radial-gradients plus a very subtle noise overlay. Optional, very slow gradient drift (CSS only, GPU-friendly, disabled under reduced motion).
+- GRADIENT TEXT: violet → magenta fill, for hero moments and key headline words only. Never for running text.
+- Contrast: all text must meet WCAG AA (4.5:1 body, 3:1 large). Verify violet or magenta text on off-white and on near-black; if a pair fails, use near-black or off-white text with a gradient accent element instead.
+
+3.2 TYPOGRAPHY
+- Typeface: Sora ONLY (Google Fonts), weights 300, 400, 600, 700, 800. Preload critical weights, font-display: swap, with a system sans-serif fallback stack that has similar metrics.
+- Type scale (desktop reference, use fluid clamp() so it scales down): Heading 80px Sora ExtraBold · Subheading 30px Sora SemiBold in CAPITALS (e.g. SEE THE WHOLE FIELD) · Body 20px Sora Regular. Add intermediate sizes for h3 to h6, captions and UI labels. On mobile, the 80px heading becomes roughly 40–48px.
+- Headlines: bold, forward-leaning (use italic or a skewX transform on display headings only, never on body text or long paragraphs). Tight tracking on display, comfortable line-height (1.5–1.7) on body.
+- Max line length ~68 characters for body copy.
+- NEVER type the logo in Sora. The logo is custom artwork (see 3.3).
+
+3.3 LOGO SYSTEM (PLACEHOLDER MODE)
+The real logo has: the Wordmark "Digital Field." (stacked, heavy forward-leaning italic custom artwork) and the Icon "DF." (an integrated italic numeral 1, a sharp forward-leaning D that shares its top stroke with the F, and a magenta block "dot" at the foot of the F). Lockups: Standard (upright divider between icon and wordmark) and Italic (divider follows the slant).
+- The real files are NOT available. Create ONE reusable <Logo /> component with variants: "wordmark", "icon", "lockup-standard", "lockup-italic", and with theme variants for light and dark backgrounds.
+- Each variant must render a clearly labeled PLACEHOLDER (e.g. a neutral outlined block with the small text "LOGO PLACEHOLDER") that is obviously temporary, plus a single config path per variant (e.g. /src/assets/brand/logo-lockup.svg) so the client can drop in official SVGs and everything updates. Do NOT redraw, approximate or retype the icon, 1, D, F or dot.
+- Rules to encode in a code comment and a /brand-guidelines.md in the repo: clear space = 1X on all sides where X = the size of the dot; never stretch, squash, recolor outside the approved palette, add or remove elements, fade, add shadows, outlines or glows, tilt or rotate; below legible size switch wordmark to icon.
+- Use the wordmark in header, footer, proposals and sign-offs; use the icon for favicon (placeholder), mobile header at small sizes, section markers and watermarks.
+
+3.4 GRAPHIC LANGUAGE
+- ONE ANGLE: every angled element (dividers, shapes, pattern, clip-paths, underlines, section edges) uses the same forward slant. Define it once as a token (e.g. --slant: -12deg; pick a single value and reuse it) so the whole identity moves in one direction.
+- DF. PATTERN: a repeating pattern of forward-slanted parallelogram or bar modules. Official artwork is not available, so build a tasteful abstract slanted-geometry pattern as a swappable <BrandPattern /> component (SVG), documented as a placeholder for the official pattern. Use it for texture on dark or gradient surfaces with enough empty space for content. Keep it legible and subtle.
+- TRIDI MARK: an inverted triangle emblem (TRI = triangle, DI = digital) built from the icon's letterforms. Official art is unavailable: create a swappable <TridiMark /> placeholder component using a plain inverted-triangle geometric motif, labeled in code as a placeholder, used only as a secondary emblem on dark and gradient surfaces, never as a logo replacement.
+- 3D DF. ICON: used for the hero and launch moments. Do not build a fake 3D logo. Build the hero visual as an abstract glossy 3D-feeling composition (layered slanted glass planes, glossy gradient forms with violet and magenta glow, subtle depth parallax) using CSS 3D transforms and SVG, with a clearly marked <Hero3DSlot /> where the official 3D icon render (PNG, WebM or GLB) can be dropped in. Avoid heavy 3D libraries unless justified; if Three.js is used it must be lazy-loaded, capped for performance, and have a static fallback.
+- GLASSMORPHISM: translucent panels, backdrop-blur, 1px light borders, only on dark gradient surfaces. Never on off-white sections.
+- LAYOUTS: use L-shape and T-shape compositions (a bold heading anchoring an edge with content flowing along an axis), split-screen, editorial asymmetry, full-bleed bands, a bento grid (max two uses), process or timeline diagrams, big-type statement sections. Vary layouts from section to section; avoid repeating identical card grids.
+- Do not overcrowd with decoration. One hero visual per section at most.
+
+3.5 PHOTOGRAPHY AND IMAGERY
+- Direction: authentic, editorial; real people, creative collaboration, modern hospitality and digital experiences; natural expressions, confident compositions, considered lighting. Do: real settings, natural expression. Don't: stiff staged poses, handshake or generic stock clichés, flat or careless lighting.
+- No approved photography is supplied. Build a reusable <ImageSlot /> component: fixed aspect ratio (prevents layout shift), brand-gradient or pattern fill, a visible small "PHOTO PLACEHOLDER: [shot description]" label, an editable alt text field in data, and a single place to set the real image src (with width and height, loading="lazy", srcset or sizes ready). The shot description should state the desired photo (e.g. "Creative professionals collaborating in a real working environment, natural light").
+- Do NOT hotlink random stock photos. Do NOT use fabricated "client" imagery.
+- BRAND CHARACTERS Di & Fi: two AI-generated brand characters named after Digital and Field, each with a defined look. No reference images are supplied, so do NOT invent their appearance. Create an optional <CharacterSlot name="Di" | "Fi" /> placeholder that renders nothing visible in production unless images are configured, and note the AI-disclosure requirement ("label AI-generated imagery wherever disclosure is required").
+
+3.6 SIGNATURE POSTER / SOCIAL LAYOUT (also used for the Open Graph image spec)
+Bold headline in Sora capitals (e.g. SEE THE WHOLE FIELD, SHAPE THE FUTURE, CHOOSE TO BE DIFFERENT); wordmark bottom-left; DIGITALFIELD.CO bottom-right; dark gradient background; one hero visual.
+
+3.7 MOTION PRINCIPLES
+Premium, controlled, purposeful. Allowed: smooth route transitions (short fade and slight slide on the slant axis), subtle entrance reveals, scroll-triggered reveals and storytelling, interactive diagrams, refined hover states (underline slants, magnetic-free), slow animated gradient details, sophisticated headline reveals (mask or line-by-line), subtle parallax, carefully limited 3D tilt. Forbidden: bouncing, constant spinning, distracting backgrounds, custom cursor effects, many simultaneous animations, heavy animation libraries or assets, anything harming readability. ALL motion must honour prefers-reduced-motion (swap to instant or simple fades, disable parallax, drift and 3D tilt). Animate only transform and opacity where possible.
+
+==================================================
+## 4. TECHNICAL ARCHITECTURE
+==================================================
+
+STACK (must run in the Google AI Studio build environment; keep dependencies minimal)
+- React 18 + TypeScript (strict) + Vite + Tailwind CSS.
+- React Router. For compatibility with the preview environment, default to HashRouter; leave a clearly commented one-line switch to BrowserRouter for production deployment (which then needs server rewrites). In-page anchors must be handled by scrollIntoView helpers, not raw #hash links, so they do not conflict with HashRouter.
+- lucide-react for icons.
+- Motion/Framer Motion for animation ONLY where CSS cannot do the job, imported per component so it code-splits. Use CSS and IntersectionObserver for simple reveals.
+- No UI kit bloat, no unused libraries.
+- Do not assume any backend, API key, CMS or third-party service exists.
+
+PROJECT STRUCTURE (create it; do not put the site in one giant file)
+src/
+  app/ (App.tsx, routes.tsx, Layout.tsx, ScrollManager.tsx, RouteTransition.tsx)
+  config/ (site.ts: name, url placeholder, contact placeholders and feature flags; nav.ts: single centralized navigation config used by header, footer, mobile menu, sitemap and breadcrumbs; seo.ts)
+  styles/ (tokens.css, globals.css)
+  types/ (content.ts: typed interfaces for Practice, Service, Discipline, Industry, EcosystemNode, etc.)
+  data/ (practices.ts, intelligence.ts, performanceMarketing.ts, searchIntelligence.ts, growthMarketing.ts, digitalTransformation.ts, studio.ts, industries.ts, hospitality.ts, ecosystem.ts, values.ts: ALL copy lives here, typed)
+  components/
+    brand/ (Logo, BrandPattern, TridiMark, Hero3DSlot, ImageSlot, CharacterSlot)
+    ui/ (Button, LinkButton, Eyebrow, SectionHeading, GradientText, Tag, Accordion, Tabs, Breadcrumbs, FormField, Toast or InlineStatus, Skeleton)
+    layout/ (Header, MobileNav, MegaMenu, Footer, Container, Section)
+    sections/ (reusable: ServiceList, PracticeHero, CtaBand, ProblemStatement, ReportingVsIntelligence, ValueList, etc.)
+    diagrams/ (EcosystemDiagram, IntelligenceFramework, PracticeConstellation, DisciplineSelector, HospitalityEcosystem, DashboardContext)
+  pages/ (Home, About, Services, ServicePage (data-driven) or five practice pages, SearchIntelligence, Studio, Industries, Hospitality, Contact, NotFound)
+  hooks/ (useReducedMotion, useInView, useMediaQuery, usePageMeta)
+  lib/ (seo.ts, validation.ts, scroll.ts)
+public/ (robots.txt, sitemap.xml, favicon placeholder, og-image placeholder)
+README.md (setup, how to swap logo, image and character assets, how to wire the form backend, deployment and SEO notes)
+
+REQUIREMENTS
+- Every route lazy-loaded (React.lazy + Suspense with a branded skeleton).
+- Shared design tokens; reusable Button with variants (primary, secondary, ghost, on-dark) and consistent focus styles.
+- Clean TypeScript types for all content; no `any`.
+- Separation of concerns: data separate from presentation; diagrams are self-contained components taking typed data.
+- Error boundary with a branded error state; 404 page with useful links.
+
+==================================================
+## 5. PAGES AND EXACT CONTENT
+==================================================
+
+Global: sticky header (wordmark placeholder, nav, "Start a conversation" CTA to /contact); mobile full-screen menu with focus trap, Escape to close, accordion for Services; footer (lockup placeholder, one-line positioning, sitemap links, practice links, placeholder contact block, "DIGITALFIELD.CO" text bottom-right, © Digital Field. with year). Breadcrumbs on all deeper pages (Services children, and any page below Home). Every page ends with the shared CtaBand.
+
+---------------------------------------------
+5.1 HOME ( / ), the strongest page
+---------------------------------------------
+Use a full story arc with varied layouts:
+
+A. HERO (dark gradient mesh, Hero3DSlot visual, large Sora ExtraBold slanted headline).
+ - H1 hierarchy: "SEE THE WHOLE FIELD." as the headline (violet→magenta gradient on "WHOLE FIELD" only). Supporting statement under it: "Nothing performs in isolation. DF. is a Digital Performance & Intelligence Consultancy that connects the signals others report separately." Do NOT stack the three taglines together.
+ - Primary CTA "Start a conversation" → /contact. Secondary CTA "See how we think" → /about (or scrolls to the Ecosystem Framework).
+ - Use "Performance in Context." as a small eyebrow or footer tag in the hero, not a competing headline.
+
+B. THE PROBLEM (off-white, typography-led, T-shape). Claim then reframe. The industry is highly specialized: one agency manages media, another SEO, another content, another websites, another analytics. Each produces valid insight, yet businesses are left with fragmented data, disconnected recommendations and no clear view of what truly drives performance. Pull-quote contrast: "Most agencies ask: how do we improve the campaign? DF. asks: what is the business trying to achieve, and what across the digital field is influencing it?" Show a subtle visual of disconnected dots.
+
+C. NOTHING PERFORMS IN ISOLATION (the alternative). Marketing, sales, brand, ecommerce, technology, CX and analytics teams each see part of the picture; DF. connects the signals across the business ecosystem, aligning digital strategy with brand positioning, content, media, PR, customer insights, offline activities and commercial goals. Outcome: understand not only what is performing, but why, what is influencing it, and what should happen next. Visual: scattered dots resolving to one fixed point (the dot motif) on scroll.
+
+D. DIGITAL ECOSYSTEM FRAMEWORK, interactive (see 6.1). Short intro: "Everything starts with a business objective and extends across every digital and non-digital touchpoint that influences customer behavior and commercial outcomes."
+
+E. THE DF. INTELLIGENCE FRAMEWORK™, interactive (see 6.2) on dark gradient. Include "Most agencies provide reporting. DF. provides intelligence."
+
+F. FIVE PRACTICE AREAS, the constellation (see 6.3) with Intelligence at the centre. Line: "Every other practice produces activity. Intelligence is what turns that activity into decisions." Each practice links to its page.
+
+G. DF. STUDIO teaser (split-screen with ImageSlot montage). "Content in Context." "Most studios ask what will look good. DF. Studio asks what the content needs to achieve." Six disciplines as tags. CTA → /studio.
+
+H. INDUSTRIES AND HOSPITALITY. Industry list as a typographic index; a large, visually distinct hospitality feature block: "Hospitality is one of the most complex digital ecosystems... It is one of our core areas of expertise." CTA → /hospitality and → /industries.
+
+I. WHY DIGITAL FIELD. Summarize: strategy, technology, data, content, customer experience and marketing working toward one business goal; DF. goes beyond managing channels to explain the broader factors influencing visibility, customer acquisition, revenue and long-term growth. Closing lines: "One master proposition. One philosophy. Multiple proof points." and "Performance in Context." Show "The DF. Value" list: understand the complete digital ecosystem; connect disconnected data points; improve marketing efficiency; identify growth opportunities; increase revenue and profitability; improve customer acquisition; make more informed decisions; align digital investments with business objectives; build sustainable long-term growth. Do NOT add fake proof points or numbers.
+
+J. CONTACT / CONVERSION BAND (mesh gradient): "What is the business trying to achieve?" → CTA /contact.
+
+---------------------------------------------
+5.2 ABOUT / OUR APPROACH ( /about )
+---------------------------------------------
+The intellectual foundation. Sections: (1) Why we exist (Digital performance is never just paid advertising; every result is shaped by a wider business ecosystem; the specialisation and fragmentation problem). (2) Our positioning (Digital Performance & Intelligence Consultancy; not a traditional digital marketing agency; connects business objectives, customer behavior, search intelligence, media performance, technology and data into one integrated growth framework; "Because business performance is never influenced by a single channel."). (3) Founder and company facts: founded in 2021 by Islam Helal in Dubai, UAE; do not add a bio or photo beyond that, only an ImageSlot labeled "FOUNDER PORTRAIT PLACEHOLDER (pending client approval)". (4) The name and the dot (the three meanings of "field", and the dot). (5) The five core values (see Section 2) as a distinctive scroll-driven sequence, not a card grid. (6) The Digital Ecosystem Framework (reuse the diagram in a compact variant). (7) The DF. Intelligence Framework™ (reuse). (8) Reporting vs Intelligence (the two-column contrast: Reporting tells you what happened, which campaign generated results, which channel performed best, where budget was spent; Intelligence explains why performance changed, what factors influenced results, what opportunities exist, what actions should happen next, and what impact the decision will have on the business). Explain "Metrics like clicks, impressions, traffic, engagement, CPC, CTR and conversions explain what happened. They rarely explain why." (9) Traditional Agency Model "Campaign → Metrics → Report" vs DF. Intelligence Model "Business Objective → Digital Ecosystem → Data → Context → Intelligence → Action → Commercial Growth" as an animated comparison. (10) Commercial philosophy: "Business outcomes always take priority over vanity metrics." (11) The DF. Value list. (12) CtaBand.
+
+---------------------------------------------
+5.3 SERVICES OVERVIEW ( /services )
+---------------------------------------------
+Intro: "As a Digital Performance & Intelligence Consultancy, we help clients build, optimize and scale their digital ecosystems. We combine strategy, performance, technology, data, creativity and innovation to drive brand visibility, customer acquisition, revenue growth and long-term business impact." Show the structure: INTELLIGENCE (the core) at the centre; four practices (Performance Marketing, Search Intelligence, Growth Marketing, Digital Transformation) as "how DF. acts"; DF. Studio as "how it shows up" (creative, content and production). Each practice gets a large editorial row with a short description, 3–4 key sub-services, and a link to its page. Link DF. Studio to /studio.
+
+---------------------------------------------
+5.4 INTELLIGENCE ( /services/intelligence )
+---------------------------------------------
+Lead: "The core of everything DF. does. Performance Marketing, Search Intelligence, Growth Marketing and Digital Transformation each produce activity and data. Intelligence is what turns that activity into one connected decision-making system." It is the DF. Intelligence Framework™ applied as an ongoing service, not just a concept.
+Include the framework visual: DATA (What happened?) → CONTEXT (What influenced it?) → INTELLIGENCE (Why did it happen?) → ACTION (What should happen next?).
+Include the Reporting vs Intelligence contrast.
+Include the "Never Stop at the Dashboard" DashboardContext interaction (6.2).
+Services (all nine, each with a one-line outcome-focused explanation you write without adding facts):
+Business Intelligence & Dashboards · Data Strategy & Governance · Cross-Channel Performance Intelligence · Unified Reporting & Attribution · Predictive & Trend Analysis · Competitive & Market Intelligence · Customer & Revenue Intelligence · AI-Powered Insights & Automation · Recurring Intelligence Reviews.
+Closing line: "Every other practice produces activity. Intelligence is what turns that activity into decisions."
+Also: Data & Analytics goal = "a single source of truth for decision-making" connecting Analytics Platforms, CRM Data, Media Data, Search Intelligence, Business Data and Revenue Data.
+
+---------------------------------------------
+5.5 PERFORMANCE MARKETING ( /services/performance-marketing )
+---------------------------------------------
+Lead: "Drive measurable growth through media strategies that start with the business objective and maximize visibility, acquisitions, leads, bookings and revenue across paid digital channels." Principle: "Channels are activation tools, not the strategy itself." Use sub-navigation (sticky tabs or side index) across these sections:
+
+1. PAID MEDIA MANAGEMENT: reach the right audience at every stage of the customer journey through search, social, programmatic and digital media; maximize performance, conversions and ROI via intelligence-led campaign management and continuous optimization.
+2. GOOGLE ADS: reach high-intent audiences across Google's ecosystem (Search, Display, YouTube, Shopping, Performance Max); increase visibility, drive qualified traffic, generate conversions, maximize Return on Ad Spend (ROAS). Items: Search Ads · Performance Max · Display Ads · YouTube Ads · Shopping Ads · Demand Gen Campaigns · App Campaigns · Local Campaigns · Remarketing Campaigns.
+3. PAID SOCIAL: advertising built on audience signals, not assumptions, driving awareness, engagement, leads and sales. Items: Meta (Facebook & Instagram) · TikTok · Snapchat · X (Formerly Twitter) · LinkedIn · Pinterest · Influencer & Creator Amplification.
+4. HOSPITALITY-FOCUSED DIGITAL ADVERTISING: channels specifically built for hospitality brands (metasearch, OTAs, travel marketplaces, GDS); build the right channel mix to drive direct bookings, increase occupancy, strengthen OTA ranking and visibility, capture high-intent travelers, expand distribution through global travel networks and maximize overall revenue performance. Three sub-blocks:
+ - METASEARCH: capture high-intent travelers at the booking decision stage (Google Hotel Ads, Tripadvisor, Trivago, Kayak); optimize visibility, competitiveness and direct booking performance to maximize occupancy and revenue while reducing distribution costs. Items: Google Hotel Ads · Tripadvisor Sponsored Placements · Trivago Ads · Kayak Advertising · Skyscanner Advertising · Wego Advertising.
+ - ONLINE TRAVEL AGENCIES (OTAs): increase visibility, bookings and market share across Booking.com, Expedia, Agoda, Trip.com and more; optimize property rankings, sponsored placements, pricing visibility and promotional campaigns. Items: Booking Holdings Sponsored Listings · Expedia TravelAds · Expedia Co-Op Campaigns · Agoda Sponsored Ads · Hotels.com Advertising · Hotelbeds Marketing Solutions · Ctrip / Trip.com Advertising.
+ - GDS & TRAVEL TRADE DISTRIBUTION: expand reach through global distribution systems and travel trade networks (Amadeus, Sabre, Travelport); enhance visibility among travel agents, corporate travel buyers and TMCs. Items: Amadeus Media Solutions · Sabre Travel Network · Travelport Advertising · GDS Display Advertising · Travel Agent Marketing Programs · Corporate Travel Network Advertising · Consortia & TMC Marketing Programs.
+5. ADDITIONAL MEDIA CHANNELS: programmatic, marketplace, retail media, audio and connected TV; identify and optimize the right mix. Items: Microsoft Advertising (Bing) · Amazon Ads · Apple Search Ads · Programmatic Advertising · Native Advertising (Taboola & Outbrain) · CTV & OTT Advertising · Spotify & Podcast Advertising · DOOH Advertising · Affiliate Marketing · Retail Media Networks · Marketplace Advertising.
+6. PERFORMANCE OPTIMIZATION: continuous testing, audience insights, conversion tracking and optimization guided by context, not just metrics. Items: Audience Research & Targeting · Media Planning & Budget Allocation · Campaign Management · Creative Strategy & Ad Development · Landing Page Optimization · Conversion Rate Optimization (CRO) · A/B Testing · Retargeting Strategies · Tracking & Attribution Setup · Performance Reporting & Insights · ROAS, CPA & Revenue Optimization.
+Note: platform names are descriptive references to channels DF. manages. Do NOT display partner or platform logos and do NOT imply official partnership or certification. Use text only.
+Closing note: "The right mix depends on objectives, audience and commercial outcomes."
+
+---------------------------------------------
+5.6 SEARCH INTELLIGENCE ( /services/search-intelligence ), a particularly important page
+---------------------------------------------
+Lead: "Increase discoverability across search engines, AI platforms and AI agents by combining SEO, AEO, AIO, GEO, GAIO and AXO, so the brand is visible wherever customers search." Context: "Customers search when intent is highest, on search engines, in AI assistants, and increasingly through AI agents that act on their behalf." Also: "Visibility wherever customers search directly affects business opportunities."
+Present SIX SEPARATE DISCIPLINES. Do NOT merge them into one "AI SEO" service. Build the DisciplineSelector (6.4) plus an indexed long-scroll with one section per discipline (each with its own id, heading, tagline, explanation, deliverables, and a "Where it shows up" line). Each discipline keeps the acronym prominent.
+
+1. SEO, Search Engine Optimization. Tagline: "Rank where customers search." Improve visibility, organic traffic and rankings across search engines through technical, content and authority optimization. Deliverables: Technical SEO Audits & Optimization · Keyword & Search Demand Research · Search Intent Analysis · On-Page SEO Optimization · Content Strategy & Content Gap Analysis · Local SEO & Google Business Profile Optimization · Schema & Structured Data Implementation · Competitor Search Analysis · Link Building & Digital PR · Organic Performance Monitoring · SEO Reporting & Insights.
+2. AEO, Answer Engine Optimization. Tagline: "Be the answer, not just a result." Structure content so search engines and voice assistants give the brand's answer directly. Deliverables: Featured Snippet Optimization · People Also Ask Targeting · Question & Conversational Query Research · FAQ & Knowledge Content Creation · Voice Search Optimization (Siri, Alexa, Google Assistant) · Answer-First Content Structuring · Zero-Click Visibility Measurement.
+3. AIO, AI Overviews Optimization. Tagline: "Be in Google's AI summary." Optimize for Google AI Overviews and AI Mode, where Google summarises the answer before any link is clicked. Deliverables: AI Overviews Visibility Tracking · AI Mode Presence Analysis · Source & Citation Eligibility Optimization · Content Depth & Topical Authority · Structured Data for AI Summaries · AI Overview Click & Traffic Impact Measurement.
+4. GEO, Generative Engine Optimization. Tagline: "Be cited and recommended by AI." Increase brand visibility in AI platforms such as ChatGPT, Gemini, Claude, Perplexity and Copilot, so the brand is named when customers ask for a recommendation. Deliverables: AI Search Visibility Strategy · AI Prompt & Recommendation Research · AI Citation & Brand Mention Monitoring · Competitor Benchmarking in AI Answers · AI-Ready Content Development · Third-Party Source & Publisher Strategy · Reputation & Review Optimization · AI Share of Voice & Referral Measurement.
+5. GAIO, Generative AI Optimization. Tagline: "Shape what AI knows about you." Make sure AI models describe the brand accurately, completely and favourably, from its facts and offers to its reputation. Deliverables: AI Brand Perception Audits · Entity Optimization & Knowledge Graph Presence · Brand Fact Accuracy (Wikipedia, Wikidata, directories, listings) · First-Party Data & Authoritative Source Development · AI Sentiment & Brand Narrative Monitoring · Misinformation & Hallucination Correction · Arabic & English AI Brand Presence.
+6. AXO, Agent Experience Optimization. Tagline: "Be bookable by AI agents." Prepare the website, booking engine and data so AI agents can find, compare and transact on the customer's behalf. Deliverables: Agent-Readable Site Architecture · Structured Product, Room, Rate & Availability Data · Booking Engine & Checkout Agent Readiness · llms.txt & AI Crawler Access Management · API & Feed Readiness for AI Platforms · Agentic Commerce & Booking Testing · AI Agent Traffic & Conversion Measurement.
+Closing line (large type): "From ranking to recommendation to reservation: visibility wherever the decision is made."
+Also surface the measurement vocabulary used in the ecosystem: Search Demand Trends · Brand Search Volume · SEO Performance · Answer & Featured Snippet Visibility (AEO) · Google AI Overviews Presence (AIO) · AI Platform Citations & Recommendations (GEO) · AI Brand Accuracy & Sentiment (GAIO) · AI Agent Readiness (AXO) · Competitor Share of Voice.
+Mention AI product names (Google, ChatGPT, Gemini, Claude, Perplexity, Copilot, Siri, Alexa, Google Assistant) as text only; no logos, no partnership implication. Link to /hospitality for AXO and "Be Found and Booked Through AI."
+
+---------------------------------------------
+5.7 GROWTH MARKETING ( /services/growth-marketing )
+---------------------------------------------
+Lead: "Accelerate customer acquisition, engagement, retention and lifetime value through continuous experimentation, automation and customer-centric growth strategies." Organize the 21 services into a logical visual journey (do NOT drop any): ACQUIRE · CONVERT · ENGAGE · RETAIN · LEARN.
+- Strategy and acquisition: Growth Strategy & Go-to-Market Planning · Customer Acquisition Programs · Audience Segmentation & Personas
+- Funnel and conversion: Funnel Design & Optimization · Customer Journey Mapping · Landing Page & CRO Optimization · Lead Generation & Nurturing
+- Engagement and lifecycle: CRM Strategy & Management · Email Marketing & Automation · SMS, WhatsApp & Push Messaging · Product Onboarding Campaigns
+- Retention and loyalty: Retention & Win-Back Programs · Churn Reduction Strategies · Loyalty & Referral Programs · Community Building
+- Growth levers: Influencer & Partnership Growth · Content-Led Growth Initiatives · Product-Led Growth Strategies
+- Learning and value: Growth Experimentation & A/B Testing · Customer Lifetime Value Optimization · Analytics & Growth Reporting
+(That is all 21 items.) Tie to Customer Experience: "Customer experience influences acquisition efficiency and lifetime value."
+
+---------------------------------------------
+5.8 DIGITAL TRANSFORMATION ( /services/digital-transformation )
+---------------------------------------------
+Tagline: "Technology that connects the field." Contrast: "Most transformation projects ask which system to buy. DF. asks what the business needs that system to do." Lead: enable business growth through technology, automation, data and AI; modernize operations, improve customer experiences, build digital ecosystems where every platform, data source and team works toward the same objective. Five groups (keep all items):
+- STRATEGY & ROADMAPS: Digital Strategy & Roadmaps · Operating Model Transformation · Innovation & Pilot Programs · Digital Sales Enablement
+- CUSTOMER EXPERIENCE & DIGITAL PRODUCTS: Customer Experience (CX) Transformation · Website, App & E-Commerce Modernization · Digital Product Design · Personalization
+- DATA, CRM & MARTECH: CRM Implementation & Optimization · Customer Data Platforms (CDP) · Marketing Technology (MarTech) Integration · System Integration (ERP, CMS, CRM) · API & Connected Ecosystems · Cloud & Platform Migration
+- AI & AUTOMATION: AI Adoption & Automation · Workflow Digitization · Digital Workplace Tools
+- CHANGE & GOVERNANCE: Change Management & Training · Cybersecurity & Compliance Support
+Closing: "Systems don't transform a business. Connected systems do." Visual idea: a connected systems map where nodes link when a group is selected.
+
+---------------------------------------------
+5.9 DF. STUDIO ( /studio )
+---------------------------------------------
+Tagline: "Content in Context." Lead: "Most studios ask what will look good. DF. Studio asks what the content needs to achieve." DF. Studio is the creative and production arm of DF.: copywriting, photography, videography, graphic design, motion graphics and AI content. Every brief starts from the client's business objective and the signals from DF. Intelligence, and every asset is judged on what it moves: bookings, leads and revenue, not likes. Key message (large type): "Intelligence is how DF. knows what to do. DF. Studio is how it shows up."
+Show a "brief to result" loop: Business objective + Intelligence signals → Brief → Production → Asset → Measured result → Next brief. End with: "Every asset feeds back into the field. DF. Intelligence measures what each piece moved, and that shapes the next brief."
+SIX DISCIPLINES, portfolio-style presentation (ImageSlots with labeled placeholder shot or visual descriptions; NO invented projects, clients or results; label the section "Portfolio: client work to be added"):
+1. COPYWRITING: "Words that carry the idea and move the reader to act, written natively in English and Arabic rather than translated." Brand Messaging & Tone of Voice · Taglines, Slogans & Campaign Concepts · Advertising Copy (search, social, display, OOH) · Social Media Captions & Content Calendars · SEO & AI Search Content (with Search Intelligence) · Email, SMS & WhatsApp Copy (with Growth Marketing) · Video Scripts & Storyboards · Hotel & Room Descriptions, OTA Listing Copy · Arabic / English Transcreation & Localization.
+2. PHOTOGRAPHY: "Imagery that sells the experience before the customer arrives." Property, Rooms & Suites Photography · Food & Beverage Photography · Lifestyle & Talent Photography · Product & E-commerce Photography · Real Estate & Architectural Photography · Event & Launch Coverage · Corporate & Team Portraits · Aerial & Drone Photography · Social Media Photo Libraries.
+3. VIDEOGRAPHY: "Films and short-form video built for the channel they'll run on." Brand & Campaign Films · Property & Destination Films · Short-Form Social Video (Reels, TikTok, Shorts, Snapchat) · Ad Cut-Downs & Variations (6s, 15s, 30s) · Aerial & Drone Videography · Virtual Tours & Walkthroughs.
+4. GRAPHIC DESIGN: "Design that works the same way across every touchpoint, from feed to brochure." Campaign & Advertising Creative · Social Media Design & Templates · Website & Landing Page Visuals · Email & CRM Design · Print & Collateral (brochures, menus, signage) · Infographics & Data Visualization · Seasonal Campaign Kits.
+5. MOTION GRAPHICS: "Movement that stops the scroll and explains the idea quickly." Animated Ads & Social Motion · Animated Infographics & Data Stories · Typography & Kinetic Text Animation · Video Titles, Lower Thirds & Templates · 3D Animation & CGI · Digital Signage & In-Room TV Loops.
+6. AI CONTENT: "Faster, wider and more testable content, produced within clear brand and rights guardrails." AI Visual Concepts & Mood Boards · AI Image Generation & Scene Variations · AI Product & Seasonal Re-skins · AI Video & Avatar Content · Multilingual Versioning & Dubbing (EN / AR and beyond) · AI-Ready Content for AI Search (with Search Intelligence) · 3D Renders & Virtual Staging · AI Content Governance (rights, disclosure, brand safety).
+Note: Studio's own-brand imagery follows the DF. direction, but client work produced by Studio follows each client's brand; say so in a short note. Add a small "AI-generated imagery is labeled where disclosure is required" line under the AI Content discipline.
+
+---------------------------------------------
+5.10 INDUSTRIES ( /industries )
+---------------------------------------------
+Nine industries as a distinctive index layout (large type list with hover or focus reveal, not a generic grid): Hospitality: Hotels & Resorts · Travel & Tourism · Food & Beverage · Lifestyle & Luxury Brands · Real Estate · Retail & E-commerce · Healthcare · Financial Services · Government & Public Sector.
+For each, write one short, factual, non-invented sentence linking the industry to the DF. approach (objective → ecosystem → intelligence → action) with NO client names, case studies, results or claims of prior work. Hospitality links to /hospitality. Others link to /contact with the industry preselected in the form via a query parameter handled in app state (works under HashRouter). Reaffirm: "Business outcomes always take priority over vanity metrics." Include a labeled placeholder band "Case studies: coming soon / to be supplied" (clearly marked, no fabricated content).
+
+---------------------------------------------
+5.11 HOSPITALITY ( /hospitality ), visually distinctive, with its own accent treatment (still within the palette: deeper gradient use, hospitality-specific imagery slots)
+---------------------------------------------
+Tagline: "Built for hospitality performance." Lead: "Hospitality is one of the most complex digital ecosystems. Performance is influenced by far more than media spend alone: pricing, demand trends, distribution channels, search visibility, guest experience, review sentiment, seasonality, market conditions, brand strength and competitive activity all shape commercial performance. DF. understands how these elements work together because hospitality is not just another industry vertical. It is one of our core areas of expertise." Who: hotels, resorts, serviced apartments, hospitality groups, destinations and travel brands.
+1. THE HOSPITALITY ECOSYSTEM, interactive map (6.5) of 14 touchpoints: Brand Website (brand.com) · Booking Engine · CRM & Loyalty Platforms · Google Hotel Ads · Online Travel Agencies (OTAs) · Global Distribution Systems (GDS) · Metasearch Platforms · Search Engines · AI Assistants & Booking Agents · Social Media · Content & Visual Assets · Email Marketing · Reputation & Reviews · Revenue Management Systems. Message: "Each channel generates valuable data and contributes to commercial performance. DF. connects these signals into a single performance framework."
+2. HOSPITALITY PERFORMANCE IN CONTEXT: four dimensions, interactive panels:
+ - DEMAND: Destination search demand · Market trends · Traveler intent · Source market behavior · Competitor activity
+ - DISTRIBUTION: Direct bookings · OTA contribution · Metasearch performance · GDS effectiveness · Channel profitability
+ - COMMERCIAL: Occupancy · ADR · RevPAR · Revenue contribution · Acquisition costs · Profitability
+ - CUSTOMER EXPERIENCE: Guest reviews · Reputation signals · Website usability · Booking experience · Loyalty and retention
+ Caption: "Because bookings are not driven by a single channel. They are influenced by the entire hospitality ecosystem."
+3. WHY HOSPITALITY BRANDS CHOOSE DF.: "DF. combines digital performance expertise with hospitality commercial understanding." Animated equation: Demand + Visibility + Distribution + Guest Experience + Commercial Strategy = Revenue Growth. "This allows us to move beyond channel management and help hospitality brands make smarter commercial decisions."
+4. WHAT WE HELP HOSPITALITY BRANDS ACHIEVE (typographic outcome list, no numbers): Increase Direct Bookings · Reduce Distribution Costs · Improve Occupancy · Increase ADR & RevPAR · Improve OTA Visibility · Grow Market Share · Strengthen Brand Visibility · Increase Guest Acquisition · Improve Marketing Efficiency · Maximize Revenue Contribution · Be Found and Booked Through AI.
+5. Links to the relevant practices (Hospitality-Focused Digital Advertising, AXO, GAIO, Intelligence). Photography slots: modern hospitality, labeled placeholders.
+
+---------------------------------------------
+5.12 CONTACT ( /contact )
+---------------------------------------------
+Headline built around the core question: "What is the business trying to achieve?" Premium split layout: left = short intro and what happens next (describe process honestly without inventing SLAs, e.g. "Tell us the objective. We'll start there."), right = form.
+FORM FIELDS: Name (required) · Business email (required, validated) · Company (required) · Industry (select from the nine industries plus "Other") · Service of interest (select: Intelligence, Performance Marketing, Search Intelligence, Growth Marketing, Digital Transformation, DF. Studio, Not sure yet) · Message (required, min length, character counter). Optional honeypot field for spam. Consent checkbox is required ONLY once the client supplies privacy wording; leave a config flag.
+BEHAVIOR: accessible labels, inline validation on blur and submit, clear error messages tied via aria-describedby, aria-live status region, loading and success and error states, preserved input on error, focus moved to first invalid field.
+HONEST FALLBACK (critical): no backend or email service is configured. Do NOT show "Message sent." Instead, implement a config-driven strategy in /config/site.ts: (a) if CONTACT_ENDPOINT is set, POST JSON to it and handle success or failure; (b) else if CONTACT_EMAIL is set to a real address, open a prefilled mailto: link; (c) else (current default) validate, then show a clearly worded panel "This form isn't connected to email yet" with the composed message in a read-only box and a "Copy message" button and "Download as .txt" button, plus a visible developer-facing note in the README explaining how to connect a form service or email API. Contact details block shows labeled placeholders only: "Email: [placeholder: to be supplied]", "Phone: [placeholder]", "Office: Dubai, United Arab Emirates (street address placeholder)", "Social: placeholder". Do NOT create social links or invent addresses.
+Support query params to preselect industry and service (e.g. from the Industries page and service pages).
+
+---------------------------------------------
+5.13 404 and utility
+---------------------------------------------
+Branded 404 with links to Home, Services, Contact. Also add a robots.txt and sitemap.xml in /public with the routes above and a placeholder domain flagged for replacement.
+
+==================================================
+## 6. INTERACTION SPECIFICATIONS
+==================================================
+
+6.1 DIGITAL ECOSYSTEM FRAMEWORK (EcosystemDiagram), the signature interactive.
+Ten connected nodes in this order, linked as one chain with a visible objective anchor: Business Objectives → Brand Positioning → Content & Messaging → Search Demand & Discovery → Media & Acquisition Channels → Website / Ecommerce / Booking Engine → Customer Experience → Data & Analytics → Intelligence & Insights → Commercial Performance. Render as a connected diagram (SVG, along the slanted axis on desktop; vertical stepped path on mobile). Hover, focus or tap a node: highlight it and its connections, dim the rest, open a detail panel. Keyboard navigable (arrow keys, Enter, Esc), with an aria-live description. Node content:
+- Business Objectives: "Every strategy begins with a clear understanding of the business goals." Revenue Growth · Market Share Expansion · Lead Generation · Direct Bookings · Customer Acquisition · Retention & Loyalty · Digital Transformation. "We define success before selecting channels and tactics."
+- Brand Positioning: "A brand's perception directly impacts performance." Brand Identity · Value Proposition · Competitive Positioning · Customer Perception · Market Relevance. "Strong brands improve every downstream performance metric."
+- Content & Messaging: "Content shapes awareness, consideration, engagement and conversion." Creative Effectiveness · Content Strategy · Messaging Alignment · Audience Relevance · Customer Intent. "Content influences how users respond across every channel. Through DF. Studio, we also produce it, briefed from the objective and measured by the result."
+- Search Demand & Discovery: "Customers search when intent is highest, on search engines, in AI assistants, and increasingly through AI agents that act on their behalf." Search Demand Trends · Brand Search Volume · SEO Performance · Answer & Featured Snippet Visibility (AEO) · Google AI Overviews Presence (AIO) · AI Platform Citations & Recommendations (GEO) · AI Brand Accuracy & Sentiment (GAIO) · AI Agent Readiness (AXO) · Competitor Share of Voice. "Visibility wherever customers search directly affects business opportunities."
+- Media & Acquisition Channels: "Channels are activation tools, not the strategy itself." Google Ads · Paid Social · Programmatic Media · Metasearch · OTA Advertising · GDS Advertising · Marketplaces · Emerging Media. "The right mix depends on objectives, audience and commercial outcomes."
+- Website, App & Booking Experience: "Traffic means little if the experience fails to convert." UX & UI · Website Performance · Booking Funnel Efficiency · Ecommerce Experience · Mobile Experience · Conversion Optimization. "This is often where significant growth opportunities exist."
+- Customer Experience: "Customer interactions shape performance before and after conversion." Journey Mapping · Personalization · CRM Experience · Reviews & Reputation · Service Quality · Retention Programs. "Customer experience influences acquisition efficiency and lifetime value."
+- Data & Analytics: "Data provides visibility into performance." Analytics Platforms · CRM Data · Media Data · Search Intelligence · Business Data · Revenue Data. "Our focus is creating a single source of truth for decision-making."
+- Intelligence & Insights: "This is where DF. creates differentiation. Data becomes intelligence only when it drives action." Link to the Intelligence Framework.
+- Commercial Performance: "The ultimate measure of success is business impact." Revenue Growth · Bookings / Orders · Leads · Occupancy · Customer Lifetime Value · Market Share · Return on Investment (ROI). "Business outcomes always take priority over vanity metrics."
+Compact variant for About. Static accessible list fallback when JS or reduced motion makes the diagram hard to use.
+
+6.2 THE DF. INTELLIGENCE FRAMEWORK™ (IntelligenceFramework) + DashboardContext.
+Four-stage scroll or step experience on a dark gradient: DATA, "What happened?" → CONTEXT, "What influenced it?" → INTELLIGENCE, "Why did it happen?" → ACTION, "What should happen next?" Each stage lights up in turn (scroll-driven on desktop, tap or step controls on mobile; also operable by keyboard). Include the line "The operating idea behind every strategy, campaign, report and recommendation we produce." and "Most agencies provide reporting. DF. provides intelligence."
+DashboardContext, "Never Stop at the Dashboard": show a mock stat tile reading "CTR ↑ 12%" labeled "Illustrative example" with the caption "Accurate. But incomplete." As the user clicks or scrolls, context questions appear around it: What changed around the campaign? Was there PR coverage? Did search demand shift? Did the content mix change? Was seasonality a factor? Did pricing change? Was product interest affected? Were offline activities influencing performance? Supporting text: "A campaign may deliver strong results, but was the success driven by better targeting, stronger content, increased brand demand, pricing changes, PR coverage, seasonality, customer sentiment, market shifts, or external factors? Without context, optimization becomes guesswork." This must be clearly illustrative, never presented as real client data.
+Also: the Traditional Agency Model (Campaign → Metrics → Report) vs the DF. Intelligence Model (Business Objective → Digital Ecosystem → Data → Context → Intelligence → Action → Commercial Growth), as an animated comparison.
+
+6.3 PRACTICE CONSTELLATION. Intelligence as the central hub; Performance Marketing, Search Intelligence, Growth Marketing, Digital Transformation orbiting or radiating along slanted axes with connecting lines; DF. Studio as an outer ring or band labeled "Brought to life by DF. Studio." Hover or focus highlights a practice and shows a one-line summary and link; mobile uses a vertical stacked version with the same hierarchy. Not a card grid.
+
+6.4 SEARCH INTELLIGENCE DISCIPLINE SELECTOR. Six large acronym controls (SEO, AEO, AIO, GEO, GAIO, AXO) arranged as a progression "from ranking to recommendation to reservation". Selecting one reveals its tagline, explanation and deliverables with a smooth transition; deep-linkable via an in-app state/query parameter, keyboard accessible (tabs pattern: role="tablist", arrow keys). Each also exists as a full indexed section on the page so content is crawlable and printable.
+
+6.5 HOSPITALITY ECOSYSTEM MAP. 14 touchpoints placed around a central "Commercial performance" core, grouped visually by the four dimensions (Demand, Distribution, Commercial, Customer Experience) with connecting lines. Selecting a touchpoint shows what it contributes, using only the vocabulary in 5.11; a toggle highlights one dimension at a time. Mobile: grouped accordion list with small connection visuals.
+
+6.6 GLOBAL INTERACTIONS: smooth route transitions; scroll-triggered reveals (once-only); sticky header that condenses on scroll; mega-menu opens on hover and focus, closes on Escape and outside click; consistent link and button hover states (slanted underline sweep, subtle glow only on dark surfaces); a scroll-progress indicator on long pages (optional); scroll restoration and focus management on route change (move focus to main heading, announce page title for screen readers).
+
+==================================================
+## 7. RESPONSIVE, ACCESSIBILITY, SEO, PERFORMANCE
+==================================================
+
+RESPONSIVE (large desktop ≥1440, laptop ~1280, tablet ~768, mobile ~375). Recompose, don't just shrink: stacked hero with smaller but still bold headline; mobile nav with full-screen menu; diagrams switch to vertical or step-based versions; service lists use accordions on mobile; forms single-column with large tap targets (≥44px); footer reorganizes into stacked groups; no horizontal scroll at any width; test at 320px.
+
+ACCESSIBILITY (WCAG 2.2 AA): semantic landmarks (header, nav, main, footer); one h1 per page and logical heading order; skip-to-content link; visible focus rings (Electric Blue); full keyboard operability including all diagrams, menu, tabs and accordions; correct ARIA for tabs, accordions, dialogs and live regions; sufficient contrast; prefers-reduced-motion support; do not rely on color alone; form labels and errors; meaningful alt text (decorative visuals get alt="" or aria-hidden); touch-target size; no autoplaying motion that cannot be paused beyond reduced-motion handling.
+
+SEO: semantic HTML; unique <title> (≤60 chars) and meta description (≤155 chars) per route via a usePageMeta hook/config; Open Graph and Twitter tags per route with a placeholder og:image; canonical tag per route (using a placeholder base URL from config); descriptive alt text; internal linking between related pages; clean route names; sitemap.xml and robots.txt; JSON-LD: Organization (name, foundingDate 2021, founder Islam Helal, address locality Dubai, country AE; omit url, phone, email and sameAs unless config values are real) and Service / ItemList structured data for the five practices and the six search disciplines, BreadcrumbList on deeper pages, FAQ-style content only if real Q&A exists (do not invent). Keep the terminology SEO, AEO, AIO, GEO, GAIO and AXO intact in headings and text. Note in the README that a client-side SPA has SEO limitations and recommend prerendering or SSR (e.g. Vite SSG or migrating to a framework with SSR) before launch; implement what is possible now.
+
+PERFORMANCE: route-level code splitting; lazy-load below-the-fold sections and diagrams; ImageSlot with fixed aspect ratios, lazy loading, srcset/sizes and modern formats ready; minimal dependencies; animate transform/opacity only; pause offscreen animations; hero visual loads fast with a static fallback; preload critical Sora weights; avoid layout shift (CLS < 0.1 target), keep LCP fast (< 2.5s target) and INP responsive; no heavy video or large assets bundled; respect Save-Data/reduced-motion where practical.
+
+==================================================
+## 8. QUALITY BAR
+==================================================
+The result must look professionally art-directed and internationally competitive: strong typography, deliberate hierarchy, generous whitespace, confident asymmetry, one idea per screen, restrained effects. Avoid the generic AI-agency look: no repeated identical card grids, no gradient blobs everywhere, no emoji icons, no lorem ipsum, no stock-photo clichés. Copy must obey the brand voice rules in Section 1. Do not copy any existing website; the design must be original to DF.'s identity.
+
+==================================================
+## 9. IMPLEMENTATION PHASES (complete ALL; do not stop early)
+==================================================
+PHASE 1. UNDERSTAND: restate in 10 lines the positioning, page list, and the placeholder strategy. Confirm the stack works in this environment; if any library is unsupported, choose the closest supported alternative and note it in the README.
+PHASE 2. DESIGN SYSTEM: tokens (color, type scale, spacing, radii, slant, shadows, z-index), Tailwind theme, global styles, Sora loading, reduced-motion utilities, gradient mesh and pattern utilities.
+PHASE 3. ARCHITECTURE: folder structure, typed content models, centralized nav and site config, router with lazy routes, Layout, error boundary, ScrollManager, usePageMeta.
+PHASE 4. SHARED COMPONENTS: brand placeholders (Logo, BrandPattern, TridiMark, Hero3DSlot, ImageSlot, CharacterSlot), UI primitives, Header (with mega-menu), MobileNav, Footer, Breadcrumbs, CtaBand, section building blocks.
+PHASE 5. CONTENT DATA: transcribe ALL content from Sections 2 and 5 into typed data files, with no omissions of services, items or taglines.
+PHASE 6. PAGES: implement every route in Section 5 with its full content and varied layouts, in this order: Home, About, Services overview, the five practice pages, Studio, Industries, Hospitality, Contact, 404.
+PHASE 7. VISUAL STORYTELLING AND INTERACTIONS: implement the six diagrams/interactions in Section 6 and the scroll storytelling; verify keyboard and touch operation and reduced-motion behavior.
+PHASE 8. RESPONSIVE PASS: review each page at 1440, 1280, 768, 375 and 320; recompose where needed.
+PHASE 9. FUNCTIONALITY, SEO, ACCESSIBILITY, PERFORMANCE: contact form with validation and honest fallback, meta and JSON-LD, sitemap and robots, alt text, focus management, lazy loading, bundle review.
+PHASE 10. TEST AND FIX: click every nav item and CTA; open every route directly; test the 404; test the form (valid, invalid, fallback); test the mobile menu; test all diagrams with keyboard; run a TypeScript and lint check; fix every console error and warning; then audit the build against this brief's checklist below and fix gaps.
+
+==================================================
+## 10. FINAL ACCEPTANCE CHECKLIST (verify before finishing)
+==================================================
+[ ] All 12 routes plus 404 exist and are reachable from navigation or links.
+[ ] Home has all sections A–J with varied layouts and the hero hierarchy "SEE THE WHOLE FIELD." with a single clear primary CTA.
+[ ] 5 practices present; Intelligence presented as the core; DF. Studio presented as the creative and production arm.
+[ ] Intelligence: 9 services, DATA→CONTEXT→INTELLIGENCE→ACTION, reporting vs intelligence.
+[ ] Performance Marketing: Paid Media, Google Ads (9), Paid Social (7), Hospitality advertising with Metasearch (6), OTAs (7), GDS (7), Additional Media (11), Performance Optimization (11).
+[ ] Search Intelligence: SEO (11), AEO (7), AIO (6), GEO (8), GAIO (7), AXO (7) kept separate, each with tagline.
+[ ] Growth Marketing: all 21 services. Digital Transformation: all 19 services in 5 groups.
+[ ] Studio: 6 disciplines with all listed sub-services (9, 9, 6, 7, 6, 8).
+[ ] Industries: all 9. Hospitality: 14 ecosystem items, 4 dimensions, equation, 11 outcomes.
+[ ] Ecosystem diagram: 10 nodes, interactive and keyboard-accessible.
+[ ] Brand: palette, 70/15/15 balance, gradient mesh, Sora only, one slant angle, glassmorphism restrained, placeholders for logo, pattern, Tridi Mark, 3D icon, photography, Di and Fi.
+[ ] No banned words in copy. No invented clients, numbers, testimonials, contacts or links.
+[ ] Contact form validates and uses the honest fallback; contact details are labeled placeholders.
+[ ] SEO per route, JSON-LD, sitemap, robots; accessibility and reduced-motion verified; code-split and lazy-loaded; no console errors; README explains asset swapping and form integration.

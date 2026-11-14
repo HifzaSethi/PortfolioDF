@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Digital Field. Open Graph image placeholder">
+  <defs>
+    <radialGradient id="v" cx="0%" cy="100%" r="70%">
+      <stop offset="0%" stop-color="#B34FFF" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#010102" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="m" cx="100%" cy="100%" r="70%">
+      <stop offset="0%" stop-color="#E23389" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#010102" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#010102"/>
+  <rect width="1200" height="630" fill="url(#v)"/>
+  <rect width="1200" height="630" fill="url(#m)"/>
+  <g transform="translate(86, 120)">
+    <text x="0" y="70" fill="#F4F1EA" font-family="sans-serif" font-size="22" font-weight="600" letter-spacing="4">PERFORMANCE IN CONTEXT.</text>
+    <text x="0" y="185" fill="#F4F1EA" font-family="sans-serif" font-size="84" font-weight="800">SEE THE WHOLE FIELD.</text>
+    <text x="0" y="245" fill="#F4F1EA" fill-opacity="0.72" font-family="sans-serif" font-size="24">Digital Performance &amp; Intelligence Consultancy</text>
+  </g>
+  <rect x="86" y="510" width="230" height="54" fill="none" stroke="#F4F1EA" stroke-opacity="0.35" stroke-dasharray="6 4"/>
+  <text x="201" y="542" text-anchor="middle" fill="#F4F1EA" fill-opacity="0.75" font-family="sans-serif" font-size="13" letter-spacing="2">LOGO PLACEHOLDER</text>
+  <text x="1114" y="545" text-anchor="end" fill="#F4F1EA" font-family="sans-serif" font-size="18" font-weight="600" letter-spacing="3">DIGITALFIELD.CO</text>
+</svg>

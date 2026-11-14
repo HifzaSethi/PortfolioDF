@@ -1,0 +1,145 @@
+import type { StudioDiscipline } from '../types/content';
+
+export const STUDIO_COPY = {
+  tagline: 'Content in Context.',
+  contrastClaim: 'Most studios ask what will look good.',
+  contrastReframe: 'DF. Studio asks what the content needs to achieve.',
+  lead: 'DF. Studio is the creative and production arm of DF.: copywriting, photography, videography, graphic design, motion graphics, and AI content. Every brief starts from the client’s business objective and the signals from DF. Intelligence, and every asset is judged on what it moves: bookings, leads, and revenue, not likes.',
+  keyMessage: 'Intelligence is how DF. knows what to do. DF. Studio is how it shows up.',
+  loopIntro: 'Brief to Result',
+  loopSteps: [
+    'Business objective + Intelligence signals',
+    'Brief',
+    'Production',
+    'Asset',
+    'Measured result',
+    'Next brief',
+  ],
+  loopClosing:
+    'Every asset feeds back into the field. DF. Intelligence measures what each piece moved, and that shapes the next brief.',
+  brandDirectionNote:
+    "DF. Studio's own-brand imagery follows the Digital Field. visual direction, while client work produced by Studio adapts faithfully to each client's established brand identity.",
+  portfolioNotice: 'Portfolio: client work to be added',
+};
+
+export const STUDIO_DISCIPLINES: StudioDiscipline[] = [
+  {
+    id: 'copywriting',
+    title: 'Copywriting',
+    tagline:
+      'Words that carry the idea and move the reader to act, written natively in English and Arabic rather than translated.',
+    description:
+      'Objective-led messaging across brand systems, search intent, lifecycle automation, and hospitality listings.',
+    shotDescription: 'Editorial copywriting direction and bilingual English/Arabic brand messaging workshop',
+    altText: 'Placeholder for DF. Studio bilingual copywriting creative direction',
+    aspectRatio: '4/3',
+    subServices: [
+      'Brand Messaging & Tone of Voice',
+      'Taglines, Slogans & Campaign Concepts',
+      'Advertising Copy (search, social, display, OOH)',
+      'Social Media Captions & Content Calendars',
+      'SEO & AI Search Content (with Search Intelligence)',
+      'Email, SMS & WhatsApp Copy (with Growth Marketing)',
+      'Video Scripts & Storyboards',
+      'Hotel & Room Descriptions, OTA Listing Copy',
+      'Arabic / English Transcreation & Localization',
+    ],
+  },
+  {
+    id: 'photography',
+    title: 'Photography',
+    tagline: 'Imagery that sells the experience before the customer arrives.',
+    description:
+      'Authentic, considered visual production across hospitality spaces, culinary craft, talent, architecture, and product lines.',
+    shotDescription: 'Authentic modern hospitality suite and architectural daylight photography',
+    altText: 'Placeholder for DF. Studio hospitality and architectural photography',
+    aspectRatio: '4/3',
+    subServices: [
+      'Property, Rooms & Suites Photography',
+      'Food & Beverage Photography',
+      'Lifestyle & Talent Photography',
+      'Product & E-commerce Photography',
+      'Real Estate & Architectural Photography',
+      'Event & Launch Coverage',
+      'Corporate & Team Portraits',
+      'Aerial & Drone Photography',
+      'Social Media Photo Libraries',
+    ],
+  },
+  {
+    id: 'videography',
+    title: 'Videography',
+    tagline: "Films and short-form video built for the channel they'll run on.",
+    description:
+      'Structured production from hero destination films down to performance-tested short-form cut-downs.',
+    shotDescription: 'Film production crew capturing modern hospitality and destination storytelling',
+    altText: 'Placeholder for DF. Studio film and short-form videography production',
+    aspectRatio: '16/9',
+    subServices: [
+      'Brand & Campaign Films',
+      'Property & Destination Films',
+      'Short-Form Social Video (Reels, TikTok, Shorts, Snapchat)',
+      'Ad Cut-Downs & Variations (6s, 15s, 30s)',
+      'Aerial & Drone Videography',
+      'Virtual Tours & Walkthroughs',
+    ],
+  },
+  {
+    id: 'graphic-design',
+    title: 'Graphic Design',
+    tagline: 'Design that works the same way across every touchpoint, from feed to brochure.',
+    description:
+      'Cohesive campaign creative, landing visuals, lifecycle templates, and print collateral engineered for conversion clarity.',
+    shotDescription: 'Cohesive digital campaign design and print collateral layout system',
+    altText: 'Placeholder for DF. Studio graphic design system showcase',
+    aspectRatio: '4/3',
+    subServices: [
+      'Campaign & Advertising Creative',
+      'Social Media Design & Templates',
+      'Website & Landing Page Visuals',
+      'Email & CRM Design',
+      'Print & Collateral (brochures, menus, signage)',
+      'Infographics & Data Visualization',
+      'Seasonal Campaign Kits',
+    ],
+  },
+  {
+    id: 'motion-graphics',
+    title: 'Motion Graphics',
+    tagline: 'Movement that stops the scroll and explains the idea quickly.',
+    description:
+      'Kinetic typography, animated data stories, CGI sequences, and digital signage designed for fast comprehension.',
+    shotDescription: 'Kinetic typography and sleek data visualization motion frame',
+    altText: 'Placeholder for DF. Studio motion graphics and kinetic typography',
+    aspectRatio: '16/9',
+    subServices: [
+      'Animated Ads & Social Motion',
+      'Animated Infographics & Data Stories',
+      'Typography & Kinetic Text Animation',
+      'Video Titles, Lower Thirds & Templates',
+      '3D Animation & CGI',
+      'Digital Signage & In-Room TV Loops',
+    ],
+  },
+  {
+    id: 'ai-content',
+    title: 'AI Content',
+    tagline: 'Faster, wider, and more testable content, produced within clear brand and rights guardrails.',
+    description:
+      'Governed generative visual and multilingual production integrated directly with Search Intelligence and performance testing.',
+    shotDescription: 'AI-assisted visual staging and seasonal creative variation workflow',
+    altText: 'Placeholder for DF. Studio governed AI content workflow',
+    aspectRatio: '4/3',
+    subServices: [
+      'AI Visual Concepts & Mood Boards',
+      'AI Image Generation & Scene Variations',
+      'AI Product & Seasonal Re-skins',
+      'AI Video & Avatar Content',
+      'Multilingual Versioning & Dubbing (EN / AR and beyond)',
+      'AI-Ready Content for AI Search (with Search Intelligence)',
+      '3D Renders & Virtual Staging',
+      'AI Content Governance (rights, disclosure, brand safety)',
+    ],
+    disclosureNote: 'AI-generated imagery is labeled where disclosure is required.',
+  },
+];

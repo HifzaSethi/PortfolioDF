@@ -1,0 +1,6 @@
+{
+  "name": "Digital Field.",
+  "description": "Digital Performance & Intelligence Consultancy. Performance in Context.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
