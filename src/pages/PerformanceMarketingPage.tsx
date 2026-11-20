@@ -29,7 +29,7 @@ export default function PerformanceMarketingPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
             {/* Sticky Side Index */}
-            <aside className="lg:col-span-4 lg:sticky lg:top-24 df-card-surface df-frame-l p-6 space-y-4">
+            <aside className="lg:col-span-4 lg:sticky lg:top-24 df-card-surface df-ambient df-panel-hairline df-frame-l p-6 space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                 Channel Index
               </p>
@@ -40,7 +40,7 @@ export default function PerformanceMarketingPage() {
                       <button
                         type="button"
                         onClick={() => scrollToSection(sec.id)}
-                        className="w-full min-h-[40px] flex items-center gap-3 px-2 py-1.5 text-left text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--link-accent)] cursor-pointer"
+                        className="w-full min-h-[40px] flex items-center gap-3 px-3 py-1.5 text-left text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--link-accent)] df-interactive"
                       >
                         <span className="text-xs tabular-nums text-[var(--text-muted)]">
                           0{idx + 1}
@@ -76,7 +76,7 @@ export default function PerformanceMarketingPage() {
                       {section.items.map((item) => (
                         <li
                           key={item}
-                          className="df-card-surface px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
+                          className="df-card-surface df-ambient px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
                         >
                           {item}
                         </li>
@@ -89,7 +89,7 @@ export default function PerformanceMarketingPage() {
                       {section.subBlocks.map((block) => (
                         <div
                           key={block.id}
-                          className="df-card-surface df-frame-l p-6 space-y-4"
+                          className="df-card-surface df-ambient df-frame-l p-6 space-y-4"
                         >
                           <h3 className="text-xl font-extrabold text-[var(--text-primary)]">
                             {block.title}

@@ -7,6 +7,7 @@ import { TridiMark } from '../components/brand/TridiMark';
 import { EcosystemDiagram } from '../components/diagrams/EcosystemDiagram';
 import { IntelligenceFramework } from '../components/diagrams/IntelligenceFramework';
 import { PracticeConstellation } from '../components/diagrams/PracticeConstellation';
+import { useIntro } from '../components/intro/IntroContext';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { CtaBand } from '../components/sections/CtaBand';
@@ -20,10 +21,14 @@ import { ECOSYSTEM_INTRO } from '../data/ecosystem';
 import { INDUSTRIES } from '../data/industries';
 import { STUDIO_DISCIPLINES } from '../data/studio';
 import { usePageMeta } from '../hooks/usePageMeta';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 export default function HomePage() {
   usePageMeta('/');
   const [dotsAligned, setDotsAligned] = useState(true);
+  const { contentRevealAllowed } = useIntro();
+  const reducedMotion = useReducedMotion();
+  const showHeroContent = contentRevealAllowed || reducedMotion;
 
   return (
     <>
@@ -35,7 +40,11 @@ export default function HomePage() {
       >
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-7 space-y-6">
+            <div
+              className={`lg:col-span-7 space-y-6 transition-[opacity,transform] duration-700 ease-[var(--ease-out)] ${
+                showHeroContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
               <div className="flex items-center gap-3">
                 <TridiMark size={28} tone="auto" />
                 <Eyebrow number="01" tone="auto">
@@ -184,7 +193,7 @@ export default function HomePage() {
             </div>
 
             {/* Interactive Scattered Dots -> One Fixed Point */}
-            <div className="lg:col-span-6 df-card-surface df-frame-l p-6 sm:p-8 space-y-5">
+            <div className="lg:col-span-6 df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8 space-y-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                   Signal Alignment Model
@@ -193,7 +202,7 @@ export default function HomePage() {
                   type="button"
                   aria-pressed={dotsAligned}
                   onClick={() => setDotsAligned((v) => !v)}
-                  className="min-h-[40px] px-4 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-page)] text-xs font-bold uppercase tracking-[0.06em] text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] df-slant-block cursor-pointer"
+                  className="min-h-[40px] px-4 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-page)] text-xs font-bold uppercase tracking-[0.06em] text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] df-slant-block df-interactive"
                 >
                   <span className="df-unslant inline-block">
                     {dotsAligned ? 'Show Disconnected State' : 'Resolve to Business Objective'}
@@ -416,7 +425,7 @@ export default function HomePage() {
                   <li key={ind.id}>
                     <Link
                       to={ind.path}
-                      className="flex min-h-[48px] items-center justify-between gap-4 py-3 text-base font-bold text-[var(--text-primary)] hover:text-[var(--link-accent)] transition-colors"
+                      className="flex min-h-[48px] items-center justify-between gap-4 py-3 px-3 text-base font-bold text-[var(--text-primary)] hover:text-[var(--link-accent)] df-interactive"
                     >
                       <span className="flex items-center gap-4">
                         <span className="text-xs font-semibold tabular-nums text-[var(--text-muted)]">

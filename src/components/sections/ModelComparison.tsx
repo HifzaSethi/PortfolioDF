@@ -17,7 +17,7 @@ export function ModelComparison() {
               key={mode}
               type="button"
               onClick={() => setSelectedModel(mode)}
-              className={`min-h-[40px] px-3.5 py-1.5 text-xs font-bold border transition-colors cursor-pointer df-slant-block ${
+              className={`min-h-[40px] px-3.5 py-1.5 text-xs font-bold border df-slant-block df-interactive ${
                 selectedModel === mode
                   ? 'bg-[var(--electric-blue)] text-[var(--off-white)] border-[var(--electric-blue)]'
                   : 'border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'

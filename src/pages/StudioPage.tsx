@@ -49,7 +49,7 @@ export default function StudioPage() {
               {STUDIO_COPY.loopSteps.map((step, idx) => (
                 <li
                   key={step}
-                  className="df-card-surface df-frame-t p-4 flex flex-col justify-between gap-4"
+                  className="df-card-surface df-ambient df-frame-t p-4 flex flex-col justify-between gap-4"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
@@ -120,7 +120,7 @@ export default function StudioPage() {
                     {discipline.subServices.map((item) => (
                       <li
                         key={item}
-                        className="df-card-surface px-3.5 py-2.5 text-sm font-semibold text-[var(--text-primary)]"
+                        className="df-card-surface df-ambient px-3.5 py-2.5 text-sm font-semibold text-[var(--text-primary)]"
                       >
                         {item}
                       </li>
@@ -144,7 +144,7 @@ export default function StudioPage() {
             </div>
           )}
 
-          <div className="df-card-surface df-frame-l p-6">
+          <div className="df-card-surface df-ambient df-frame-l p-6">
             <p className="text-sm leading-relaxed text-[var(--text-primary)]">
               {STUDIO_COPY.brandDirectionNote}
             </p>

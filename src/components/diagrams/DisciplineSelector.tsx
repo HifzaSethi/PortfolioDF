@@ -66,7 +66,8 @@ export function DisciplineSelector({ activeId, onSelect }: DisciplineSelectorPro
               tabIndex={selected ? 0 : -1}
               onClick={() => onSelect(discipline.id)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`p-4 text-left border transition-all duration-150 cursor-pointer min-h-[82px] flex flex-col justify-between ${
+              data-spotlight=""
+              className={`p-4 text-left border min-h-[82px] flex flex-col justify-between df-interactive ${
                 selected
                   ? 'bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] border-[var(--magenta)]'
                   : 'df-card-surface text-[var(--text-primary)] hover:border-[var(--link-accent)]'
@@ -92,7 +93,7 @@ export function DisciplineSelector({ activeId, onSelect }: DisciplineSelectorPro
         id="discipline-selector-panel"
         role="tabpanel"
         aria-live="polite"
-        className="df-card-surface df-frame-l p-6 sm:p-8 grid gap-6 lg:grid-cols-12"
+        className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8 grid gap-6 lg:grid-cols-12"
       >
         <div className="lg:col-span-5 space-y-3">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">

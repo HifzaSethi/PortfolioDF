@@ -22,7 +22,7 @@ interface SectionProps {
 }
 
 const SURFACE_CLASSES: Record<Exclude<SectionSurface, 'hero-adaptive'>, string> = {
-  'off-white': 'bg-[var(--bg-page)] text-[var(--text-primary)]',
+  'off-white': 'df-surface-page text-[var(--text-primary)]',
   tint: 'bg-[var(--bg-tint)] df-night-mesh-subtle text-[var(--text-primary)]',
   'dark-mesh': 'df-mesh-dark df-mesh-animate text-[var(--off-white)]',
   'hospitality-mesh': 'df-mesh-hospitality df-mesh-animate text-[var(--off-white)]',
@@ -59,12 +59,12 @@ export function Section({
     <section
       id={id}
       ref={reveal ? ref : undefined}
-      className={`relative overflow-hidden ${surfaceClass} ${
+      className={`relative overflow-x-clip ${surfaceClass} ${
         compact ? 'py-[var(--section-py-compact)]' : 'py-[var(--section-py)]'
       } ${reveal ? `df-reveal ${isInView ? 'is-visible' : ''}` : ''} ${className}`}
     >
       {withPattern && <BrandPattern tone={isDarkSurface ? 'dark' : 'light'} />}
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 w-full">{children}</div>
     </section>
   );
 }

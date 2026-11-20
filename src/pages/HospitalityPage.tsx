@@ -74,8 +74,9 @@ export default function HospitalityPage() {
                   role="tab"
                   type="button"
                   aria-selected={selected}
+                  data-spotlight=""
                   onClick={() => setActiveDimensionId(dim.id)}
-                  className={`p-5 text-left border transition-colors cursor-pointer min-h-[76px] ${
+                  className={`p-5 text-left border min-h-[76px] df-interactive ${
                     selected
                       ? 'bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] border-[var(--link-accent)]'
                       : 'bg-[var(--bg-elevated)] text-[var(--text-primary)] border-[var(--border-strong)] hover:border-[var(--link-accent)]'
@@ -92,7 +93,7 @@ export default function HospitalityPage() {
           <div
             role="tabpanel"
             aria-live="polite"
-            className="df-card-surface df-frame-l p-6 sm:p-8 grid gap-6 lg:grid-cols-12 lg:items-center"
+            className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8 grid gap-6 lg:grid-cols-12 lg:items-center"
           >
             <div className="lg:col-span-5 space-y-2">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
@@ -216,7 +217,8 @@ export default function HospitalityPage() {
                     <Link
                       key={link.label}
                       to={link.path}
-                      className="flex min-h-[48px] items-center justify-between gap-3 df-card-surface px-4 py-3 text-sm font-bold text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] transition-colors"
+                      data-spotlight=""
+                      className="flex min-h-[48px] items-center justify-between gap-3 df-card-surface df-interactive px-4 py-3 text-sm font-bold text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)]"
                     >
                       <span>{link.label}</span>
                       <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0" />

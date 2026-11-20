@@ -37,7 +37,7 @@ export default function GrowthMarketingPage() {
                 type="button"
                 aria-pressed={selectedStageId === 'all'}
                 onClick={() => setSelectedStageId('all')}
-                className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block cursor-pointer ${
+                className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
                   selectedStageId === 'all'
                     ? 'df-gradient-accent text-[var(--near-black)] border-transparent'
                     : 'bg-[var(--bg-elevated)] border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'
@@ -53,7 +53,7 @@ export default function GrowthMarketingPage() {
                     type="button"
                     aria-pressed={isSelected}
                     onClick={() => setSelectedStageId(stage.id)}
-                    className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block cursor-pointer ${
+                    className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
                       isSelected
                         ? 'bg-[var(--electric-blue)] text-[var(--off-white)] border-[var(--electric-blue)]'
                         : 'bg-[var(--bg-elevated)] border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'
@@ -70,7 +70,7 @@ export default function GrowthMarketingPage() {
             {visibleStages.map((stage, idx) => (
               <section
                 key={stage.id}
-                className="df-card-surface df-frame-l p-6 sm:p-8"
+                className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8"
               >
                 <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
                   <div className="lg:col-span-4 space-y-2">

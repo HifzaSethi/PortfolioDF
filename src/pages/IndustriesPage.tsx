@@ -40,7 +40,7 @@ export default function IndustriesPage() {
                       to={industry.path}
                       onMouseEnter={() => setHoveredId(industry.id)}
                       onFocus={() => setHoveredId(industry.id)}
-                      className={`group flex min-h-[64px] items-center justify-between gap-4 py-4 px-2 transition-colors ${
+                      className={`group flex min-h-[64px] items-center justify-between gap-4 py-4 px-3 df-interactive ${
                         isSelected
                           ? 'text-[var(--link-accent)]'
                           : 'text-[var(--text-primary)] hover:text-[var(--link-accent)]'
@@ -67,7 +67,7 @@ export default function IndustriesPage() {
             {/* Context Reveal Panel */}
             <aside
               aria-live="polite"
-              className="lg:col-span-5 lg:sticky lg:top-28 df-card-surface df-frame-l p-7 sm:p-8 space-y-4"
+              className="lg:col-span-5 lg:sticky lg:top-28 df-card-surface df-ambient df-panel-hairline df-frame-l p-7 sm:p-8 space-y-4"
             >
               <Eyebrow number="02" accent="blue">
                 Objective &rarr; Ecosystem &rarr; Intelligence &rarr; Action

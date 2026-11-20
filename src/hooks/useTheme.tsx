@@ -12,18 +12,27 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+function syncThemeMeta(theme: DfTheme) {
+  if (typeof document === 'undefined') return;
+  document.documentElement.setAttribute('data-theme', theme);
+  const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  if (meta) {
+    meta.content = theme === 'night' ? '#010102' : '#F4F1EA';
+  }
+}
+
 function readInitialTheme(): DfTheme {
   if (typeof document !== 'undefined') {
     const attr = document.documentElement.getAttribute('data-theme');
-    if (attr === 'night' || attr === 'day') return attr;
+    if (attr === 'day' || attr === 'night') return attr;
   }
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (saved === 'night') return 'night';
+    if (saved === 'day') return 'day';
   } catch {
     // Ignore storage access errors
   }
-  return 'day';
+  return 'night';
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -31,9 +40,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const setTheme = useCallback((next: DfTheme) => {
     setThemeState(next);
-    if (typeof document !== 'undefined') {
-      document.documentElement.setAttribute('data-theme', next);
-    }
+    syncThemeMeta(next);
     try {
       window.localStorage.setItem(STORAGE_KEY, next);
     } catch {
@@ -46,7 +53,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme, setTheme]);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    syncThemeMeta(theme);
   }, [theme]);
 
   return (

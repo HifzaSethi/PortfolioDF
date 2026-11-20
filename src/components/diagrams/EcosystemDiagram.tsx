@@ -42,7 +42,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
         <button
           type="button"
           onClick={() => setShowListView((v) => !v)}
-          className="inline-flex min-h-[40px] items-center gap-2 border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] cursor-pointer"
+          className="inline-flex min-h-[40px] items-center gap-2 border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3.5 py-1.5 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] df-interactive"
         >
           <ListTree aria-hidden="true" className="h-4 w-4" />
           <span>{showListView ? 'Interactive Chain View' : 'Accessible List View'}</span>
@@ -54,7 +54,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
           {ECOSYSTEM_NODES.map((node) => (
             <li
               key={node.id}
-              className="df-card-surface p-4"
+              className="df-card-surface df-ambient p-4"
             >
               <p className="text-xs font-bold tabular-nums text-[var(--link-accent)]">
                 {String(node.order).padStart(2, '0')}
@@ -69,7 +69,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
           {/* Desktop Slanted SVG + Connected Chain / Mobile Vertical Stepped Path */}
           <div className="lg:col-span-7">
             <div
-              className="hidden md:block relative df-card-surface p-6"
+              className="hidden md:block relative df-card-surface df-ambient p-6"
               role="group"
               aria-label="Digital Ecosystem Framework 10-node chain"
             >
@@ -132,12 +132,13 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                       key={node.id}
                       id={`eco-node-${node.id}`}
                       type="button"
+                      data-spotlight=""
                       onClick={() => setActiveId(node.id)}
                       onMouseEnter={() => setActiveId(node.id)}
                       onFocus={() => setActiveId(node.id)}
                       onKeyDown={(e) => handleKeyDown(e, index)}
                       aria-pressed={isSelected}
-                      className={`group text-left p-3 border transition-all duration-150 cursor-pointer min-h-[84px] flex flex-col justify-between ${
+                      className={`group text-left p-3 border min-h-[84px] flex flex-col justify-between df-interactive ${
                         isSelected
                           ? 'border-[var(--magenta)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] shadow-sm'
                           : isNeighbor
@@ -180,37 +181,37 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
               {ECOSYSTEM_NODES.map((node, index) => {
                 const isSelected = node.id === activeNode.id;
                 return (
-                  <button
-                    key={node.id}
-                    type="button"
-                    onClick={() => setActiveId(node.id)}
-                    aria-expanded={isSelected}
-                    className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left border min-h-[48px] cursor-pointer ${
-                      isSelected
-                        ? 'border-[var(--magenta)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)]'
-                        : 'border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-primary)]'
-                    }`}
-                  >
-                    <span className="flex items-center gap-3">
-                      <span className="text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
-                        {String(node.order).padStart(2, '0')}
+                    <button
+                      key={node.id}
+                      type="button"
+                      onClick={() => setActiveId(node.id)}
+                      aria-expanded={isSelected}
+                      className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left border min-h-[48px] df-interactive ${
+                        isSelected
+                          ? 'border-[var(--magenta)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)]'
+                          : 'border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-primary)]'
+                      }`}
+                    >
+                      <span className="flex items-center gap-3">
+                        <span className="text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
+                          {String(node.order).padStart(2, '0')}
+                        </span>
+                        <span className="text-sm font-bold">{node.title}</span>
                       </span>
-                      <span className="text-sm font-bold">{node.title}</span>
-                    </span>
-                    <span className="text-xs opacity-75">{index === 0 ? 'Anchor' : 'Inspect'}</span>
-                  </button>
-                );
-              })}
+                      <span className="text-xs opacity-75">{index === 0 ? 'Anchor' : 'Inspect'}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* Detail Panel with architectural L-frame */}
-          <div
-            aria-live="polite"
-            className={`lg:col-span-5 df-card-surface df-frame-l ${
-              compact ? 'p-6' : 'p-7 sm:p-8'
-            }`}
-          >
+            {/* Detail Panel with architectural L-frame */}
+            <div
+              aria-live="polite"
+              className={`lg:col-span-5 df-card-surface df-ambient df-panel-hairline df-frame-l ${
+                compact ? 'p-6' : 'p-7 sm:p-8'
+              }`}
+            >
             <div className="flex items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
               <span className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--link-accent)] tabular-nums">
                 Node {String(activeNode.order).padStart(2, '0')} / 10

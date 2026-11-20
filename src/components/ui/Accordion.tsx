@@ -56,7 +56,7 @@ export function Accordion({
               aria-expanded={isOpen}
               aria-controls={panelId}
               onClick={() => toggle(item.id)}
-              className={`flex w-full min-h-[52px] items-center justify-between gap-4 py-4 text-left transition-colors cursor-pointer ${
+              className={`flex w-full min-h-[52px] items-center justify-between gap-4 py-4 px-2 text-left df-interactive ${
                 isDark
                   ? 'text-[var(--off-white)] hover:text-[var(--violet)]'
                   : 'text-[var(--text-primary)] hover:text-[var(--link-accent)]'

@@ -33,7 +33,7 @@ const SERVICE_OPTIONS = [
 const INDUSTRY_OPTIONS = [...INDUSTRIES.map((i) => i.name), 'Other'];
 
 const FIELD_INPUT_CLASSES =
-  'w-full min-h-[44px] border border-[var(--border-strong)] bg-[var(--input-bg)] px-3.5 py-2.5 text-sm text-[var(--input-text)] placeholder:text-[var(--text-subtle)] focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2';
+  'w-full min-h-[44px] border border-[var(--border-strong)] bg-[var(--input-bg)] px-3.5 py-2.5 text-sm text-[var(--input-text)] placeholder:text-[var(--text-subtle)] df-input-focus focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2';
 
 export default function ContactPage() {
   usePageMeta('/contact');
@@ -206,7 +206,7 @@ export default function ContactPage() {
                 </ol>
               </div>
 
-              <div className="df-card-surface df-frame-l p-6 space-y-4">
+              <div className="df-card-surface df-ambient df-frame-l p-6 space-y-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
                   Direct Contact Details
                 </p>
@@ -361,7 +361,7 @@ export default function ContactPage() {
                     aria-describedby={
                       errors.message ? 'contact-message-error' : 'contact-message-hint'
                     }
-                    className="w-full border border-[var(--border-strong)] bg-[var(--input-bg)] px-3.5 py-3 text-sm text-[var(--input-text)] placeholder:text-[var(--text-subtle)] focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2"
+                    className="w-full border border-[var(--border-strong)] bg-[var(--input-bg)] px-3.5 py-3 text-sm text-[var(--input-text)] placeholder:text-[var(--text-subtle)] df-input-focus focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2"
                   />
                 </FormField>
 

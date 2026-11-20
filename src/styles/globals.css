@@ -53,6 +53,42 @@
   }
 }
 
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Pre-paint intro cover prevents FOUC before IntroGate mounts */
+html[data-intro='pending'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: #010102;
+  z-index: 190;
+}
+
+/* Page surface transparency in Night allows fixed ambient glow to shine through */
+[data-theme="day"] .df-surface-page {
+  background-color: var(--bg-page);
+}
+
+[data-theme="night"] .df-surface-page {
+  background-color: transparent;
+}
+
+/* Fixed ambient Night lighting layer (violet bottom-left, magenta bottom-right, blue top-right) */
+[data-theme="night"] body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 68% 58% at 6% 96%, color-mix(in srgb, var(--violet) 13%, transparent) 0%, transparent 66%),
+    radial-gradient(ellipse 64% 56% at 94% 94%, color-mix(in srgb, var(--magenta) 11%, transparent) 0%, transparent 64%),
+    radial-gradient(ellipse 52% 48% at 92% 8%, color-mix(in srgb, var(--electric-blue) 6%, transparent) 0%, transparent 64%);
+}
+
 /* Signature Dark-Centre Gradient Mesh (Day hero/footer bands & Night surfaces) */
 .df-mesh-dark {
   position: relative;
@@ -155,7 +191,9 @@
 }
 
 [data-theme="night"] .df-card-surface {
-  background-color: var(--bg-elevated);
+  background-color: rgba(255, 255, 255, 0.02);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--shadow-subtle);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-strong);
@@ -164,6 +202,11 @@
 [data-theme="day"] .df-card-surface {
   background-color: var(--bg-elevated);
   border: 1px solid var(--border-strong);
+}
+
+/* Subtle 1px brand hairline option on major feature panels */
+[data-theme="night"] .df-panel-hairline {
+  border-color: color-mix(in srgb, var(--violet) 32%, var(--border-strong));
 }
 
 /* Architectural L-Shape and T-Shape Framing Elements */
@@ -210,6 +253,210 @@
 .df-link-sweep:hover::after,
 .df-link-sweep:focus-visible::after {
   transform: scaleX(1) skewX(var(--slant));
+}
+
+/* ============================================================================
+   INTERACTION SYSTEM (Two Tiers + Media)
+   Rule:
+   - TIER 1 (.df-interactive): Strictly interactive controls (<Link>, <button>,
+     role="tab", accordion triggers, MegaMenu cards). If a static block is later
+     wrapped in a link, move it from .df-ambient to .df-interactive.
+   - TIER 2 (.df-ambient): Non-clickable informational blocks. Default cursor,
+     never scales or lifts beyond subtle border/light sweep (opacity <= 0.08).
+   - .df-media: Overflow-hidden media slots (scale 1.045 + slanted drift).
+   ============================================================================ */
+
+.df-interactive {
+  position: relative;
+  isolation: isolate;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--dur-out) var(--ease-out),
+    box-shadow var(--dur-out) var(--ease-out),
+    border-color var(--dur-out) var(--ease-out);
+}
+
+.df-interactive::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, var(--violet), var(--magenta));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity var(--dur-out) var(--ease-out);
+}
+
+.df-interactive[data-spotlight]:not(.df-mesh-dark):not(.df-mesh-hospitality)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--violet) 22%, transparent),
+    color-mix(in srgb, var(--magenta) 10%, transparent) 45%,
+    transparent 74%
+  );
+  transition: opacity var(--dur-out) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .df-interactive:hover {
+    will-change: transform;
+    transition-duration: var(--dur-in);
+    transform: translate3d(0, var(--lift), 0);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .df-interactive:hover::before {
+    transition-duration: var(--dur-in);
+    opacity: 1;
+  }
+
+  .df-interactive[data-spotlight]:not(.df-mesh-dark):not(.df-mesh-hospitality):hover::after {
+    opacity: 1;
+  }
+}
+
+.df-interactive:focus-visible {
+  will-change: transform;
+  transform: translate3d(0, var(--lift), 0);
+  box-shadow: var(--shadow-lift);
+}
+
+.df-interactive:focus-visible::before {
+  opacity: 1;
+}
+
+.df-interactive:active {
+  transform: translate3d(0, -1px, 0) scale(0.995);
+  transition-duration: 120ms;
+}
+
+@media (hover: none) {
+  .df-interactive {
+    transition:
+      transform 240ms var(--ease-out),
+      box-shadow 240ms var(--ease-out),
+      border-color 240ms var(--ease-out);
+  }
+
+  .df-interactive:active {
+    transform: scale(0.985);
+    transition-duration: 120ms;
+  }
+
+  .df-interactive:active::before {
+    opacity: 0.8;
+    transition-duration: 120ms;
+  }
+
+  .df-interactive[data-touch-pulse='true'] {
+    box-shadow: var(--shadow-lift);
+  }
+
+  .df-interactive[data-touch-pulse='true']::before {
+    opacity: 0.85;
+  }
+}
+
+/* TIER 2: Non-clickable informational blocks */
+.df-ambient {
+  position: relative;
+  cursor: default;
+  transition:
+    border-color var(--dur-out) var(--ease-out),
+    box-shadow var(--dur-out) var(--ease-out);
+}
+
+.df-ambient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  background-image: linear-gradient(
+    102deg,
+    transparent 12%,
+    rgba(179, 79, 255, 0.35) 38%,
+    rgba(255, 255, 255, 0.72) 50%,
+    rgba(226, 51, 137, 0.3) 62%,
+    transparent 88%
+  );
+  transition: opacity var(--dur-out) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .df-ambient:hover {
+    border-color: color-mix(in srgb, var(--text-primary) 34%, transparent);
+  }
+
+  .df-ambient:hover::after {
+    transition-duration: var(--dur-in);
+    opacity: 0.075;
+  }
+}
+
+/* Media & ImageSlot hover drift */
+.df-media {
+  overflow: hidden;
+}
+
+.df-media img,
+.df-media .df-media-target,
+.df-media .df-media-pattern {
+  transition: transform 600ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .df-media:hover img,
+  .df-media:hover .df-media-target {
+    will-change: transform;
+    transform: translate3d(6px, -2px, 0) scale(1.045);
+  }
+
+  .df-media:hover .df-media-pattern {
+    will-change: transform;
+    transform: translate3d(6px, -3px, 0) scale(1.03);
+  }
+}
+
+/* Subtle Violet input focus glow */
+.df-input-focus:focus-visible {
+  box-shadow: 0 0 0 3px var(--glow-violet);
+}
+
+/* Explore CTA automated light sweep */
+@keyframes df-btn-sweep {
+  0%, 72% {
+    transform: translateX(-140%) skewX(var(--slant));
+    opacity: 0;
+  }
+  78% {
+    opacity: 0.65;
+  }
+  94%, 100% {
+    transform: translateX(220%) skewX(var(--slant));
+    opacity: 0;
+  }
+}
+
+.df-explore-sweep {
+  animation: df-btn-sweep 4.2s var(--ease-out) infinite;
 }
 
 /* Scroll reveal utility */
@@ -262,8 +509,22 @@
     scroll-behavior: auto;
   }
 
-  .df-mesh-animate {
+  .df-mesh-animate,
+  .df-explore-sweep {
     animation: none !important;
+  }
+
+  .df-interactive:hover,
+  .df-interactive:focus-visible,
+  .df-interactive:active,
+  .df-media:hover img,
+  .df-media:hover .df-media-target,
+  .df-media:hover .df-media-pattern {
+    transform: none !important;
+  }
+
+  .df-ambient::after {
+    display: none !important;
   }
 
   .df-reveal {

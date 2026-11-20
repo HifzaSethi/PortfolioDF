@@ -57,7 +57,7 @@ export default function IntelligencePage() {
             {INTELLIGENCE_SERVICES.map((service, idx) => (
               <article
                 key={service.id}
-                className="df-card-surface df-frame-t p-6 space-y-3"
+                className="df-card-surface df-ambient df-frame-t p-6 space-y-3"
               >
                 <p className="text-xs font-bold tabular-nums text-[var(--link-accent)]">
                   0{idx + 1}
@@ -77,7 +77,7 @@ export default function IntelligencePage() {
       {/* Single Source of Truth + Closing Line */}
       <Section surface="off-white" reveal>
         <Container className="space-y-10">
-          <div className="df-card-surface df-frame-l grid gap-8 lg:grid-cols-12 lg:items-center p-8">
+          <div className="df-card-surface df-ambient df-panel-hairline df-frame-l grid gap-8 lg:grid-cols-12 lg:items-center p-8">
             <div className="lg:col-span-5 space-y-3">
               <Eyebrow number="03" accent="blue">
                 Data &amp; Analytics Goal

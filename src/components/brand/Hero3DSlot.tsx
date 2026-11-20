@@ -1,23 +1,12 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
 import { SITE_CONFIG } from '../../config/site';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useTheme } from '../../hooks/useTheme';
+import { useIntro } from '../intro/IntroContext';
+import { isWebGLSupported } from '../intro/introStorage';
 import { Logo } from './Logo';
 
 const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'));
-
-function checkWebGLSupport(): boolean {
-  if (typeof window === 'undefined') return false;
-  try {
-    const canvas = document.createElement('canvas');
-    return Boolean(
-      window.WebGLRenderingContext &&
-        (canvas.getContext('webgl2') || canvas.getContext('webgl'))
-    );
-  } catch {
-    return false;
-  }
-}
 
 function Hero3DBrandLoader() {
   return (
@@ -64,8 +53,11 @@ function Hero3DFallback() {
 export function Hero3DSlot() {
   const reducedMotion = useReducedMotion();
   const { theme } = useTheme();
-  const [webGLOk, setWebGLOk] = useState<boolean>(() => checkWebGLSupport());
+  const { isActive, introWebGLDisposed } = useIntro();
+  const [webGLOk, setWebGLOk] = useState<boolean>(() => isWebGLSupported());
   const [canvasReady, setCanvasReady] = useState(false);
+
+  const canMountWebGL = !isActive || introWebGLDisposed;
 
   const handleReady = useCallback(() => {
     setCanvasReady(true);
@@ -73,10 +65,6 @@ export function Hero3DSlot() {
 
   const handleWebGLError = useCallback(() => {
     setWebGLOk(false);
-  }, []);
-
-  useEffect(() => {
-    setWebGLOk(checkWebGLSupport());
   }, []);
 
   if (reducedMotion || !webGLOk) {
@@ -92,25 +80,27 @@ export function Hero3DSlot() {
       className="relative mx-auto aspect-square w-full max-w-[540px]"
       aria-label="Interactive 3D extruded Digital Field monogram sculpture"
     >
-      {!canvasReady && (
+      {(!canvasReady || !canMountWebGL) && (
         <div className="absolute inset-0 z-10 flex items-center justify-center">
           <Hero3DBrandLoader />
         </div>
       )}
 
-      <Suspense fallback={<Hero3DBrandLoader />}>
-        <div
-          className={`h-full w-full transition-opacity duration-300 ${
-            canvasReady ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <Hero3DCanvas
-            theme={theme}
-            onReady={handleReady}
-            onWebGLError={handleWebGLError}
-          />
-        </div>
-      </Suspense>
+      {canMountWebGL && (
+        <Suspense fallback={<Hero3DBrandLoader />}>
+          <div
+            className={`h-full w-full transition-opacity duration-300 ${
+              canvasReady ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <Hero3DCanvas
+              theme={theme}
+              onReady={handleReady}
+              onWebGLError={handleWebGLError}
+            />
+          </div>
+        </Suspense>
+      )}
     </div>
   );
 }

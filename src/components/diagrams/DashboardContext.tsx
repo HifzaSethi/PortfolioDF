@@ -14,22 +14,27 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
     <div
       className={`border p-6 sm:p-10 ${
         isDark
-          ? 'df-glass-dark border-[var(--border-dark)] text-[var(--off-white)]'
-          : 'df-card-surface text-[var(--text-primary)]'
+          ? 'df-glass-dark df-panel-hairline border-[var(--border-dark)] text-[var(--off-white)]'
+          : 'df-card-surface df-ambient df-panel-hairline text-[var(--text-primary)]'
       }`}
     >
       <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
         {/* Left: Illustrative Stat Tile */}
         <div className="lg:col-span-5 space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
+          <p
+            className={`text-xs font-semibold uppercase tracking-[0.16em] ${
+              isDark ? 'text-[var(--magenta)]' : 'text-[var(--eyebrow-magenta)]'
+            }`}
+          >
             {DASHBOARD_CONTEXT_DATA.title}
           </p>
 
           <button
             type="button"
+            data-spotlight=""
             onClick={() => setRevealed((r) => !r)}
             aria-expanded={revealed}
-            className={`w-full text-left border p-6 transition-all duration-200 cursor-pointer ${
+            className={`w-full text-left border p-6 transition-all duration-200 cursor-pointer df-interactive ${
               isDark
                 ? 'border-[var(--border-dark-strong)] bg-[var(--near-black)]/80 hover:border-[var(--violet)]'
                 : 'border-[var(--border-strong)] bg-[var(--bg-page)] hover:border-[var(--link-accent)]'
@@ -47,7 +52,11 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
               <span className="text-4xl sm:text-5xl font-extrabold tracking-tight">
                 {DASHBOARD_CONTEXT_DATA.metricLabel}
               </span>
-              <span className="inline-flex items-center gap-1 text-3xl sm:text-4xl font-extrabold text-[var(--magenta)]">
+              <span
+                className={`inline-flex items-center gap-1 text-3xl sm:text-4xl font-extrabold ${
+                  isDark ? 'text-[var(--magenta)]' : 'text-[var(--eyebrow-magenta)]'
+                }`}
+              >
                 <ArrowUpRight aria-hidden="true" className="h-7 w-7" />
                 <span>12%</span>
               </span>
@@ -57,7 +66,11 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
               {DASHBOARD_CONTEXT_DATA.caption}
             </span>
 
-            <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--violet)]">
+            <span
+              className={`mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] ${
+                isDark ? 'text-[var(--violet)]' : 'text-[var(--link-accent)]'
+              }`}
+            >
               <HelpCircle aria-hidden="true" className="h-4 w-4" />
               <span>{revealed ? 'Hide context questions' : 'Inspect surrounding context'}</span>
             </span>
@@ -92,7 +105,11 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
                       : 'border-[var(--border-subtle)] text-[var(--text-muted)]'
                 }`}
               >
-                <span className="mr-2 tabular-nums text-[var(--magenta)]">
+                <span
+                  className={`mr-2 tabular-nums ${
+                    isDark ? 'text-[var(--magenta)]' : 'text-[var(--eyebrow-magenta)]'
+                  }`}
+                >
                   0{idx + 1}.
                 </span>
                 <span>{question}</span>

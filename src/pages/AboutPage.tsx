@@ -163,7 +163,7 @@ export default function AboutPage() {
                       {val.timeline.map((item) => (
                         <div
                           key={item.stage}
-                          className="df-card-surface p-3.5"
+                          className="df-card-surface df-ambient p-3.5"
                         >
                           <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--link-accent)]">
                             {item.stage}
@@ -209,7 +209,7 @@ export default function AboutPage() {
 
           <ModelComparison />
 
-          <div className="df-card-surface df-frame-l p-8 text-center">
+          <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-8 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
               Commercial Philosophy
             </p>

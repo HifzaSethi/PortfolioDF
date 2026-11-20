@@ -1,5 +1,7 @@
 :root,
 [data-theme="day"] {
+  color-scheme: light;
+
   /* Core Approved Brand Color Palette */
   --violet: #B34FFF;
   --magenta: #E23389;
@@ -16,7 +18,7 @@
 
   --text-primary: var(--near-black);
   --text-muted: color-mix(in srgb, var(--near-black) 68%, var(--off-white));
-  --text-subtle: color-mix(in srgb, var(--near-black) 50%, var(--off-white));
+  --text-subtle: color-mix(in srgb, var(--near-black) 60%, var(--off-white));
 
   --border-subtle: color-mix(in srgb, var(--near-black) 13%, transparent);
   --border-strong: color-mix(in srgb, var(--near-black) 26%, transparent);
@@ -84,6 +86,16 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 
+  /* Interaction System Tokens (Day mode softer neutral shadow + muted glows) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-in: 220ms;
+  --dur-out: 320ms;
+  --lift: -4px;
+  --glow-violet: rgba(179, 79, 255, 0.16);
+  --glow-magenta: rgba(226, 51, 137, 0.14);
+  --shadow-lift: 0 12px 28px rgba(1, 1, 2, 0.09),
+                 0 0 18px var(--glow-violet);
+
   /* Elevation & Focus */
   --shadow-subtle: 0 2px 4px color-mix(in srgb, var(--near-black) 6%, transparent),
                    0 12px 32px color-mix(in srgb, var(--near-black) 5%, transparent);
@@ -96,9 +108,12 @@
   --z-megamenu: 55;
   --z-drawer: 70;
   --z-skip: 100;
+  --z-intro: 200;
 }
 
 [data-theme="night"] {
+  color-scheme: dark;
+
   --bg-page: var(--near-black);
   --bg-tint: #090810;
   --bg-elevated: rgba(255, 255, 255, 0.045);
@@ -123,6 +138,12 @@
   --input-text: var(--off-white);
   --pattern-opacity-surface: 0.075;
   --pattern-opacity-mesh: 0.11;
+
+  --glow-violet: rgba(179, 79, 255, 0.38);
+  --glow-magenta: rgba(226, 51, 137, 0.32);
+  --shadow-lift: 0 16px 36px rgba(0, 0, 0, 0.72),
+                 0 0 28px var(--glow-violet),
+                 0 0 18px var(--glow-magenta);
 
   --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.65),
                    0 0 0 1px rgba(179, 79, 255, 0.08);

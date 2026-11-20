@@ -66,15 +66,20 @@ export default function DigitalTransformationPage() {
                       role="tab"
                       type="button"
                       aria-selected={isActive}
+                      data-spotlight=""
                       onClick={() => setActiveGroupId(group.id)}
-                      className={`w-full min-h-[52px] flex items-center justify-between gap-3 px-4 py-3 text-left border transition-colors cursor-pointer ${
+                      className={`w-full min-h-[52px] flex items-center justify-between gap-3 px-4 py-3 text-left border df-interactive ${
                         isActive
                           ? 'bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] border-[var(--link-accent)]'
                           : 'bg-[var(--bg-elevated)] text-[var(--text-primary)] border-[var(--border-strong)] hover:border-[var(--link-accent)]'
                       }`}
                     >
                       <span className="flex items-center gap-3">
-                        <span className="text-xs font-bold tabular-nums text-[var(--magenta)]">
+                        <span
+                          className={`text-xs font-bold tabular-nums ${
+                            isActive ? 'text-[var(--magenta)]' : 'text-[var(--eyebrow-magenta)]'
+                          }`}
+                        >
                           0{idx + 1}
                         </span>
                         <span className="text-sm font-bold">{group.title}</span>
@@ -113,7 +118,7 @@ export default function DigitalTransformationPage() {
                 </div>
               </div>
 
-              <div className="df-card-surface df-frame-l p-6 sm:p-8 space-y-4">
+              <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8 space-y-4">
                 <h2 className="text-2xl font-extrabold text-[var(--text-primary)]">
                   {activeGroup.title}
                 </h2>
@@ -141,7 +146,7 @@ export default function DigitalTransformationPage() {
               {TRANSFORMATION_GROUPS.map((group) => (
                 <div
                   key={group.id}
-                  className="df-card-surface df-frame-t p-6 space-y-4"
+                  className="df-card-surface df-ambient df-frame-t p-6 space-y-4"
                 >
                   <h3 className="text-base font-extrabold uppercase tracking-[0.06em] text-[var(--text-primary)]">
                     {group.title}

@@ -1,18 +1,46 @@
 <!doctype html>
-<html lang="en" data-theme="day">
+<html lang="en" data-theme="night">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#010102" />
     <script>
       (function () {
+        var nextTheme = 'night';
         try {
           var saved = localStorage.getItem('df-theme');
-          document.documentElement.setAttribute('data-theme', saved === 'night' ? 'night' : 'day');
+          if (saved === 'day') nextTheme = 'day';
         } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'day');
+          nextTheme = 'night';
+        }
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        var themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) {
+          themeMeta.setAttribute('content', nextTheme === 'day' ? '#F4F1EA' : '#010102');
+        }
+        try {
+          var h = window.location.hash;
+          var isRoot = !h || h === '#' || h === '#/';
+          if (isRoot && sessionStorage.getItem('df-intro-seen') !== '1') {
+            document.documentElement.dataset.intro = 'pending';
+            window.setTimeout(function () {
+              if (document.documentElement.dataset.intro === 'pending') {
+                delete document.documentElement.dataset.intro;
+              }
+            }, 8000);
+          }
+        } catch (e) {
+          /* ignore storage errors */
         }
       })();
     </script>
+    <noscript>
+      <style>
+        html[data-intro='pending'] body::before {
+          display: none !important;
+        }
+      </style>
+    </noscript>
     <title>Digital Field. (DF.) — Performance in Context</title>
     <meta
       name="description"

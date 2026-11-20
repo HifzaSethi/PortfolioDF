@@ -115,7 +115,7 @@ export default function SearchIntelligencePage() {
                   {discipline.deliverables.map((item) => (
                     <li
                       key={item}
-                      className="df-card-surface px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
+                      className="df-card-surface df-ambient px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
                     >
                       {item}
                     </li>
@@ -141,7 +141,7 @@ export default function SearchIntelligencePage() {
               {SEARCH_MEASUREMENT_VOCABULARY.map((item) => (
                 <li
                   key={item}
-                  className="df-card-surface px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
+                  className="df-card-surface df-ambient px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
                 >
                   {item}
                 </li>

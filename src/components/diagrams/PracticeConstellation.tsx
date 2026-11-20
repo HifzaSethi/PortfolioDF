@@ -16,7 +16,7 @@ export function PracticeConstellation() {
     <div className="space-y-8">
       {/* Desktop Constellation along slanted axes */}
       <div className="hidden lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
-        <div className="lg:col-span-7 relative df-card-surface p-8">
+        <div className="lg:col-span-7 relative df-card-surface df-ambient p-8">
           {/* Outer DF. Studio Ring Label */}
           <div className="flex items-center justify-between border-b border-dashed border-[var(--border-strong)] pb-4 mb-6">
             <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
@@ -26,7 +26,7 @@ export function PracticeConstellation() {
               type="button"
               onClick={() => setActiveId(STUDIO_PRACTICE_SUMMARY.id)}
               onMouseEnter={() => setActiveId(STUDIO_PRACTICE_SUMMARY.id)}
-              className={`min-h-[36px] px-3.5 py-1 text-xs font-bold transition-colors cursor-pointer df-slant-block ${
+              className={`min-h-[36px] px-3.5 py-1 text-xs font-bold df-slant-block df-interactive ${
                 activeId === STUDIO_PRACTICE_SUMMARY.id
                   ? 'df-gradient-accent text-[var(--near-black)]'
                   : 'border border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'
@@ -57,10 +57,11 @@ export function PracticeConstellation() {
                   <button
                     key={practice.id}
                     type="button"
+                    data-spotlight=""
                     onClick={() => setActiveId(practice.id)}
                     onMouseEnter={() => setActiveId(practice.id)}
                     onFocus={() => setActiveId(practice.id)}
-                    className={`text-left p-4 border transition-all duration-150 cursor-pointer ${
+                    className={`text-left p-4 border df-interactive ${
                       isSelected
                         ? 'border-[var(--link-accent)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] shadow-sm'
                         : 'border-[var(--border-subtle)] bg-[var(--bg-page)] text-[var(--text-primary)] hover:border-[var(--border-strong)]'
@@ -88,7 +89,7 @@ export function PracticeConstellation() {
                 onClick={() => setActiveId(core.id)}
                 onMouseEnter={() => setActiveId(core.id)}
                 onFocus={() => setActiveId(core.id)}
-                className={`df-slant-block px-7 py-5 border text-center transition-all duration-150 cursor-pointer ${
+                className={`df-slant-block df-interactive px-7 py-5 border text-center ${
                   activeId === core.id
                     ? 'bg-[var(--near-black)] text-[var(--off-white)] border-[var(--magenta)] shadow-lg'
                     : 'bg-[var(--near-black)] text-[var(--off-white)] border-[var(--border-dark-strong)] hover:border-[var(--violet)]'
@@ -108,7 +109,7 @@ export function PracticeConstellation() {
         {/* Active Practice Detail with L-frame */}
         <div
           aria-live="polite"
-          className="lg:col-span-5 df-card-surface df-frame-l p-8 space-y-5"
+          className="lg:col-span-5 df-card-surface df-ambient df-panel-hairline df-frame-l p-8 space-y-5"
         >
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--link-accent)]">
             {activeItem.roleLabel}
@@ -140,7 +141,7 @@ export function PracticeConstellation() {
       <div className="lg:hidden space-y-4">
         <Link
           to={core.path}
-          className="block df-mesh-dark p-6 border border-[var(--border-dark)]"
+          className="block df-mesh-dark df-interactive p-6 border border-[var(--border-dark)]"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
             {core.roleLabel}
@@ -154,7 +155,8 @@ export function PracticeConstellation() {
             <Link
               key={practice.id}
               to={practice.path}
-              className="block df-card-surface p-5"
+              data-spotlight=""
+              className="block df-card-surface df-interactive p-5"
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                 {practice.roleLabel}
@@ -170,7 +172,8 @@ export function PracticeConstellation() {
 
         <Link
           to={STUDIO_PRACTICE_SUMMARY.path}
-          className="block border border-dashed border-[var(--border-strong)] bg-[var(--bg-tint)] p-5"
+          data-spotlight=""
+          className="block border border-dashed border-[var(--border-strong)] bg-[var(--bg-tint)] df-interactive p-5"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
             Brought to life by DF. Studio

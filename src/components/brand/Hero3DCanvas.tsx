@@ -1,56 +1,17 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
-import dfMark3dRaw from '../../assets/brand/df-mark-3d.svg?raw';
 import type { DfTheme } from '../../hooks/useTheme';
+import {
+  buildDfMarkGroup,
+  createDfMaterials,
+  detectSoftwareGl,
+} from './dfMark3D';
 
 interface Hero3DCanvasProps {
   theme: DfTheme;
   onReady?: () => void;
   onWebGLError?: () => void;
-}
-
-function flipExtrudedGeometryY(geometry: THREE.BufferGeometry, scale: number): void {
-  geometry.scale(scale, -scale, scale);
-
-  // Reverse triangle winding order after negative Y scale so all normals face outward cleanly
-  if (geometry.index) {
-    const arr = geometry.index.array;
-    for (let i = 0; i < arr.length; i += 3) {
-      const tmp = arr[i + 1];
-      arr[i + 1] = arr[i + 2];
-      arr[i + 2] = tmp;
-    }
-    geometry.index.needsUpdate = true;
-  } else {
-    const pos = geometry.getAttribute('position');
-    if (pos) {
-      const a = pos.array as Float32Array;
-      for (let i = 0; i < a.length; i += 9) {
-        for (let k = 0; k < 3; k++) {
-          const tmp = a[i + 3 + k];
-          a[i + 3 + k] = a[i + 6 + k];
-          a[i + 6 + k] = tmp;
-        }
-      }
-      pos.needsUpdate = true;
-    }
-    const uv = geometry.getAttribute('uv');
-    if (uv) {
-      const u = uv.array as Float32Array;
-      for (let i = 0; i < u.length; i += 6) {
-        for (let k = 0; k < 2; k++) {
-          const tmp = u[i + 2 + k];
-          u[i + 2 + k] = u[i + 4 + k];
-          u[i + 4 + k] = tmp;
-        }
-      }
-      uv.needsUpdate = true;
-    }
-  }
-
-  geometry.computeVertexNormals();
 }
 
 export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCanvasProps) {
@@ -81,13 +42,11 @@ export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCan
       return;
     }
 
-    // Detect software WebGL (SwiftShader / llvmpipe) to throttle appropriately
-    const debugExt = gl.getExtension('WEBGL_debug_renderer_info');
-    const glRendererStr = debugExt ? String(gl.getParameter(debugExt.UNMASKED_RENDERER_WEBGL)) : '';
-    const isSoftwareGl = /SwiftShader|llvmpipe|Software Rasterizer/i.test(glRendererStr);
+    const isSoftwareGl = detectSoftwareGl(gl);
 
-    const maxDpr = isSoftwareGl ? 1 : 2;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
+    const targetDpr = isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+    const softwareScale = isSoftwareGl ? 0.5 : 1;
+    renderer.setPixelRatio(targetDpr);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = themeRef.current === 'night' ? 1.28 : 1.16;
@@ -103,15 +62,25 @@ export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCan
     const height = Math.max(container.clientHeight, 320);
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
     camera.position.set(0, 0, 7.2);
-    renderer.setSize(width, height, false);
+    renderer.setSize(
+      Math.max(160, Math.round(width * softwareScale)),
+      Math.max(160, Math.round(height * softwareScale)),
+      false
+    );
 
-    // Environment reflections for black-chrome finish
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const roomEnv = new RoomEnvironment();
-    const envTarget = pmrem.fromScene(roomEnv, 0.04);
-    scene.environment = envTarget.texture;
-    roomEnv.dispose();
-    pmrem.dispose();
+    // Environment reflections for black-chrome finish (hardware GPUs only)
+    let envTarget: THREE.WebGLRenderTarget | null = null;
+    if (!isSoftwareGl) {
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const roomEnv = new RoomEnvironment();
+      envTarget = pmrem.fromScene(roomEnv, 0.04);
+      scene.environment = envTarget.texture;
+      roomEnv.dispose();
+      pmrem.dispose();
+    } else {
+      const hemi = new THREE.HemisphereLight(0xf4f1ea, 0x261038, 1.25);
+      scene.add(hemi);
+    }
 
     // Lighting rig (Key + Violet Rim + Magenta Rim + Electric Blue Accent)
     const ambientLight = new THREE.AmbientLight(0xffffff, themeRef.current === 'night' ? 0.35 : 0.75);
@@ -133,87 +102,16 @@ export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCan
     blueKicker.position.set(-3, 4.5, -2.5);
     scene.add(blueKicker);
 
-    // Materials
-    const chromeMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(themeRef.current === 'night' ? 0x0b0b12 : 0x0d0d15),
-      metalness: 0.94,
-      roughness: 0.14,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.08,
-      reflectivity: 1.0,
-      envMapIntensity: themeRef.current === 'night' ? 2.1 : 1.7,
-    });
-
-    const dotMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0xe23389),
-      emissive: new THREE.Color(0xe23389),
-      emissiveIntensity: themeRef.current === 'night' ? 0.42 : 0.16,
-      metalness: 0.42,
-      roughness: 0.16,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      envMapIntensity: 1.6,
-    });
-
-    // Extrude exact DF mark SVG
-    const loader = new SVGLoader();
-    const svgData = loader.parse(dfMark3dRaw);
-    const markGroup = new THREE.Group();
+    const { chromeMaterial, dotMaterial } = createDfMaterials(themeRef.current, isSoftwareGl);
+    const { markGroup, geometries } = buildDfMarkGroup(chromeMaterial, dotMaterial);
     const markPivot = new THREE.Group();
 
     const disposables: Array<{ dispose: () => void }> = [
       chromeMaterial,
       dotMaterial,
-      envTarget,
+      ...geometries,
     ];
-
-    // 419 SVG units -> ~3.8 world units wide
-    const svgScale = 3.85 / 419;
-
-    const extrudeBodySettings: THREE.ExtrudeGeometryOptions = {
-      depth: 52,
-      bevelEnabled: true,
-      bevelThickness: 4.5,
-      bevelSize: 3.4,
-      bevelSegments: 4,
-      curveSegments: 20,
-    };
-
-    const extrudeDotSettings: THREE.ExtrudeGeometryOptions = {
-      depth: 58,
-      bevelEnabled: true,
-      bevelThickness: 4.5,
-      bevelSize: 3.4,
-      bevelSegments: 4,
-      curveSegments: 12,
-    };
-
-    for (const path of svgData.paths) {
-      const node = (path.userData as { node?: Element } | undefined)?.node;
-      const pathId = node?.getAttribute?.('id') ?? '';
-      const isDot = pathId === 'df-dot';
-      const shapes = path.toShapes();
-      if (shapes.length === 0) continue;
-
-      const geom = new THREE.ExtrudeGeometry(
-        shapes,
-        isDot ? extrudeDotSettings : extrudeBodySettings
-      );
-      flipExtrudedGeometryY(geom, svgScale);
-      disposables.push(geom);
-
-      const mesh = new THREE.Mesh(geom, isDot ? dotMaterial : chromeMaterial);
-      if (isDot) {
-        mesh.position.z += 0.03;
-      }
-      markGroup.add(mesh);
-    }
-
-    // Center the assembled mark preserving exact spatial relation between DF body and magenta dot
-    const box = new THREE.Box3().setFromObject(markGroup);
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-    markGroup.position.sub(center);
+    if (envTarget) disposables.push(envTarget);
 
     markPivot.add(markGroup);
     scene.add(markPivot);
@@ -304,8 +202,12 @@ export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCan
         // Pull camera slightly back on narrow viewports so DF mark never clips horizontally
         camera.position.z = w < 440 ? 8.3 : 7.0;
         camera.updateProjectionMatrix();
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
-        renderer.setSize(w, h, false);
+        renderer.setPixelRatio(targetDpr);
+        renderer.setSize(
+          Math.max(140, Math.round(w * softwareScale)),
+          Math.max(130, Math.round(h * softwareScale)),
+          false
+        );
       }
     });
     resizeObserver.observe(container);
@@ -346,6 +248,7 @@ export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCan
     let elapsed = 0;
     let lastThemeApplied: DfTheme | null = null;
     let readyCalled = false;
+    let lastSoftwareRenderMs = 0;
 
     const handleContextLost = (e: Event) => {
       e.preventDefault();
@@ -382,7 +285,9 @@ export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCan
       magentaRim.intensity = isNight ? 36 : 22;
       blueKicker.intensity = isNight ? 1.85 : 1.25;
       chromeMaterial.color.setHex(isNight ? 0x0a0a10 : 0x0d0d16);
-      chromeMaterial.envMapIntensity = isNight ? 2.15 : 1.75;
+      if ('envMapIntensity' in chromeMaterial) {
+        chromeMaterial.envMapIntensity = isNight ? 2.15 : 1.75;
+      }
       dotMaterial.emissiveIntensity = isNight ? 0.44 : 0.16;
 
       // In Day mode contrast dark triangles slightly against #F4F1EA background
@@ -427,8 +332,11 @@ export default function Hero3DCanvas({ theme, onReady, onWebGLError }: Hero3DCan
         item.mesh.rotation.z += item.rotSpeed.z * dt;
       }
 
-      if (isSoftwareGl && Math.floor(elapsed * 60) % 2 === 1) {
-        return;
+      if (isSoftwareGl && readyCalled) {
+        if (now - lastSoftwareRenderMs < 120) {
+          return;
+        }
+        lastSoftwareRenderMs = now;
       }
 
       renderer.render(scene, camera);

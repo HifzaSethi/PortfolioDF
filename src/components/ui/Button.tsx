@@ -17,7 +17,7 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
 };
 
 const BASE_CLASSES =
-  'group/btn inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 text-sm font-bold tracking-tight whitespace-nowrap shrink-0 transition-all duration-200 ease-out focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-3 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
+  'group/btn df-interactive inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 text-sm font-bold tracking-tight whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-3 disabled:opacity-50 disabled:cursor-not-allowed';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;

@@ -59,7 +59,8 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
               key={practice.id}
               to={practice.path}
               onClick={onClose}
-              className="group block df-card-surface p-4 transition-colors hover:border-[var(--link-accent)]"
+              data-spotlight=""
+              className="group block df-card-surface df-interactive p-4 hover:border-[var(--link-accent)]"
             >
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                 {practice.roleLabel}

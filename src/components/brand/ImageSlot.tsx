@@ -36,7 +36,7 @@ export function ImageSlot({
 
   if (src && !hasError) {
     return (
-      <div className={`relative overflow-hidden bg-[var(--near-black)] ${aspectClass} ${className}`}>
+      <div className={`relative df-media bg-[var(--near-black)] ${aspectClass} ${className}`}>
         <img
           src={src}
           srcSet={srcSet}
@@ -53,14 +53,14 @@ export function ImageSlot({
 
   return (
     <figure
-      className={`relative overflow-hidden df-frame-l border border-[var(--border-strong)] ${aspectClass} ${
+      className={`relative df-media df-frame-l border border-[var(--border-strong)] ${aspectClass} ${
         isDarkMesh
           ? 'df-mesh-dark text-[var(--off-white)]'
           : 'df-card-surface text-[var(--text-primary)]'
       } ${className}`}
       aria-label={alt}
     >
-      <BrandPattern tone={isDarkMesh ? 'dark' : 'auto'} />
+      <BrandPattern tone={isDarkMesh ? 'dark' : 'auto'} className="df-media-pattern" />
       <div className="relative z-10 flex h-full w-full flex-col justify-between p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <span

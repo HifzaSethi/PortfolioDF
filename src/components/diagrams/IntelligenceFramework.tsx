@@ -55,7 +55,8 @@ export function IntelligenceFramework() {
               onClick={() => setActiveIndex(idx)}
               onMouseEnter={() => setActiveIndex(idx)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
-              className={`group relative text-left p-6 transition-all duration-200 cursor-pointer ${
+              data-spotlight=""
+              className={`group relative text-left p-6 df-interactive ${
                 isActive
                   ? 'df-glass-dark border-[var(--electric-blue)] bg-[color-mix(in_srgb,var(--electric-blue)_14%,var(--near-black))]'
                   : 'df-glass-dark opacity-75 hover:opacity-100'
@@ -106,14 +107,14 @@ export function IntelligenceFramework() {
             onClick={() =>
               setActiveIndex((prev) => (prev - 1 + INTELLIGENCE_STAGES.length) % INTELLIGENCE_STAGES.length)
             }
-            className="min-h-[44px] px-4 py-2 border border-[var(--border-dark-strong)] text-xs font-semibold text-[var(--off-white)] hover:border-[var(--electric-blue)] cursor-pointer"
+            className="min-h-[44px] px-4 py-2 border border-[var(--border-dark-strong)] text-xs font-semibold text-[var(--off-white)] hover:border-[var(--electric-blue)] df-interactive"
           >
             Previous
           </button>
           <button
             type="button"
             onClick={() => setActiveIndex((prev) => (prev + 1) % INTELLIGENCE_STAGES.length)}
-            className="min-h-[44px] px-4 py-2 bg-[var(--electric-blue)] text-xs font-semibold text-[var(--off-white)] hover:opacity-90 cursor-pointer"
+            className="min-h-[44px] px-4 py-2 bg-[var(--electric-blue)] text-xs font-semibold text-[var(--off-white)] hover:opacity-90 df-interactive"
           >
             Next Stage
           </button>

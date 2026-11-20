@@ -26,7 +26,7 @@ export function HospitalityEcosystem() {
         <button
           type="button"
           onClick={() => setSelectedDimension('all')}
-          className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border transition-colors cursor-pointer df-slant-block ${
+          className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
             selectedDimension === 'all'
               ? 'bg-[var(--electric-blue)] text-[var(--off-white)] border-[var(--electric-blue)]'
               : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/85 hover:border-[var(--off-white)]'
@@ -43,7 +43,7 @@ export function HospitalityEcosystem() {
               const firstMatch = HOSPITALITY_TOUCHPOINTS.find((tp) => tp.dimension === dim.id);
               if (firstMatch) setSelectedTouchpoint(firstMatch);
             }}
-            className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border transition-colors cursor-pointer df-slant-block ${
+            className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
               selectedDimension === dim.id
                 ? 'bg-[var(--magenta)] text-[var(--near-black)] border-[var(--magenta)]'
                 : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/85 hover:border-[var(--off-white)]'
@@ -85,7 +85,8 @@ export function HospitalityEcosystem() {
                   onClick={() => setSelectedTouchpoint(tp)}
                   onMouseEnter={() => setSelectedTouchpoint(tp)}
                   onFocus={() => setSelectedTouchpoint(tp)}
-                  className={`p-3.5 text-left border transition-all duration-150 cursor-pointer min-h-[76px] flex flex-col justify-between ${
+                  data-spotlight=""
+                  className={`p-3.5 text-left border min-h-[76px] flex flex-col justify-between df-interactive ${
                     isSelected
                       ? 'border-[var(--magenta)] bg-[color-mix(in_srgb,var(--violet)_22%,var(--near-black))] text-[var(--off-white)]'
                       : matchesDimension

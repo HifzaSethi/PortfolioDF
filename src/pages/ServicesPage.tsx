@@ -42,7 +42,7 @@ export default function ServicesPage() {
                 Turns activity and cross-channel signals into connected commercial decisions.
               </p>
             </div>
-            <div className="df-card-surface df-frame-t p-6">
+            <div className="df-card-surface df-ambient df-frame-t p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--link-accent)]">
                 How DF. Acts
               </p>
@@ -54,7 +54,7 @@ export default function ServicesPage() {
                 Transformation.
               </p>
             </div>
-            <div className="df-card-surface df-frame-t p-6">
+            <div className="df-card-surface df-ambient df-frame-t p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                 How DF. Shows Up
               </p>

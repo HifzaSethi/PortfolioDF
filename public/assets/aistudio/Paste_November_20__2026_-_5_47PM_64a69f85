@@ -1,0 +1,221 @@
+# TASK: ENHANCE THE EXISTING "DIGITAL FIELD." WEBSITE (DO NOT REBUILD IT)
+
+You are modifying an existing, working React project. This is an ENHANCEMENT, not a new site and not a template swap. Preserve all existing pages, routes, copy, data files, forms, SEO, diagrams and brand identity. Work incrementally, edit existing files in place, and keep the project compiling after every phase (`npm run lint` = `tsc --noEmit`, then `npm run build`).
+
+You will deliver four workstreams:
+A. Dark theme as the default experience.
+B. A consistent, refined hover/touch interaction system.
+C. A cinematic, interactive 3D intro with "Skip Intro" and "Explore" buttons and a 3D curtain-reveal transition onto the REAL homepage.
+D. Integration, performance and accessibility hardening.
+
+==================================================
+## 0. VERIFIED FACTS ABOUT THE EXISTING CODEBASE (do not re-discover, do not contradict)
+==================================================
+
+STACK: Vite 8, React 19, TypeScript strict (`noUnusedLocals`, `noUnusedParameters` are ON: unused imports/variables fail the build), Tailwind CSS v4 via `@tailwindcss/vite` (utility classes like `bg-[var(--bg-page)]`), `react-router-dom` v7 using `HashRouter`, `motion` v12 (import from `motion/react`; `<MotionConfig reducedMotion="user">` already wraps the app), `three` ^0.187 + `@types/three` (RAW three.js; React Three Fiber and Drei are NOT installed), `lucide-react`.
+
+KEY FILES:
+- `src/app/App.tsx`: ErrorBoundary > ThemeProvider > MotionConfig > HashRouter > Layout > AppRoutes.
+- `src/app/Layout.tsx`: wrapper `div.flex.min-h-screen.flex-col.bg-[var(--bg-page)]` containing ScrollManager, Header, `<main id="main-content">` (with RouteTransition) and Footer.
+- `src/app/ScrollManager.tsx`: scrolls to top and moves focus to `main h1` on route change (skips first mount).
+- `src/hooks/useTheme.tsx`: `ThemeProvider`, `useTheme()` returning `{ theme: 'day'|'night', setTheme, toggleTheme }`; storage key `df-theme`; `readInitialTheme()` currently falls back to `'day'`.
+- `index.html`: `<html data-theme="day">` plus an inline script that sets `data-theme` from `localStorage['df-theme']`, defaulting to `'day'`. No `theme-color` meta exists.
+- `src/styles/tokens.css`: `:root, [data-theme="day"]` block and a `[data-theme="night"]` block defining semantic tokens (`--bg-page`, `--bg-tint`, `--bg-elevated`, `--text-primary/-muted/-subtle`, `--border-subtle/-strong`, `--link-accent`, `--eyebrow-magenta`, `--eyebrow-blue`, `--header-bg`, `--input-bg`, always-dark constants `--dark-*`, `--border-dark*`, `--on-dark-*`) and z-index tokens (`--z-header:50`, `--z-megamenu:55`, `--z-drawer:70`, `--z-skip:100`).
+- `src/styles/globals.css`: `.df-mesh-dark`, `.df-mesh-day`, `.df-mesh-hospitality`, `.df-night-mesh-subtle`, `.df-gradient-accent`, `.df-gradient-text`, `.df-slant-block`, `.df-unslant`, `.df-glass-dark`, `.df-card-surface` (night and day variants), `.df-frame-l`, `.df-frame-t`, `.df-link-sweep`, `.df-reveal`, a reduced-motion block.
+- `src/components/layout/Section.tsx`: surfaces `off-white | tint | dark-mesh | hospitality-mesh | near-black | hero-adaptive` (it reads `useTheme()`); its inner wrapper is `<div className="relative z-10">`.
+- `src/components/ui/Button.tsx`: `Button` and `LinkButton` with variants `primary | gradient | secondary | ghost | on-dark`, slanted by default.
+- `src/components/brand/Hero3DCanvas.tsx` (474 lines, lazy-loaded by `Hero3DSlot.tsx`): raw three scene that extrudes `src/assets/brand/df-mark-3d.svg` (imported with `?raw`; paths `#df-body` and `#df-dot`) using `SVGLoader`, `RoomEnvironment` reflections, a chrome/black-glass material, a glossy magenta dot, a `flipExtrudedGeometryY()` helper, software-GL detection (SwiftShader/llvmpipe), theme-dependent lighting via `applyThemeLighting`, pointer parallax, an IntersectionObserver pause, and `webglcontextlost` handling. `Hero3DSlot.tsx` shows a static fallback if `useReducedMotion()` is true or WebGL is unavailable.
+- `src/config/site.ts` exposes official logo SVG URLs in `SITE_CONFIG.assets.logos` (`iconLight/Dark`, `wordmarkLight/Dark`, `lockupStandardLight/Dark`, `lockupItalicLight/Dark`). Official artwork lives in `src/assets/brand/`. These are the ONLY logo sources. Never retype, redraw, recolor or distort them.
+- `vite.config.ts`: has `optimizeDeps.include` for `three`, `SVGLoader` and `RoomEnvironment`; the `server.hmr` / `server.watch` block is controlled by AI Studio. DO NOT modify the `server` block.
+- Hover baseline: there is NO shared hover system today. `df-card-surface` appears 34 times in 17 files, but only about 3 of those elements are links; the rest are static `div`/`li`/`article` blocks. Existing hover styling is just border-color changes (`hover:border-[var(--link-accent)]`).
+- Known issue 1: the hero content is misaligned with the header (it starts about 70px further left) because the `Section` inner wrapper has no `w-full` while the hero Section uses `flex items-center`. Fix by changing the wrapper to `className="relative z-10 w-full"`.
+- Known issue 2: `package.json` pins `esbuild ^0.25` in devDependencies, which conflicts with Vite 8's peer range under npm (ERESOLVE) and nothing imports esbuild. If, and only if, the environment installs with npm, remove that single devDependency. Make no other package.json changes unless a dependency is genuinely required, and justify any change in your summary.
+
+==================================================
+## 1. HARD CONSTRAINTS
+==================================================
+- Preserve every route, page, data file, form behavior, SEO hook, diagram, and all copy. No content rewrites.
+- Preserve the brand: violet #B34FFF, magenta #E23389, electric blue #0057FF, off-white #F4F1EA, near-black #010102; Sora only; the single forward slant (`--slant`). Do not introduce other hues. No random neon.
+- Do not add React Three Fiber, Drei, GSAP, postprocessing, or any new runtime dependency. Use the existing `three` and `motion`, plus CSS. If you believe a dependency is unavoidable, stop and explain instead of adding it.
+- Keep TypeScript strict-clean (no `any`, no unused symbols). Keep ES module imports from `three/examples/jsm/...` consistent with the existing ones.
+- Do not edit the `server` block in `vite.config.ts`.
+- Animate only `transform`, `opacity` and (sparingly) `box-shadow`/`filter` on small elements. No layout-affecting animation.
+- All new motion must respect `prefers-reduced-motion`.
+
+==================================================
+## 2. WORKSTREAM A: DARK THEME AS THE DEFAULT
+==================================================
+Goal: first-time visitors see Night mode immediately, on every page; the existing Day/Night toggle keeps working; a visitor's saved choice is respected.
+
+Exact changes:
+1. `index.html`: set `<html lang="en" data-theme="night">`; change the inline script so the fallback is `'night'` (apply `'day'` only if `localStorage['df-theme'] === 'day'`; keep the try/catch fallback to `'night'`). Add `<meta name="theme-color" content="#010102">` and update its `content` to `#010102` (night) / `#F4F1EA` (day) whenever the theme changes (do this in `ThemeProvider`'s effect).
+2. `src/hooks/useTheme.tsx`: `readInitialTheme()` returns `'night'` by default; only a stored `'day'` yields day. Keep `setTheme`, `toggleTheme`, the storage key and the public API unchanged.
+3. `tokens.css`: keep the existing day tokens intact for Day mode. Add `color-scheme: dark` to `[data-theme="night"]` and `color-scheme: light` to `[data-theme="day"]` (native scrollbars, form controls, selects).
+4. Header: keep the two Day/Night buttons exactly as they are, in the same place; Night is simply the pre-selected state at first visit.
+
+Make Night feel rich, not flat black (still using only brand colours):
+- Ambient lighting layer: add a fixed, `pointer-events:none`, `z-index:-1` layer for `[data-theme="night"]` (e.g. `body::before`) with three soft radial gradients: violet at bottom-left (about 12–14% opacity), magenta at bottom-right (about 10–12%), electric blue top-right (about 5–6%), over `--near-black`. IMPORTANT: sections currently use opaque `bg-[var(--bg-page)]` and would hide this layer, so in Night make the `off-white` surface in `Section.tsx` transparent (or `background: transparent` via a night rule) so the ambient layer shows through, and keep `tint` using the existing `.df-night-mesh-subtle`. Verify visually that no section reads as a flat black slab.
+- Elevated cards in Night: extend `.df-card-surface` night variant with a top-lit gradient (`linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))`), an inner highlight (`inset 0 1px 0 rgba(255,255,255,0.08)`), keep the existing blur and `--border-strong` hairline. Optional: a 1px gradient hairline (violet→magenta at about 35% opacity) on feature panels.
+- Header/footer/forms/inputs/accordions/tabs/diagrams: audit every page and component in Night; fix anything that still looks like a light-theme leftover (white boxes, dark text on dark, hard-coded `#010102` or `#F4F1EA` in SVGs; use `currentColor` or tokens).
+- Accessibility: body text must stay ≥ 4.5:1. The existing Night tokens already pass; use `--eyebrow-blue` (never raw `--electric-blue`) for small blue text in Night.
+- Day mode must remain fully functional (it is now the secondary mode). While there: in Day, small labels using raw `text-[var(--magenta)]` on LIGHT surfaces fail AA (3.67:1); switch those on light surfaces to `text-[var(--eyebrow-magenta)]`, but leave raw magenta on dark panels (`df-mesh-dark`, `df-mesh-hospitality`, the MegaMenu Studio card, the Constellation hub). Set Day `--text-subtle` to a 60% mix (5.48:1).
+
+==================================================
+## 3. WORKSTREAM B: INTERACTION SYSTEM (HOVER AND TOUCH)
+==================================================
+Principle: ONE interaction language, TWO tiers, so clickable things feel clickable and static things never pretend to be buttons.
+
+### 3.1 Tokens (add to `tokens.css`)
+`--ease-out: cubic-bezier(0.16, 1, 0.3, 1); --dur-in: 220ms; --dur-out: 320ms; --lift: -4px; --glow-violet: rgba(179,79,255,0.38); --glow-magenta: rgba(226,51,137,0.32);` In Day mode use weaker glows (about 40–50% of those alphas) and a softer neutral shadow instead of light-on-dark glow.
+
+### 3.2 Classes (add to `globals.css`, all hover rules gated by `@media (hover: hover) and (pointer: fine)`)
+- `.df-interactive` (TIER 1, for anything that is a link, button, tab, accordion trigger or otherwise clickable):
+  - `position: relative; isolation: isolate; cursor: pointer; transition: transform var(--dur-out) var(--ease-out), box-shadow var(--dur-out) var(--ease-out), border-color var(--dur-out) var(--ease-out);`
+  - Hover/focus-visible: `transform: translate3d(0, var(--lift), 0)`; elevation shadow plus a faint violet/magenta glow; border brightens.
+  - Illuminated border ring via `::before`: `inset: -1px; padding: 1px; border-radius: inherit; background: linear-gradient(120deg, var(--violet), var(--magenta)); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;` (include the `-webkit-mask` variants), `opacity: 0` → `1` on hover/focus-visible. The border width never changes, so there is no layout shift.
+  - `:focus-visible` must look the same as hover (keyboard parity) plus the existing focus outline.
+  - `:active`: `transform: translate3d(0,-1px,0) scale(0.995)`.
+- `.df-ambient` (TIER 2, for informational blocks that are NOT clickable, which is most `df-card-surface` instances):
+  - Default cursor, no arrow icons, no scale, no lift beyond 2px. Hover only brightens the border slightly and reveals a faint light sweep (a soft diagonal highlight following the slant, opacity ≤ 0.08). It must never be mistaken for a button.
+- `.df-media` (image/portfolio containers with `overflow:hidden`): on hover the inner media scales to 1.045 and drifts about 6px along the slant over 600ms; for `ImageSlot` placeholders, shift the `BrandPattern` layer slightly instead.
+- Optional enhancement, desktop only: a tiny delegated `pointermove` handler (single listener, rAF-throttled) that writes `--mx/--my` on elements with `data-spotlight` so a radial violet/magenta highlight follows the cursor inside TIER 1 cards. Optional subtle tilt (max 4°, only for cards ≤ 420px wide, disabled on coarse pointers and under reduced motion) via a small `useTilt` hook; use `perspective` on the parent and never alter layout.
+
+### 3.3 Mapping (audit with `grep -rn "df-card-surface" src`; 34 occurrences across 17 files)
+- TIER 1 (`df-interactive`): every element that is actually a `<Link>`, `<button>`, `role="tab"`, accordion trigger or MegaMenu card. Known: HomePage practice and industry `<Link>`s (around lines 299, 403, 417, 453), IndustriesPage industry index `<Link>` rows, PracticeConstellation nodes and its `<Link>`, HospitalityPage `<Link>` (around line 219), EcosystemDiagram node buttons, DisciplineSelector tabs, MegaMenu cards. Keep `LinkButton`/`Button` as they are (just add the shared glow/ring feel through a light pass; do not restyle their shapes).
+- TIER 2 (`df-ambient`): the remaining static `df-card-surface` blocks (Services, About, Intelligence, Studio loop steps, Contact info cards, DashboardContext tiles, etc.) and `ImageSlot` (`df-media`).
+- NO hover effect at all: the Contact form container and its inputs (inputs get a violet focus glow only), body text, headings, nav text.
+- If an item is later wrapped in a link, it moves to TIER 1; document this rule in a comment block above the new CSS.
+
+### 3.4 Touch and mobile (`@media (hover: none)`)
+No sticky hover. `:active` gives a press response (`scale(0.985)` plus ring opacity ≈ 0.8, 120ms in / 240ms out). Add `-webkit-tap-highlight-color: transparent; touch-action: manipulation` on TIER 1. Optional: when a TIER 1 card crosses the vertical center of the viewport, give it a single soft one-time glow pulse (IntersectionObserver, once per card). Minimum tap targets 44px.
+
+### 3.5 Quality rules
+No layout shift on hover (transform, opacity and pseudo-elements only). Hover-in 220ms, hover-out 320ms. `will-change: transform` only while hovering. Reduced motion: remove lift/tilt/zoom/sweeps and keep only border/glow color changes. Be careful that `Section` has `overflow-hidden`, so make sure lifted cards and glows are not clipped at section edges (add inner padding where needed).
+
+==================================================
+## 4. WORKSTREAM C: CINEMATIC 3D INTRO
+==================================================
+
+### 4.1 Architecture (new files, keep each focused)
+```
+src/components/intro/IntroGate.tsx        // state machine, route/session gating, overlay shell, a11y, scroll lock
+src/components/intro/IntroScene.tsx       // lazy WebGL canvas for the interactive 3D mark
+src/components/intro/IntroFallback.tsx    // CSS-3D layered fallback (no WebGL)
+src/components/intro/CurtainReveal.tsx    // the two curtain panels
+src/components/intro/introStorage.ts      // sessionStorage helpers (try/catch)
+src/components/intro/IntroContext.tsx     // { phase, isActive } so the hero can defer its own WebGL
+src/components/brand/dfMark3D.ts          // NEW shared module extracted from Hero3DCanvas (see 4.2)
+src/hooks/useBodyScrollLock.ts
+```
+Mount `<IntroGate />` in `App.tsx` as a SIBLING of `<Layout>` inside `<HashRouter>` (it needs `useLocation`). The real `Layout` + routes stay mounted and rendered underneath the overlay the whole time. The reveal must show the ACTUAL homepage, never a duplicate or screenshot. Wrap the Layout in `<div id="app-shell" inert={isActive}>` (React 19 supports the boolean `inert`) so keyboard and screen readers cannot reach the page behind the overlay.
+
+### 4.2 Shared 3D module (refactor, no behavior change to the hero)
+Move out of `Hero3DCanvas.tsx` into `dfMark3D.ts` and import back: `flipExtrudedGeometryY`, the extrusion settings and the `buildDfMarkGroup()` logic (parse `df-mark-3d.svg?raw` with `SVGLoader`, extrude `#df-body` and `#df-dot`, centre the assembled group), `createDfMaterials()` (chrome/black-glass body, glossy magenta dot, theme-aware parameters), and `detectSoftwareGl(gl)`. Both the hero and the intro import this one module so Vite emits ONE shared chunk (no double download). After the refactor the hero must look and behave exactly as before. Verify this first.
+
+### 4.3 When the intro shows (gating)
+- Show only when the initial URL is the home route (`#/` or empty hash) AND `sessionStorage['df-intro-seen']` is not set. Deep links such as `#/services` never show it. In-app navigation never shows it. A refresh in the same browser session does not replay it. A new session shows it again.
+- Set `df-intro-seen` when the visitor clicks Explore or Skip. All storage access is wrapped in try/catch (if storage fails, show once per page load).
+- Optional and OFF by default: a small, low-key "Replay intro" text button in the Footer bottom row that clears the flag and shows the intro. Do not add it unless trivial.
+- No flash of the site before the intro: in the `index.html` inline script, if the hash is root and the flag is unset, set `document.documentElement.dataset.intro = 'pending'`. In CSS: `html[data-intro='pending'] body::before { content:''; position:fixed; inset:0; background:#010102; z-index:190; }`. `IntroGate` replaces it on mount (sets `data-intro="active"`, painting the same dark base) and removes the attribute when done. Add an 8-second failsafe that removes it, and a `<noscript>` style that disables the pending cover.
+- Add `--z-intro: 200` to the z-index tokens; the overlay uses it (it must sit above Header z-50, MegaMenu z-55, MobileNav z-70, skip link z-100).
+
+### 4.4 State machine
+`loading → ready → opening → done`, plus `skipped → done`.
+- `loading`: the overlay shell is already visible (dark stage, curtains closed, wordmark and both buttons rendered from the first frame, so Skip and Explore work BEFORE the 3D chunk arrives). The lazy `IntroScene` loads in parallel behind a branded static icon (official `logo-icon-dark.svg`).
+- `ready`: 3D mark fades in (400ms), UI entrance staggers in.
+- `opening`: triggered by Explore (details in 4.7).
+- `done`: unmount the overlay, dispose WebGL, unlock scroll, remove `inert`, set storage, focus the page.
+- Skip works in EVERY state, including mid-curtain: it cancels running animations (stop `motion` controls / clear timers / set a `cancelled` ref checked each frame), then does a quick 180ms overlay fade (instant under reduced motion) and goes to `done`. Escape also skips.
+
+### 4.5 Stage visuals
+- The overlay is ALWAYS dark and cinematic regardless of the saved theme: a near-black stage whose "closed curtains" are the backdrop (see 4.8), with the existing DF. pattern at very low opacity and soft violet/magenta/blue ambient light pools. Sophisticated and immersive, not playful, not game-like.
+- Centre: the 3D DF. mark (4.6). Beneath it: the OFFICIAL wordmark `SITE_CONFIG.assets.logos.wordmarkDark` as an `<img>` (HTML overlay, `height` about 44–64px responsive, width auto). Never re-typeset "Digital Field." in Sora and never extrude the wordmark. Below that a small uppercase tagline "PERFORMANCE IN CONTEXT." (existing copy, Sora SemiBold, wide tracking, `--on-dark-muted`).
+- Entrance (all 700–900ms, `--ease-out`): stage light pools fade in 0–600ms; mark settles from `rotation.y = -0.9 rad`, small scale-up (0.94→1) and fades in 200–900ms; wordmark fades up 12px at 500ms; tagline at 700ms; buttons at 900ms.
+
+### 4.6 The interactive 3D mark (raw three, in `IntroScene.tsx`)
+Rendering: full-viewport transparent canvas behind the UI; camera fov ≈ 34, `z ≈ 8`; the mark occupies roughly 42–48% of viewport width on desktop and ≈ 78% of width on portrait phones; recompute on resize/orientation change (ResizeObserver). Materials, environment (`RoomEnvironment` PMREM) and geometry come from `dfMark3D.ts`: black-chrome / black-glass body with real bevels, glossy magenta dot.
+Lighting rig (brand colours only): off-white key light top-left; violet rim light lower-left; magenta rim light lower-right; a small electric-blue kicker behind top-right (sparing); low ambient. Env intensity about 1.8–2.1 to get crisp reflections like the PDF's 3D page (black glass with a violet glow beneath).
+Atmosphere: a soft contact-shadow/glow blob under the mark (radial-gradient `CanvasTexture` on a plane); optional faint mirrored reflection (a flipped clone at about 12% opacity with a gradient `alphaMap`) ONLY if the adaptive-quality check passes; optional dust: ≤ 60 tiny instanced points (violet/magenta/off-white) drifting very slowly. No bloom/postprocessing.
+
+Auto-revolve: continuous slow yaw about 0.27 rad/s (≈ 23s per full turn), eased with a DWELL at the front-facing pose: `speed = base * (0.35 + 0.65 * smoothstep(0, 1, |sin(yaw/2)|))`, so it lingers when the DF. faces the viewer and passes quickly over the (mirrored) back. Add a gentle pitch sway (±0.06 rad) and a tiny float (±4 units).
+
+User interaction (Pointer Events API, works for mouse, touch and pen):
+- Drag rotates: `pointerdown` → `setPointerCapture`; yaw += dx × 0.0105 rad/px; pitch += dy × 0.006 rad/px, clamped to ±0.6 rad. Cursor `grab` → `grabbing`. The canvas has `touch-action: none` (the page is scroll-locked during the intro).
+- Inertia: on release keep angular velocity and damp it (`v *= 0.94` per 16.7ms, delta-time normalised).
+- Return to auto: after 1500ms without input, ease the auto-revolve speed back from 0 to its base value over 1200ms and relax pitch toward 0.08 with a ~0.8s time constant. The motion must never snap.
+- Click/tap response (pointerup with < 6px travel and < 250ms): a "pulse": a critically damped spring adds one 360° turn in the direction of the click side (stiffness ≈ 90, damping ≈ 14, about 1s), a scale pulse 1→1.05→1 over 400ms, and a brief light-intensity boost (violet and magenta × 1.8, decaying over 600ms). Ignore taps while a pulse runs.
+- Keyboard: the canvas is focusable (`tabIndex=0`, `role="img"`, `aria-label="Interactive 3D Digital Field logo"`, `aria-describedby` pointing to a visually-hidden hint "Drag, or use arrow keys to rotate. Press Enter to spin."). Arrow keys nudge yaw/pitch; Enter/Space triggers the pulse. Show a subtle visible hint "DRAG TO ROTATE" (desktop) / "DRAG OR TAP" (touch) that fades after the first interaction.
+Robustness and performance: cap DPR at 2 (1.5 on mobile, 1 on software GL via `detectSoftwareGl`); pause the render loop when the tab is hidden; adaptive quality: average the first 60 frames and if > 24ms drop DPR to 1 and disable reflection/dust; handle `webglcontextlost` by switching to `IntroFallback` (never leave an empty stage); dispose geometries, materials, textures, PMREM and the renderer on unmount. If the lazy chunk has not loaded within 6 seconds or throws, switch to `IntroFallback` permanently for this visit.
+
+`IntroFallback` (no WebGL / chunk failure): CSS-3D pseudo-depth. Stack about 14 absolutely positioned copies of the official `logo-icon-dark.svg` along translateZ (top layer full opacity, lower layers darker with a violet glow), inside a `perspective: 1200px; transform-style: preserve-3d` container. Support the same drag-to-rotate (pointer events → `rotateY/rotateX`), the same inertia/return behavior and auto-sway through a rAF loop or CSS keyframes. This must still look premium; do NOT show a plain image.
+
+### 4.7 Buttons
+Both are real `<button>` elements, centred below the tagline (stacked, full-width max 320px on phones; side-by-side on desktop), `min-height 48px`, clearly distinct:
+- Explore (primary): the existing `df-gradient-accent` / `variant="gradient"` look, slanted via `df-slant-block`, label "Explore" + arrow icon (lucide). Subtle animated light sweep along the slant every ~4s (disabled under reduced motion), hover: gentle lift + brightness; `:active` press. Initial focus lands here.
+- Skip Intro (secondary): ghost/outline with `--border-dark-strong`, off-white text, hover border brightens. Always visible, never delayed behind the animation, labelled exactly "Skip Intro".
+Keyboard: Tab order Explore → Skip Intro; Escape = skip. Both have visible focus rings.
+
+### 4.8 Cinematic 3D curtain reveal (`CurtainReveal.tsx`)
+Layers (bottom → top, all inside the overlay `position: fixed; inset: 0; z-index: var(--z-intro)`):
+1. The REAL website (already mounted in `#app-shell`, beneath the overlay).
+2. A fading black veil layer (opacity 0.55→0) that darkens the site at the start for depth. Do NOT use `filter: brightness` on the whole site (expensive).
+3. Two curtain panels (left and right), each `width: 50.6%` (slight centre overlap to hide the seam), full height, inside a container with `perspective: 1800px; perspective-origin: 50% 40%`. In the closed state they ARE the intro stage background.
+4. The intro UI and 3D canvas above the curtains.
+Curtain look (CSS only, no images): base `linear-gradient(90deg, #07050c, #0d0716 50%, #07050c)`; fabric pleats via `repeating-linear-gradient(90deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 22px, rgba(0,0,0,0.35) 22px 30px, transparent 30px 56px)`; a top valance shadow and bottom hem shadow; a faint violet/magenta tint toward the outer edges; a soft vertical vignette. The inner leading edge carries a thin 2–3px violet→magenta rim light (about 55% opacity) that brightens during the move, plus a cast shadow (a 120px-wide gradient to transparent) falling onto the revealed site.
+Sequence on Explore (total ≈ 2.4s; times are targets, tune for smoothness):
+- 0ms: set `df-intro-seen`; disable both buttons' pointer events EXCEPT Skip, which stays active; the hint fades.
+- 0–600ms: the UI (wordmark, tagline, buttons) fades and drifts down 10px; the 3D mark performs a final slow push toward the camera (scale 1→1.12) while fading out; the veil begins easing out. At about 600ms DISPOSE the intro WebGL renderer, then allow the hero to mount (see 4.9).
+- 500–2200ms: curtains part. Left panel `transform-origin: 0 50%`, right panel `100% 50%`. Left keyframes: `0%: translate3d(0,0,0) rotateY(0)`; `35%: translate3d(-14%,0,40px) rotateY(-6deg)`; `100%: translate3d(-106%,0,80px) rotateY(-10deg)`. Right panel mirrored. Duration 1700ms, `cubic-bezier(0.77, 0, 0.18, 1)`, with a ≤ 60ms start offset between panels for a natural feel. While moving, shift the pleat `background-position-x` by about 40px opposite to the motion (fabric gathering), and fade the leading-edge rim glow in then out.
+- During the same window the REAL site beneath eases `scale(1.035)→1` (apply to `#app-shell` as `transform` ONLY during the animation, then set `transform: none`, never leave `scale(1)`, because a lingering transform breaks `position: fixed` and sticky descendants such as the MobileNav drawer) and the veil reaches 0.
+- At the end: mark `done`, unmount the overlay, unlock scroll, remove `inert`, then focus `main h1` explicitly (ScrollManager skips focus on first mount) and set the live-region text "Welcome to Digital Field."
+Use `motion` (`animate()` / `useAnimate`) with a shared timeline and a cancel handle so Skip can stop it instantly. CSS keyframes are acceptable for the curtains if cancellation is handled by removing the overlay.
+Skip Intro bypasses ALL of this (180ms fade or instant, never any curtain motion).
+Reduced motion: no revolve, no inertia, no curtains. Show a calm static mark (the user may still drag it manually) with the same two buttons; Explore performs a 300ms crossfade to the site; Skip is instant.
+
+### 4.9 Integration with the existing hero and page (avoid hidden work)
+- The homepage must not run its own WebGL or entrance animations while it is hidden behind the intro. Provide `IntroContext` (`phase`, `isActive`). In `Hero3DSlot.tsx`, do not mount `Hero3DCanvas` until the intro has disposed its renderer (during `opening` after ~600ms, or immediately on skip) or when no intro is active. This guarantees at most ONE WebGL context at a time (important on mobile). Show the existing hero brand loader meanwhile. Gate the homepage's `df-reveal`/motion entrance animations the same way so the hero's text animates in as the curtains open.
+- `useBodyScrollLock`: while the overlay is active set `html, body { overflow: hidden; overscroll-behavior: none; }` and compensate scrollbar width (`padding-right`) to avoid a layout jump; make sure the intro never leaves the page locked (always restore in cleanup, including on Skip, on error and on unmount). On iOS also set `touch-action: none` on the overlay. Use `100dvh`, not `100vh`, for the stage.
+- Accessibility: overlay `role="dialog" aria-modal="true" aria-label="Digital Field. introduction"`; `inert` on `#app-shell`; focus starts on Explore and is contained (since the rest of the page is inert); a polite live region announces "Introduction. Press Explore to enter the website, or Skip Intro."; all text meets AA; the 3D canvas is not the only way to proceed.
+
+==================================================
+## 5. PERFORMANCE, COMPATIBILITY AND BUDGETS
+==================================================
+- The three.js intro code is code-split (`React.lazy` / dynamic `import()` started after first paint) and shares one chunk with the hero via `dfMark3D.ts`. The initial JS (main chunk) must not grow by more than about 10 KB gzipped; check the build output.
+- LCP must not be blocked by the 3D chunk: the static shell, wordmark and buttons are plain DOM.
+- After `done`, there must be zero intro listeners, timers, rAF loops or WebGL contexts left running.
+- Target 60fps on a mid-range laptop and a stable 30+ fps on mid-range phones; use the adaptive-quality fallback described above.
+- Do not edit the `server` block of `vite.config.ts`. Keep the existing `optimizeDeps.include` entries; add more `three/examples/jsm/...` entries only if you import new example modules.
+- Keep the build clean: `npm run lint` and `npm run build` must pass with no new warnings about unused code or missing assets.
+
+==================================================
+## 6. IMPLEMENTATION PHASES (complete all, verifying after each)
+==================================================
+1. INSPECT: confirm every fact in Section 0 against the code; list any discrepancy before editing.
+2. HOUSEKEEPING: apply the `Section` `w-full` fix; if (and only if) npm install fails, remove the `esbuild` devDependency.
+3. WORKSTREAM A: dark default, Night enrichment, Day mode checks; confirm the toggle and persistence still work.
+4. REFACTOR: extract `dfMark3D.ts` from `Hero3DCanvas.tsx`; confirm the hero is visually unchanged.
+5. WORKSTREAM B: add tokens and classes; apply the two-tier mapping page by page; verify no layout shift and correct touch behavior.
+6. WORKSTREAM C: build `IntroGate`, scene, fallback, curtains, scroll lock, gating, storage; wire `IntroContext` into `Hero3DSlot` and the homepage animations.
+7. ACCESSIBILITY AND PERFORMANCE PASS: reduced motion, no-WebGL, keyboard, focus return, bundle check.
+8. TEST everything in Section 7 and fix failures. Then report.
+
+==================================================
+## 7. ACCEPTANCE CHECKLIST (test each; fix before finishing)
+==================================================
+[ ] First visit in a fresh session: the dark theme is shown immediately with no light flash; the Day/Night buttons work; the choice persists across reloads; a stored Day choice is respected.
+[ ] Every page in Night: no light-theme leftovers; text readable (≥ 4.5:1); backgrounds show subtle violet/magenta depth rather than flat black.
+[ ] Intro appears only on `#/` in a new session; `#/services` deep link shows no intro; refresh after Explore or Skip shows no intro.
+[ ] Skip Intro works: before WebGL has loaded, during auto-revolve, during a drag, and mid-curtain. Escape also skips. Scroll is always unlocked afterwards.
+[ ] Explore plays the full sequence; the curtains reveal the REAL live homepage (header, hero, everything interactive) with no duplicate or flash; the hero 3D starts only after the intro's context is disposed.
+[ ] 3D mark: auto-revolves with a front-facing dwell; drag rotates (mouse and touch); inertia then gentle return to auto-rotation; click/tap triggers the spring spin and light pulse; keyboard arrows and Enter work.
+[ ] Reduced motion: no revolve or curtains; the buttons still work; Explore crossfades.
+[ ] WebGL disabled: `IntroFallback` appears with drag support; the 6-second chunk timeout also falls back.
+[ ] Mobile (375px, portrait and landscape): the mark fits, buttons are stacked and ≥ 48px, no scroll or rubber-banding during the intro, `100dvh` is respected.
+[ ] Hover: TIER 1 elements lift and glow with an illuminated ring and pointer cursor; TIER 2 blocks show only subtle border/sweep with a default cursor; the Contact form container has none; no layout shift anywhere; touch devices get press feedback and no sticky hover.
+[ ] Existing functionality intact: all 12 routes, forms and validation, diagrams, mega menu, mobile menu, SEO meta.
+[ ] `npm run lint` and `npm run build` pass; the main chunk grew ≤ about 10 KB gzipped; no console errors; no leftover intro listeners or WebGL contexts after `done`.
+
+==================================================
+## 8. OUTPUT
+==================================================
+When finished, reply with: (1) the list of files created and modified, (2) any deviation from this brief and why, (3) any dependency change (expected: none, or only the `esbuild` removal), and (4) anything you could not verify.
