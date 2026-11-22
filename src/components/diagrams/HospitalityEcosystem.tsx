@@ -25,31 +25,33 @@ export function HospitalityEcosystem() {
       <div className="flex flex-wrap items-center gap-2.5" role="group" aria-label="Filter hospitality dimensions">
         <button
           type="button"
+          aria-pressed={selectedDimension === 'all'}
           onClick={() => setSelectedDimension('all')}
-          className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
+          className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive df-chip-wipe ${
             selectedDimension === 'all'
               ? 'bg-[var(--electric-blue)] text-[var(--off-white)] border-[var(--electric-blue)]'
               : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/85 hover:border-[var(--off-white)]'
           }`}
         >
-          <span className="df-unslant block">All 14 Touchpoints</span>
+          <span className="relative z-10 df-unslant block">All 14 Touchpoints</span>
         </button>
         {HOSPITALITY_DIMENSIONS.map((dim) => (
           <button
             key={dim.id}
             type="button"
+            aria-pressed={selectedDimension === dim.id}
             onClick={() => {
               setSelectedDimension(dim.id);
               const firstMatch = HOSPITALITY_TOUCHPOINTS.find((tp) => tp.dimension === dim.id);
               if (firstMatch) setSelectedTouchpoint(firstMatch);
             }}
-            className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
+            className={`min-h-[42px] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive df-chip-wipe ${
               selectedDimension === dim.id
                 ? 'bg-[var(--magenta)] text-[var(--near-black)] border-[var(--magenta)]'
                 : 'border-[var(--border-dark-strong)] text-[var(--off-white)]/85 hover:border-[var(--off-white)]'
             }`}
           >
-            <span className="df-unslant block">{dim.title}</span>
+            <span className="relative z-10 df-unslant block">{dim.title}</span>
           </button>
         ))}
       </div>

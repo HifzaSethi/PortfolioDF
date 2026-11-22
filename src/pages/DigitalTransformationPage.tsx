@@ -95,8 +95,8 @@ export default function DigitalTransformationPage() {
 
             {/* Connected Nodes & Active Group Deliverables */}
             <div className="lg:col-span-7 space-y-6" aria-live="polite">
-              <div className="df-mesh-dark border border-[var(--border-dark)] p-6 space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
+              <div className="df-card-surface df-ambient df-panel-hairline df-frame-t df-accent-top-rim p-6 space-y-4">
+                <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                   Connected Ecosystem Nodes · {activeGroup.title}
                 </p>
                 <div className="flex flex-wrap gap-2.5">
@@ -108,7 +108,7 @@ export default function DigitalTransformationPage() {
                         className={`px-3.5 py-2 text-xs font-bold border transition-all duration-150 ${
                           isLinked
                             ? 'border-[var(--electric-blue)] bg-[var(--electric-blue)] text-[var(--off-white)]'
-                            : 'border-[var(--border-dark)] text-[var(--on-dark-subtle)] opacity-55'
+                            : 'border-[var(--border-strong)] bg-[var(--bg-page)] text-[var(--text-muted)] opacity-60'
                         }`}
                       >
                         {node.label}
@@ -159,7 +159,7 @@ export default function DigitalTransformationPage() {
                       >
                         <span
                           aria-hidden="true"
-                          className="mt-2 h-1.5 w-1.5 bg-[var(--link-accent)] shrink-0"
+                          className="mt-2 h-1.5 w-1.5 bg-[var(--eyebrow-blue)] shrink-0"
                         />
                         <span>{item}</span>
                       </li>

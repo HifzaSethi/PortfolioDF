@@ -59,7 +59,7 @@ export default function IntelligencePage() {
                 key={service.id}
                 className="df-card-surface df-ambient df-frame-t p-6 space-y-3"
               >
-                <p className="text-xs font-bold tabular-nums text-[var(--link-accent)]">
+                <p className="df-ambient-eyebrow text-xs font-bold tabular-nums text-[var(--eyebrow-blue)]">
                   0{idx + 1}
                 </p>
                 <h3 className="text-lg font-extrabold text-[var(--text-primary)]">

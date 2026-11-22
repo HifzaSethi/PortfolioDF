@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react';
+import { useEffect, useState, type KeyboardEvent } from 'react';
 import { ArrowRight, ListTree } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ECOSYSTEM_NODES } from '../../data/ecosystem';
@@ -11,6 +11,18 @@ interface EcosystemDiagramProps {
 export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
   const [activeId, setActiveId] = useState<string>(ECOSYSTEM_NODES[0].id);
   const [showListView, setShowListView] = useState(false);
+
+  useEffect(() => {
+    const handleExternalSelect = (event: Event) => {
+      const detail = (event as CustomEvent<{ id?: string }>).detail;
+      if (detail?.id && ECOSYSTEM_NODES.some((n) => n.id === detail.id)) {
+        setActiveId(detail.id);
+        setShowListView(false);
+      }
+    };
+    window.addEventListener('df:select-ecosystem-node', handleExternalSelect);
+    return () => window.removeEventListener('df:select-ecosystem-node', handleExternalSelect);
+  }, []);
 
   const activeIndex = ECOSYSTEM_NODES.findIndex((n) => n.id === activeId);
   const activeNode: EcosystemNode = ECOSYSTEM_NODES[activeIndex] ?? ECOSYSTEM_NODES[0];
@@ -56,7 +68,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
               key={node.id}
               className="df-card-surface df-ambient p-4"
             >
-              <p className="text-xs font-bold tabular-nums text-[var(--link-accent)]">
+              <p className="df-ambient-eyebrow text-xs font-bold tabular-nums text-[var(--eyebrow-blue)]">
                 {String(node.order).padStart(2, '0')}
               </p>
               <h3 className="mt-1 text-sm font-bold text-[var(--text-primary)]">{node.title}</h3>
@@ -149,7 +161,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
                       <span className="flex items-center justify-between text-[11px] font-bold tabular-nums">
                         <span
                           className={
-                            isSelected ? 'text-[var(--violet)]' : 'text-[var(--link-accent)]'
+                            isSelected ? 'text-[var(--violet)]' : 'text-[var(--eyebrow-blue)]'
                           }
                         >
                           {String(node.order).padStart(2, '0')}
@@ -213,7 +225,7 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
               }`}
             >
             <div className="flex items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
-              <span className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--link-accent)] tabular-nums">
+              <span className="df-ambient-eyebrow text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)] tabular-nums">
                 Node {String(activeNode.order).padStart(2, '0')} / 10
               </span>
               <span className="text-xs font-semibold text-[var(--text-muted)]">

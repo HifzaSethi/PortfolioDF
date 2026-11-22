@@ -86,15 +86,26 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 
-  /* Interaction System Tokens (Day mode softer neutral shadow + muted glows) */
+  /* Interaction & Motion Language Tokens (Day mode ~45% alpha + soft neutral shadow) */
+  --dur-micro: 140ms;
+  --dur-hover-in: 220ms;
+  --dur-hover-out: 340ms;
+  --dur-in: var(--dur-hover-in);
+  --dur-out: var(--dur-hover-out);
+  --dur-reveal: 720ms;
+  --dur-scene: 1100ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-in: 220ms;
-  --dur-out: 320ms;
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-cinematic: cubic-bezier(0.77, 0, 0.18, 1);
+  --tilt-max: 5deg;
+  --stagger: 60ms;
   --lift: -4px;
-  --glow-violet: rgba(179, 79, 255, 0.16);
+  --ring-ambient-opacity: 0.35;
+  --glow-violet: rgba(179, 79, 255, 0.17);
   --glow-magenta: rgba(226, 51, 137, 0.14);
-  --shadow-lift: 0 12px 28px rgba(1, 1, 2, 0.09),
-                 0 0 18px var(--glow-violet);
+  --shadow-lift: 0 10px 26px rgba(1, 1, 2, 0.08),
+                 0 0 0 1px rgba(179, 79, 255, 0.32),
+                 0 0 16px var(--glow-violet);
 
   /* Elevation & Focus */
   --shadow-subtle: 0 2px 4px color-mix(in srgb, var(--near-black) 6%, transparent),
@@ -139,6 +150,7 @@
   --pattern-opacity-surface: 0.075;
   --pattern-opacity-mesh: 0.11;
 
+  --ring-ambient-opacity: 0.55;
   --glow-violet: rgba(179, 79, 255, 0.38);
   --glow-magenta: rgba(226, 51, 137, 0.32);
   --shadow-lift: 0 16px 36px rgba(0, 0, 0, 0.72),

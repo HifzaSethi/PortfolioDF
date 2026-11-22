@@ -117,6 +117,12 @@ export interface StudioDiscipline {
   aspectRatio: '16/9' | '4/3' | '3/4' | '1/1';
   subServices: string[];
   disclosureNote?: string;
+  image?: {
+    src?: string | null;
+    srcSet?: string;
+    sizes?: string;
+    alt: string;
+  };
 }
 
 export interface IndustryItem {
@@ -125,6 +131,14 @@ export interface IndustryItem {
   approachNote: string;
   path: string;
   isDedicatedPage?: boolean;
+  shotDescription: string;
+  gradientVariant: number;
+  image?: {
+    src?: string | null;
+    srcSet?: string;
+    sizes?: string;
+    alt: string;
+  };
 }
 
 export type HospitalityDimensionId = 'demand' | 'distribution' | 'commercial' | 'experience';

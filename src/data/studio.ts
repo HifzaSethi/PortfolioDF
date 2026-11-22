@@ -32,6 +32,7 @@ export const STUDIO_DISCIPLINES: StudioDiscipline[] = [
       'Objective-led messaging across brand systems, search intent, lifecycle automation, and hospitality listings.',
     shotDescription: 'Editorial copywriting direction and bilingual English/Arabic brand messaging workshop',
     altText: 'Placeholder for DF. Studio bilingual copywriting creative direction',
+    image: { src: null, alt: 'Placeholder for DF. Studio bilingual copywriting creative direction' },
     aspectRatio: '4/3',
     subServices: [
       'Brand Messaging & Tone of Voice',
@@ -53,6 +54,7 @@ export const STUDIO_DISCIPLINES: StudioDiscipline[] = [
       'Authentic, considered visual production across hospitality spaces, culinary craft, talent, architecture, and product lines.',
     shotDescription: 'Authentic modern hospitality suite and architectural daylight photography',
     altText: 'Placeholder for DF. Studio hospitality and architectural photography',
+    image: { src: null, alt: 'Placeholder for DF. Studio hospitality and architectural photography' },
     aspectRatio: '4/3',
     subServices: [
       'Property, Rooms & Suites Photography',
@@ -74,6 +76,7 @@ export const STUDIO_DISCIPLINES: StudioDiscipline[] = [
       'Structured production from hero destination films down to performance-tested short-form cut-downs.',
     shotDescription: 'Film production crew capturing modern hospitality and destination storytelling',
     altText: 'Placeholder for DF. Studio film and short-form videography production',
+    image: { src: null, alt: 'Placeholder for DF. Studio film and short-form videography production' },
     aspectRatio: '16/9',
     subServices: [
       'Brand & Campaign Films',
@@ -92,6 +95,7 @@ export const STUDIO_DISCIPLINES: StudioDiscipline[] = [
       'Cohesive campaign creative, landing visuals, lifecycle templates, and print collateral engineered for conversion clarity.',
     shotDescription: 'Cohesive digital campaign design and print collateral layout system',
     altText: 'Placeholder for DF. Studio graphic design system showcase',
+    image: { src: null, alt: 'Placeholder for DF. Studio graphic design system showcase' },
     aspectRatio: '4/3',
     subServices: [
       'Campaign & Advertising Creative',
@@ -111,6 +115,7 @@ export const STUDIO_DISCIPLINES: StudioDiscipline[] = [
       'Kinetic typography, animated data stories, CGI sequences, and digital signage designed for fast comprehension.',
     shotDescription: 'Kinetic typography and sleek data visualization motion frame',
     altText: 'Placeholder for DF. Studio motion graphics and kinetic typography',
+    image: { src: null, alt: 'Placeholder for DF. Studio motion graphics and kinetic typography' },
     aspectRatio: '16/9',
     subServices: [
       'Animated Ads & Social Motion',
@@ -129,6 +134,7 @@ export const STUDIO_DISCIPLINES: StudioDiscipline[] = [
       'Governed generative visual and multilingual production integrated directly with Search Intelligence and performance testing.',
     shotDescription: 'AI-assisted visual staging and seasonal creative variation workflow',
     altText: 'Placeholder for DF. Studio governed AI content workflow',
+    image: { src: null, alt: 'Placeholder for DF. Studio governed AI content workflow' },
     aspectRatio: '4/3',
     subServices: [
       'AI Visual Concepts & Mood Boards',

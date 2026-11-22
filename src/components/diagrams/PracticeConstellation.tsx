@@ -2,7 +2,51 @@ import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PRACTICES, STUDIO_PRACTICE_SUMMARY } from '../../data/practices';
+import { useTilt } from '../../hooks/useTilt';
+import type { PracticeSummary } from '../../types/content';
 import { LinkButton } from '../ui/Button';
+
+interface OrbitPracticeTileProps {
+  practice: PracticeSummary;
+  isSelected: boolean;
+  onSelect: () => void;
+}
+
+function OrbitPracticeTile({ practice, isSelected, onSelect }: OrbitPracticeTileProps) {
+  const tiltRef = useTilt<HTMLButtonElement>(true);
+
+  return (
+    <div className="df-tilt-scene">
+      <button
+        ref={tiltRef}
+        type="button"
+        data-spotlight=""
+        onClick={onSelect}
+        onMouseEnter={onSelect}
+        onFocus={onSelect}
+        className={`w-full text-left p-4 border df-interactive df-tilt df-tilt-border ${
+          isSelected
+            ? 'border-[var(--link-accent)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] shadow-sm'
+            : 'border-[var(--border-subtle)] bg-[var(--bg-page)] text-[var(--text-primary)] hover:border-[var(--border-strong)]'
+        }`}
+      >
+        <div className="df-tilt-clip" aria-hidden="true">
+          <div className="df-tilt-glare" />
+        </div>
+        <span
+          className={`relative z-10 df-tilt-z-md block text-[10px] font-semibold uppercase tracking-[0.14em] ${
+            isSelected ? 'text-[var(--violet)]' : 'text-[var(--text-muted)]'
+          }`}
+        >
+          {practice.roleLabel}
+        </span>
+        <span className="relative z-10 df-tilt-z-lg mt-1 block text-base font-bold">
+          {practice.name}
+        </span>
+      </button>
+    </div>
+  );
+}
 
 export function PracticeConstellation() {
   const core = PRACTICES.find((p) => p.isCore) ?? PRACTICES[0];
@@ -26,13 +70,13 @@ export function PracticeConstellation() {
               type="button"
               onClick={() => setActiveId(STUDIO_PRACTICE_SUMMARY.id)}
               onMouseEnter={() => setActiveId(STUDIO_PRACTICE_SUMMARY.id)}
-              className={`min-h-[36px] px-3.5 py-1 text-xs font-bold df-slant-block df-interactive ${
+              className={`min-h-[36px] px-3.5 py-1 text-xs font-bold df-slant-block df-interactive df-chip-wipe ${
                 activeId === STUDIO_PRACTICE_SUMMARY.id
                   ? 'df-gradient-accent text-[var(--near-black)]'
                   : 'border border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'
               }`}
             >
-              <span className="df-unslant block">DF. Studio</span>
+              <span className="relative z-10 df-unslant block">DF. Studio</span>
             </button>
           </div>
 
@@ -51,38 +95,17 @@ export function PracticeConstellation() {
             </svg>
 
             <div className="relative z-10 grid grid-cols-2 gap-x-24 gap-y-20">
-              {orbiting.map((practice) => {
-                const isSelected = activeId === practice.id;
-                return (
-                  <button
-                    key={practice.id}
-                    type="button"
-                    data-spotlight=""
-                    onClick={() => setActiveId(practice.id)}
-                    onMouseEnter={() => setActiveId(practice.id)}
-                    onFocus={() => setActiveId(practice.id)}
-                    className={`text-left p-4 border df-interactive ${
-                      isSelected
-                        ? 'border-[var(--link-accent)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)] shadow-sm'
-                        : 'border-[var(--border-subtle)] bg-[var(--bg-page)] text-[var(--text-primary)] hover:border-[var(--border-strong)]'
-                    }`}
-                  >
-                    <span
-                      className={`block text-[10px] font-semibold uppercase tracking-[0.14em] ${
-                        isSelected ? 'text-[var(--violet)]' : 'text-[var(--text-muted)]'
-                      }`}
-                    >
-                      {practice.roleLabel}
-                    </span>
-                    <span className="mt-1 block text-base font-bold">
-                      {practice.name}
-                    </span>
-                  </button>
-                );
-              })}
+              {orbiting.map((practice) => (
+                <OrbitPracticeTile
+                  key={practice.id}
+                  practice={practice}
+                  isSelected={activeId === practice.id}
+                  onSelect={() => setActiveId(practice.id)}
+                />
+              ))}
             </div>
 
-            {/* Central Intelligence Hub */}
+            {/* Central Intelligence Hub (slanted — no tilt) */}
             <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
               <button
                 type="button"
@@ -111,7 +134,7 @@ export function PracticeConstellation() {
           aria-live="polite"
           className="lg:col-span-5 df-card-surface df-ambient df-panel-hairline df-frame-l p-8 space-y-5"
         >
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--link-accent)]">
+          <p className="df-ambient-eyebrow text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)]">
             {activeItem.roleLabel}
           </p>
           <h3 className="text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">
@@ -131,23 +154,27 @@ export function PracticeConstellation() {
           <div className="pt-2">
             <LinkButton to={activeItem.path} variant="primary">
               <span>Explore {activeItem.name}</span>
-              <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+              <ArrowUpRight aria-hidden="true" className="h-4 w-4 df-btn-arrow" />
             </LinkButton>
           </div>
         </div>
       </div>
 
-      {/* Mobile / Tablet Stacked Hierarchy */}
+      {/* Mobile / Tablet Stacked Hierarchy (F5 Unified Material Surfaces) */}
       <div className="lg:hidden space-y-4">
         <Link
           to={core.path}
-          className="block df-mesh-dark df-interactive p-6 border border-[var(--border-dark)]"
+          data-spotlight=""
+          className="block df-card-surface df-panel-hairline df-accent-top-rim df-interactive p-6"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
             {core.roleLabel}
           </p>
-          <h3 className="mt-1 text-2xl font-extrabold text-[var(--off-white)]">{core.name}</h3>
-          <p className="mt-2 text-sm text-[var(--on-dark-muted)]">{core.summary}</p>
+          <h3 className="mt-1 flex items-center justify-between text-2xl font-extrabold text-[var(--text-primary)]">
+            <span>{core.name}</span>
+            <ArrowUpRight aria-hidden="true" className="h-4 w-4 text-[var(--link-accent)]" />
+          </h3>
+          <p className="mt-2 text-sm text-[var(--text-muted)]">{core.summary}</p>
         </Link>
 
         <div className="space-y-3 df-frame-l pl-4 pb-3">
@@ -158,7 +185,7 @@ export function PracticeConstellation() {
               data-spotlight=""
               className="block df-card-surface df-interactive p-5"
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--eyebrow-blue)]">
                 {practice.roleLabel}
               </p>
               <p className="mt-1 flex items-center justify-between text-lg font-bold text-[var(--text-primary)]">
@@ -173,9 +200,9 @@ export function PracticeConstellation() {
         <Link
           to={STUDIO_PRACTICE_SUMMARY.path}
           data-spotlight=""
-          className="block border border-dashed border-[var(--border-strong)] bg-[var(--bg-tint)] df-interactive p-5"
+          className="block df-card-surface df-frame-t df-interactive p-5"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--eyebrow-magenta)]">
             Brought to life by DF. Studio
           </p>
           <p className="mt-1 flex items-center justify-between text-lg font-bold text-[var(--text-primary)]">

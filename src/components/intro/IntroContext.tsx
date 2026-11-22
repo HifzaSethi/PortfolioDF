@@ -15,7 +15,7 @@ interface IntroContextValue {
   isActive: boolean;
   introWebGLDisposed: boolean;
   contentRevealAllowed: boolean;
-  setPhase: (phase: IntroPhase) => void;
+  setPhase: (phase: IntroPhase | ((prev: IntroPhase) => IntroPhase)) => void;
   setIntroWebGLDisposed: (disposed: boolean) => void;
   setContentRevealAllowed: (allowed: boolean) => void;
 }
@@ -38,13 +38,19 @@ export function IntroProvider({ children }: { children: ReactNode }) {
     () => !computeShouldStartActive()
   );
 
-  const handleSetPhase = useCallback((next: IntroPhase) => {
-    setPhase(next);
-    if (next === 'done') {
-      setIntroWebGLDisposed(true);
-      setContentRevealAllowed(true);
-    }
-  }, []);
+  const handleSetPhase = useCallback(
+    (next: IntroPhase | ((prev: IntroPhase) => IntroPhase)) => {
+      setPhase((prev) => {
+        const resolved = typeof next === 'function' ? next(prev) : next;
+        if (resolved === 'done') {
+          setIntroWebGLDisposed(true);
+          setContentRevealAllowed(true);
+        }
+        return resolved;
+      });
+    },
+    []
+  );
 
   const value = useMemo<IntroContextValue>(() => {
     const isActive = phase !== 'done';

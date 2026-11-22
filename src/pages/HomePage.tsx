@@ -34,6 +34,7 @@ export default function HomePage() {
     <>
       {/* 01 HERO — Interactive Three.js DF Sculpture with Day/Night Adaptive Theme */}
       <Section
+        id="home-hero"
         surface="hero-adaptive"
         withPattern
         className="pt-10 pb-16 sm:pt-14 sm:pb-24 min-h-[calc(100vh-84px)] flex items-center"
@@ -67,13 +68,13 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-3">
-                <LinkButton to="/contact" variant="gradient">
+                <LinkButton to="/contact" variant="gradient" magnetic>
                   <span>Start a conversation</span>
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  <ArrowRight aria-hidden="true" className="h-4 w-4 df-btn-arrow" />
                 </LinkButton>
                 <LinkButton to="/about" variant="secondary">
                   <span>See how we think</span>
-                  <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                  <ArrowUpRight aria-hidden="true" className="h-4 w-4 df-btn-arrow" />
                 </LinkButton>
               </div>
             </div>
@@ -202,9 +203,9 @@ export default function HomePage() {
                   type="button"
                   aria-pressed={dotsAligned}
                   onClick={() => setDotsAligned((v) => !v)}
-                  className="min-h-[40px] px-4 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-page)] text-xs font-bold uppercase tracking-[0.06em] text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] df-slant-block df-interactive"
+                  className="min-h-[40px] px-4 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-page)] text-xs font-bold uppercase tracking-[0.06em] text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] df-slant-block df-interactive df-chip-wipe"
                 >
-                  <span className="df-unslant inline-block">
+                  <span className="relative z-10 df-unslant inline-block">
                     {dotsAligned ? 'Show Disconnected State' : 'Resolve to Business Objective'}
                   </span>
                 </button>
@@ -422,18 +423,18 @@ export default function HomePage() {
             <div className="lg:col-span-7">
               <ul className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
                 {INDUSTRIES.map((ind, idx) => (
-                  <li key={ind.id}>
+                  <li key={ind.id} className="df-row">
                     <Link
                       to={ind.path}
-                      className="flex min-h-[48px] items-center justify-between gap-4 py-3 px-3 text-base font-bold text-[var(--text-primary)] hover:text-[var(--link-accent)] df-interactive"
+                      className="relative z-10 flex min-h-[48px] items-center justify-between gap-4 py-3 px-3 text-base font-bold text-[var(--text-primary)] hover:text-[var(--link-accent)]"
                     >
                       <span className="flex items-center gap-4">
-                        <span className="text-xs font-semibold tabular-nums text-[var(--text-muted)]">
+                        <span className="df-row-num text-xs font-semibold tabular-nums text-[var(--text-muted)]">
                           0{idx + 1}
                         </span>
-                        <span>{ind.name}</span>
+                        <span className="df-row-title">{ind.name}</span>
                       </span>
-                      <ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0" />
+                      <ArrowUpRight aria-hidden="true" className="df-row-arrow h-4 w-4 shrink-0" />
                     </Link>
                   </li>
                 ))}

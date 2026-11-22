@@ -165,7 +165,7 @@ export default function AboutPage() {
                           key={item.stage}
                           className="df-card-surface df-ambient p-3.5"
                         >
-                          <p className="text-xs font-extrabold tracking-[0.14em] text-[var(--link-accent)]">
+                          <p className="df-ambient-eyebrow text-xs font-extrabold tracking-[0.14em] text-[var(--eyebrow-blue)]">
                             {item.stage}
                           </p>
                           <p className="mt-1 text-xs font-semibold text-[var(--text-primary)]">

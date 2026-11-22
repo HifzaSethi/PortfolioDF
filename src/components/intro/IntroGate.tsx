@@ -126,7 +126,7 @@ export function IntroGate() {
     if (!isActive || phase !== 'loading' || useFallback) return;
     const timeoutId = window.setTimeout(() => {
       setUseFallback(true);
-      setPhase('ready');
+      setPhase((prev) => (prev === 'loading' ? 'ready' : prev));
     }, 6000);
     return () => window.clearTimeout(timeoutId);
   }, [isActive, phase, useFallback, setPhase]);
@@ -209,14 +209,14 @@ export function IntroGate() {
   }, [setContentRevealAllowed, setIntroWebGLDisposed, setPhase]);
 
   const handleSceneReady = useCallback(() => {
-    setPhase('ready');
+    setPhase((prev) => (prev === 'loading' ? 'ready' : prev));
   }, [setPhase]);
 
   const handleFallback = useCallback(() => {
     setUseFallback(true);
     setSceneUnmounted(true);
     setIntroWebGLDisposed(true);
-    setPhase('ready');
+    setPhase((prev) => (prev === 'loading' ? 'ready' : prev));
   }, [setIntroWebGLDisposed, setPhase]);
 
   const handleFirstInteract = useCallback(() => {
@@ -273,7 +273,7 @@ export function IntroGate() {
     }, 500);
 
     // Dispose Intro WebGL right at ~600ms so the curtain sweep stays 100% stutter-free
-    // Hero3DCanvas will mount cleanly inside finalizeDone() once curtains finish parting
+    // HeroEcosystemCanvas will mount cleanly inside finalizeDone() once curtains finish parting
     scheduleTimer(() => {
       if (!cancelledRef.current) {
         setSceneUnmounted(true);

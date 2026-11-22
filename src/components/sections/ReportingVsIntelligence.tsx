@@ -14,9 +14,9 @@ export function ReportingVsIntelligence() {
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* Reporting Column */}
-        <div className="border border-[var(--border-strong)] bg-[var(--bg-tint)] p-7 sm:p-8 space-y-5">
+        <div className="df-card-surface df-ambient df-frame-t p-7 sm:p-8 space-y-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+            <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)]">
               {reporting.subtitle}
             </p>
             <h4 className="mt-1 text-2xl font-bold text-[var(--text-primary)]">{reporting.title}</h4>
@@ -26,7 +26,7 @@ export function ReportingVsIntelligence() {
               <li key={point} className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
                 <span
                   aria-hidden="true"
-                  className="mt-2 h-1.5 w-1.5 bg-[var(--text-subtle)] shrink-0"
+                  className="mt-2 h-1.5 w-1.5 bg-[var(--eyebrow-blue)] shrink-0"
                 />
                 <span>{point}</span>
               </li>
@@ -35,24 +35,24 @@ export function ReportingVsIntelligence() {
         </div>
 
         {/* Intelligence Column */}
-        <div className="df-mesh-dark p-7 sm:p-8 space-y-5 border border-[var(--border-dark)]">
+        <div className="df-card-surface df-ambient df-panel-hairline df-accent-top-rim p-7 sm:p-8 space-y-5">
           <div className="relative z-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
+            <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
               {intelligence.subtitle}
             </p>
-            <h4 className="mt-1 text-2xl font-bold text-[var(--off-white)]">
+            <h4 className="mt-1 text-2xl font-bold text-[var(--text-primary)]">
               {intelligence.title}
             </h4>
           </div>
-          <ul className="relative z-10 space-y-3 border-t border-[var(--border-dark)] pt-5">
+          <ul className="relative z-10 space-y-3 border-t border-[var(--border-subtle)] pt-5">
             {intelligence.points.map((point) => (
               <li
                 key={point}
-                className="flex items-start gap-3 text-sm font-medium text-[var(--off-white)]"
+                className="flex items-start gap-3 text-sm font-medium text-[var(--text-primary)]"
               >
                 <span
                   aria-hidden="true"
-                  className="mt-2 h-1.5 w-1.5 bg-[var(--electric-blue)] shrink-0"
+                  className="mt-2 h-1.5 w-1.5 bg-[var(--eyebrow-magenta)] shrink-0"
                 />
                 <span>{point}</span>
               </li>

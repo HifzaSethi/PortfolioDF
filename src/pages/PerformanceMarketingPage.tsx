@@ -105,7 +105,7 @@ export default function PerformanceMarketingPage() {
                               >
                                 <span
                                   aria-hidden="true"
-                                  className="h-1.5 w-1.5 bg-[var(--link-accent)] shrink-0"
+                                  className="h-1.5 w-1.5 bg-[var(--eyebrow-blue)] shrink-0"
                                 />
                                 <span>{item}</span>
                               </li>

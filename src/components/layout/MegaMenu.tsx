@@ -77,24 +77,24 @@ export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
         </div>
 
         {/* DF. Studio Creative Arm */}
-        <div className="lg:col-span-3 df-mesh-dark border border-[var(--border-dark)] p-5 flex flex-col justify-between">
+        <div className="lg:col-span-3 df-card-surface df-panel-hairline df-accent-top-rim p-5 flex flex-col justify-between">
           <div className="relative z-10">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--off-white)]/75">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)]">
               {STUDIO_PRACTICE_SUMMARY.roleLabel}
             </p>
             <Link
               to={STUDIO_PRACTICE_SUMMARY.path}
               onClick={onClose}
-              className="mt-2 inline-flex items-center gap-2 text-xl font-extrabold text-[var(--off-white)] hover:text-[var(--violet)] transition-colors"
+              className="mt-2 inline-flex items-center gap-2 text-xl font-extrabold text-[var(--text-primary)] hover:text-[var(--link-accent)] transition-colors"
             >
               <span>{STUDIO_PRACTICE_SUMMARY.name}</span>
               <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </Link>
-            <p className="mt-2 text-xs leading-relaxed text-[var(--on-dark-muted)]">
+            <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
               {STUDIO_PRACTICE_SUMMARY.summary}
             </p>
           </div>
-          <p className="relative z-10 mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--magenta)]">
+          <p className="relative z-10 mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--eyebrow-magenta)]">
             {STUDIO_PRACTICE_SUMMARY.tagline}
           </p>
         </div>

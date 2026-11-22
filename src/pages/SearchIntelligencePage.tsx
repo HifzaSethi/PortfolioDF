@@ -79,7 +79,7 @@ export default function SearchIntelligencePage() {
                 <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
                   {discipline.acronym}
                 </h2>
-                <p className="text-xl font-bold text-[var(--link-accent)]">
+                <p className="text-xl font-bold text-[var(--eyebrow-blue)]">
                   {discipline.tagline}
                 </p>
                 <p className="text-base leading-relaxed text-[var(--text-muted)]">

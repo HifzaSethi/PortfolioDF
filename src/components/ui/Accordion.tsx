@@ -85,10 +85,17 @@ export function Accordion({
               id={panelId}
               role="region"
               aria-labelledby={buttonId}
-              hidden={!isOpen}
-              className="pb-5 pt-1"
+              aria-hidden={!isOpen}
+              inert={!isOpen ? true : undefined}
+              className={`grid transition-[grid-template-rows,opacity] duration-[280ms] ease-[var(--ease-out)] ${
+                isOpen
+                  ? 'grid-rows-[1fr] opacity-100 visible'
+                  : 'grid-rows-[0fr] opacity-0 invisible'
+              }`}
             >
-              {item.content}
+              <div className="overflow-hidden">
+                <div className="pb-5 pt-1">{item.content}</div>
+              </div>
             </div>
           </div>
         );

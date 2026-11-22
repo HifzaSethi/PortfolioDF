@@ -44,14 +44,14 @@ export function Footer() {
             <h2 className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--on-dark-subtle)]">
               01 Navigation
             </h2>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-1 text-sm">
               {FOOTER_COMPANY_LINKS.map((item) => (
-                <li key={item.path}>
+                <li key={item.path} className="df-row">
                   <Link
                     to={item.path}
-                    className="df-link-sweep text-[var(--off-white)]/85 hover:text-[var(--off-white)]"
+                    className="relative z-10 flex items-center justify-between py-1.5 px-2 text-[var(--off-white)]/85 hover:text-[var(--off-white)]"
                   >
-                    {item.label}
+                    <span className="df-row-title">{item.label}</span>
                   </Link>
                 </li>
               ))}
@@ -63,14 +63,14 @@ export function Footer() {
             <h2 className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--on-dark-subtle)]">
               02 Consultancy Practices
             </h2>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-1 text-sm">
               {FOOTER_PRACTICE_LINKS.map((item) => (
-                <li key={item.path}>
+                <li key={item.path} className="df-row">
                   <Link
                     to={item.path}
-                    className="df-link-sweep text-[var(--off-white)]/85 hover:text-[var(--off-white)]"
+                    className="relative z-10 flex items-center justify-between py-1.5 px-2 text-[var(--off-white)]/85 hover:text-[var(--off-white)]"
                   >
-                    {item.label}
+                    <span className="df-row-title">{item.label}</span>
                   </Link>
                 </li>
               ))}

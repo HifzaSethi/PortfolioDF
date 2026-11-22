@@ -16,7 +16,7 @@ interface SectionProps {
   surface?: SectionSurface;
   compact?: boolean;
   withPattern?: boolean;
-  reveal?: boolean;
+  reveal?: boolean | 'rise' | 'slant-wipe' | 'fade';
   className?: string;
   children: ReactNode;
 }
@@ -40,6 +40,7 @@ export function Section({
 }: SectionProps) {
   const { ref, isInView } = useInView<HTMLElement>({ threshold: 0.08, once: true });
   const { theme } = useTheme();
+  const revealVariant = reveal === true ? 'rise' : reveal || undefined;
 
   const surfaceClass =
     surface === 'hero-adaptive'
@@ -58,10 +59,11 @@ export function Section({
   return (
     <section
       id={id}
-      ref={reveal ? ref : undefined}
+      ref={revealVariant ? ref : undefined}
+      data-reveal={revealVariant}
       className={`relative overflow-x-clip ${surfaceClass} ${
         compact ? 'py-[var(--section-py-compact)]' : 'py-[var(--section-py)]'
-      } ${reveal ? `df-reveal ${isInView ? 'is-visible' : ''}` : ''} ${className}`}
+      } ${revealVariant ? `df-reveal ${isInView ? 'is-visible' : ''}` : ''} ${className}`}
     >
       {withPattern && <BrandPattern tone={isDarkSurface ? 'dark' : 'light'} />}
       <div className="relative z-10 w-full">{children}</div>

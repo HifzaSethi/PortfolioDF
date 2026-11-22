@@ -5,6 +5,7 @@ import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { CtaBand } from '../components/sections/CtaBand';
 import { PracticeHero } from '../components/sections/PracticeHero';
+import { StudioCinema } from '../components/sections/StudioCinema';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { SITE_CONFIG } from '../config/site';
@@ -58,7 +59,7 @@ export default function StudioPage() {
                     {idx < STUDIO_COPY.loopSteps.length - 1 && (
                       <ArrowRight
                         aria-hidden="true"
-                        className="h-4 w-4 text-[var(--link-accent)]"
+                        className="h-4 w-4 text-[var(--eyebrow-blue)]"
                       />
                     )}
                   </div>
@@ -88,6 +89,8 @@ export default function StudioPage() {
             </p>
           </div>
 
+          <StudioCinema />
+
           <div className="space-y-16">
             {STUDIO_DISCIPLINES.map((discipline, idx) => (
               <article
@@ -96,16 +99,19 @@ export default function StudioPage() {
               >
                 <div className="lg:col-span-5">
                   <ImageSlot
+                    src={discipline.image?.src}
+                    srcSet={discipline.image?.srcSet}
+                    sizes={discipline.image?.sizes}
                     aspectRatio={discipline.aspectRatio}
                     shotDescription={discipline.shotDescription}
-                    alt={discipline.altText}
+                    alt={discipline.image?.alt ?? discipline.altText}
                     tone={idx % 2 === 1 ? 'dark' : 'light'}
                   />
                 </div>
 
                 <div className="lg:col-span-7 space-y-5">
                   <div className="space-y-2">
-                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--link-accent)]">
+                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)]">
                       0{idx + 1} · {discipline.title}
                     </p>
                     <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">

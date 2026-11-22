@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { CtaBand } from '../components/sections/CtaBand';
 import { PracticeHero } from '../components/sections/PracticeHero';
-import { LinkButton } from '../components/ui/Button';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { SectionHeading } from '../components/ui/SectionHeading';
+import { TiltFrame } from '../components/ui/TiltFrame';
 import { PRACTICES, STUDIO_PRACTICE_SUMMARY } from '../data/practices';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { buildPracticesItemListJsonLd } from '../lib/seo';
@@ -29,46 +30,88 @@ export default function ServicesPage() {
         principle="Every other practice produces activity. Intelligence turns it into decisions."
       />
 
-      {/* Architecture Overview */}
+      {/* Architecture Overview — Unified sibling cards with subtle 3D tilt depth */}
       <Section surface="tint" compact reveal>
         <Container>
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="df-mesh-dark p-6 border border-[var(--border-dark)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
-                The Core
-              </p>
-              <h2 className="mt-2 text-2xl font-extrabold text-[var(--off-white)]">Intelligence</h2>
-              <p className="mt-2 text-sm text-[var(--on-dark-muted)]">
-                Turns activity and cross-channel signals into connected commercial decisions.
-              </p>
-            </div>
-            <div className="df-card-surface df-ambient df-frame-t p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--link-accent)]">
-                How DF. Acts
-              </p>
-              <h2 className="mt-2 text-2xl font-extrabold text-[var(--text-primary)]">
-                Four Practices
-              </h2>
-              <p className="mt-2 text-sm text-[var(--text-muted)]">
-                Performance Marketing, Search Intelligence, Growth Marketing, and Digital
-                Transformation.
-              </p>
-            </div>
-            <div className="df-card-surface df-ambient df-frame-t p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
-                How DF. Shows Up
-              </p>
-              <h2 className="mt-2 text-2xl font-extrabold text-[var(--text-primary)]">DF. Studio</h2>
-              <p className="mt-2 text-sm text-[var(--text-muted)]">
-                Creative, copywriting, photography, video, design, motion, and AI content in
-                context.
-              </p>
-            </div>
+            <TiltFrame
+              withSheen
+              sceneClassName="h-full"
+              className="df-card-surface df-ambient df-panel-hairline df-accent-top-rim h-full p-6"
+            >
+              <div className="relative z-10 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="h-2.5 w-2.5 bg-[var(--violet)] df-slant-block shrink-0"
+                  />
+                  <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
+                    The Core
+                  </p>
+                </div>
+                <h2 className="df-tilt-z-lg text-2xl font-extrabold text-[var(--text-primary)]">
+                  Intelligence
+                </h2>
+                <p className="df-tilt-z-md text-sm text-[var(--text-muted)]">
+                  Turns activity and cross-channel signals into connected commercial decisions.
+                </p>
+              </div>
+            </TiltFrame>
+
+            <TiltFrame
+              withSheen
+              sceneClassName="h-full"
+              className="df-card-surface df-ambient df-frame-t h-full p-6"
+            >
+              <div className="relative z-10 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="h-2.5 w-2.5 bg-[var(--electric-blue)] df-slant-block shrink-0"
+                  />
+                  <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)]">
+                    How DF. Acts
+                  </p>
+                </div>
+                <h2 className="df-tilt-z-lg text-2xl font-extrabold text-[var(--text-primary)]">
+                  Four Practices
+                </h2>
+                <p className="df-tilt-z-md text-sm text-[var(--text-muted)]">
+                  Performance Marketing, Search Intelligence, Growth Marketing, and Digital
+                  Transformation.
+                </p>
+              </div>
+            </TiltFrame>
+
+            <TiltFrame
+              withSheen
+              sceneClassName="h-full"
+              className="df-card-surface df-ambient df-frame-t h-full p-6"
+            >
+              <div className="relative z-10 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="h-2.5 w-2.5 bg-[var(--magenta)] df-slant-block shrink-0"
+                  />
+                  <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
+                    How DF. Shows Up
+                  </p>
+                </div>
+                <h2 className="df-tilt-z-lg text-2xl font-extrabold text-[var(--text-primary)]">
+                  DF. Studio
+                </h2>
+                <p className="df-tilt-z-md text-sm text-[var(--text-muted)]">
+                  Creative, copywriting, photography, video, design, motion, and AI content in
+                  context.
+                </p>
+              </div>
+            </TiltFrame>
           </div>
         </Container>
       </Section>
 
-      {/* Editorial Rows for Each Practice + Studio */}
+      {/* Editorial Rows for Each Practice + Studio (single stretched link per row) */}
       <Section surface="off-white" reveal>
         <Container className="space-y-8">
           <div className="space-y-2">
@@ -83,21 +126,21 @@ export default function ServicesPage() {
               (practice, idx) => (
                 <article
                   key={practice.id}
-                  className="py-10 grid gap-8 lg:grid-cols-12 lg:items-start"
+                  className="df-row group/row py-10 px-4 -mx-4 grid gap-8 lg:grid-cols-12 lg:items-start"
                 >
-                  <div className="lg:col-span-5 space-y-2">
-                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
+                  <div className="relative z-10 lg:col-span-5 space-y-2">
+                    <p className="df-row-num text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                       0{idx + 1} · {practice.roleLabel}
                     </p>
-                    <h3 className="text-3xl font-extrabold tracking-tight text-[var(--text-primary)]">
+                    <h3 className="df-row-title text-3xl font-extrabold tracking-tight text-[var(--text-primary)] group-hover/row:text-[var(--link-accent)]">
                       {practice.name}
                     </h3>
-                    <p className="text-sm font-semibold text-[var(--link-accent)]">
+                    <p className="text-sm font-semibold text-[var(--eyebrow-blue)]">
                       {practice.tagline}
                     </p>
                   </div>
 
-                  <div className="lg:col-span-4 space-y-3">
+                  <div className="relative z-10 lg:col-span-4 space-y-3">
                     <p className="text-base leading-relaxed text-[var(--text-muted)]">
                       {practice.summary}
                     </p>
@@ -107,7 +150,7 @@ export default function ServicesPage() {
                           key={item}
                           className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)]"
                         >
-                          <span aria-hidden="true" className="h-1.5 w-1.5 bg-[var(--link-accent)]" />
+                          <span aria-hidden="true" className="h-1.5 w-1.5 bg-[var(--eyebrow-blue)]" />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -115,10 +158,17 @@ export default function ServicesPage() {
                   </div>
 
                   <div className="lg:col-span-3 lg:flex lg:justify-end">
-                    <LinkButton to={practice.path} variant="secondary">
-                      <span>Explore {practice.name}</span>
-                      <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                    </LinkButton>
+                    <Link
+                      to={practice.path}
+                      className="df-stretched-link inline-flex items-center focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-3"
+                    >
+                      <span className="relative z-10 df-interactive df-btn-secondary df-slant-block inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 text-sm font-bold tracking-tight whitespace-nowrap shrink-0 bg-transparent text-[var(--text-primary)] border border-[var(--border-strong)] group-hover/row:border-[var(--link-accent)] group-hover/row:text-[var(--link-accent)]">
+                        <span className="relative z-10 df-unslant inline-flex items-center justify-center gap-2.5">
+                          <span>Explore {practice.name}</span>
+                          <ArrowRight aria-hidden="true" className="h-4 w-4 df-btn-arrow df-row-arrow" />
+                        </span>
+                      </span>
+                    </Link>
                   </div>
                 </article>
               )

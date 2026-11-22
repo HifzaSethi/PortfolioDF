@@ -11,7 +11,7 @@ export function useInteractionPolish() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion) return;
 
-    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const supportsHover = window.matchMedia('(any-hover: hover) and (any-pointer: fine)').matches;
 
     if (supportsHover) {
       let rafId = 0;
@@ -32,7 +32,7 @@ export function useInteractionPolish() {
       };
 
       const onPointerMove = (e: PointerEvent) => {
-        if (e.pointerType !== 'mouse') return;
+        if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
         pendingEvent = e;
         if (!rafId) {
           rafId = window.requestAnimationFrame(updateSpotlight);
@@ -47,7 +47,7 @@ export function useInteractionPolish() {
     }
 
     // Touch / coarse-pointer: brief one-time pulse when TIER 1 [data-spotlight] crosses viewport center
-    if (window.matchMedia('(hover: none)').matches && 'IntersectionObserver' in window) {
+    if (window.matchMedia('(hover: none), (any-hover: none)').matches && 'IntersectionObserver' in window) {
       const pulsed = new WeakSet<Element>();
       const timers = new Set<number>();
 

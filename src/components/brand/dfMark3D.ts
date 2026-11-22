@@ -177,3 +177,41 @@ export function buildDfMarkGroup(
 
   return { markGroup, geometries, size };
 }
+
+export interface DfDotBuildResult {
+  dotGroup: THREE.Group;
+  geometries: THREE.BufferGeometry[];
+  size: THREE.Vector3;
+}
+
+export function buildDfDotMesh(dotMaterial: THREE.Material): DfDotBuildResult {
+  const loader = new SVGLoader();
+  const svgData = loader.parse(dfMark3dRaw);
+  const dotGroup = new THREE.Group();
+  const geometries: THREE.BufferGeometry[] = [];
+
+  for (const path of svgData.paths) {
+    const node = (path.userData as { node?: Element } | undefined)?.node;
+    const pathId = node?.getAttribute?.('id') ?? '';
+    if (pathId !== 'df-dot') continue;
+
+    const shapes = path.toShapes();
+    if (shapes.length === 0) continue;
+
+    const geom = new THREE.ExtrudeGeometry(shapes, EXTRUDE_DOT_SETTINGS);
+    flipExtrudedGeometryY(geom, SVG_WORLD_SCALE);
+    geometries.push(geom);
+
+    const mesh = new THREE.Mesh(geom, dotMaterial);
+    dotGroup.add(mesh);
+  }
+
+  const box = new THREE.Box3().setFromObject(dotGroup);
+  const center = new THREE.Vector3();
+  const size = new THREE.Vector3();
+  box.getCenter(center);
+  box.getSize(size);
+  dotGroup.position.sub(center);
+
+  return { dotGroup, geometries, size };
+}

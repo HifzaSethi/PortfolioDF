@@ -36,9 +36,9 @@ export function CtaBand({ serviceParam }: CtaBandProps) {
           </div>
 
           <div className="lg:col-span-4 lg:flex lg:justify-end">
-            <LinkButton to={destination} variant="gradient">
+            <LinkButton to={destination} variant="gradient" magnetic>
               <span>Start a conversation</span>
-              <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              <ArrowRight aria-hidden="true" className="h-4 w-4 df-btn-arrow" />
             </LinkButton>
           </div>
         </div>

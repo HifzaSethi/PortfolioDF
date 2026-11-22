@@ -20,11 +20,11 @@ export function FormField({
   children,
 }: FormFieldProps) {
   return (
-    <div className="space-y-1.5">
+    <div className="df-field-group space-y-1.5">
       <div className="flex items-baseline justify-between gap-2">
         <label
           htmlFor={id}
-          className="block text-sm font-semibold text-[var(--text-primary)]"
+          className="df-field-label block text-sm font-semibold text-[var(--text-primary)]"
         >
           {label}
           {required && (

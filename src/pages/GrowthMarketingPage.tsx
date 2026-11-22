@@ -37,13 +37,13 @@ export default function GrowthMarketingPage() {
                 type="button"
                 aria-pressed={selectedStageId === 'all'}
                 onClick={() => setSelectedStageId('all')}
-                className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
+                className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive df-chip-wipe ${
                   selectedStageId === 'all'
                     ? 'df-gradient-accent text-[var(--near-black)] border-transparent'
                     : 'bg-[var(--bg-elevated)] border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'
                 }`}
               >
-                <span className="df-unslant inline-block">All 5 Stages (21 Services)</span>
+                <span className="relative z-10 df-unslant inline-block">All 5 Stages (21 Services)</span>
               </button>
               {GROWTH_STAGES.map((stage) => {
                 const isSelected = selectedStageId === stage.id;
@@ -53,13 +53,13 @@ export default function GrowthMarketingPage() {
                     type="button"
                     aria-pressed={isSelected}
                     onClick={() => setSelectedStageId(stage.id)}
-                    className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive ${
+                    className={`min-h-[40px] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.12em] border df-slant-block df-interactive df-chip-wipe ${
                       isSelected
                         ? 'bg-[var(--electric-blue)] text-[var(--off-white)] border-[var(--electric-blue)]'
                         : 'bg-[var(--bg-elevated)] border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)]'
                     }`}
                   >
-                    <span className="df-unslant inline-block">{stage.stage}</span>
+                    <span className="relative z-10 df-unslant inline-block">{stage.stage}</span>
                   </button>
                 );
               })}

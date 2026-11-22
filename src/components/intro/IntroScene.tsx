@@ -392,7 +392,25 @@ export default function IntroScene({
 
       const s = interactionRef.current;
 
-      // Initial entrance settle (200..900ms, rotation.y -0.9 -> 0)
+      // Initial entrance settle (200..900ms, rotation.y -0.9 -> 0) + one-time specular sweep
+      if (!reducedRef.current) {
+        if (elapsed <= 1.35) {
+          if (elapsed <= 0.95) {
+            const p = elapsed / 0.95;
+            const ep = 1 - Math.pow(1 - p, 2);
+            keyLight.position.x = -7.5 + ep * 15.0;
+            keyLight.intensity = (isSoftwareGl ? 2.1 : 1.65) * (1 + Math.sin(p * Math.PI) * 0.42);
+          } else {
+            const settle = (elapsed - 0.95) / 0.4;
+            keyLight.position.x = 7.5 + (-4.5 - 7.5) * smoothstep01(0, 1, settle);
+            keyLight.intensity = isSoftwareGl ? 2.1 : 1.65;
+          }
+        } else {
+          keyLight.position.x = -4.5;
+          keyLight.intensity = isSoftwareGl ? 2.1 : 1.65;
+        }
+      }
+
       if (!s.hasInteracted && s.entranceT < 1 && !reducedRef.current) {
         s.entranceT = Math.min(1, s.entranceT + dt / 0.72);
         const eased = 1 - Math.pow(1 - s.entranceT, 3);

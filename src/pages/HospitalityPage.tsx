@@ -127,17 +127,17 @@ export default function HospitalityPage() {
             </SectionHeading>
           </div>
 
-          <div className="df-mesh-dark border border-[var(--border-dark)] p-6 sm:p-10 space-y-6">
+          <div className="df-card-surface df-ambient df-panel-hairline df-frame-t df-accent-top-rim p-6 sm:p-10 space-y-6">
             <div className="flex flex-wrap items-center gap-3">
               {HOSPITALITY_COPY.equationParts.map((part, idx) => (
                 <div key={part} className="flex items-center gap-3">
-                  <span className="border border-[var(--border-dark-strong)] bg-[var(--near-black)]/70 px-4 py-2.5 text-sm font-bold text-[var(--off-white)]">
+                  <span className="border border-[var(--border-strong)] bg-[var(--bg-page)] px-4 py-2.5 text-sm font-bold text-[var(--text-primary)]">
                     {part}
                   </span>
                   {idx < HOSPITALITY_COPY.equationParts.length - 1 ? (
-                    <Plus aria-hidden="true" className="h-4 w-4 text-[var(--violet)]" />
+                    <Plus aria-hidden="true" className="h-4 w-4 text-[var(--eyebrow-blue)]" />
                   ) : (
-                    <Equal aria-hidden="true" className="h-4 w-4 text-[var(--magenta)]" />
+                    <Equal aria-hidden="true" className="h-4 w-4 text-[var(--eyebrow-magenta)]" />
                   )}
                 </div>
               ))}
@@ -145,7 +145,7 @@ export default function HospitalityPage() {
                 <span className="df-unslant inline-block">{HOSPITALITY_COPY.equationResult}</span>
               </span>
             </div>
-            <p className="text-base text-[var(--on-dark-muted)] max-w-2xl">
+            <p className="text-base text-[var(--text-muted)] max-w-2xl">
               {HOSPITALITY_COPY.whyChooseClosing}
             </p>
           </div>

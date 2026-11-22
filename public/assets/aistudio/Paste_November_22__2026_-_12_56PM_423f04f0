@@ -1,0 +1,183 @@
+# TASK: FIX HOVER/COLOR ISSUES, THEN ADD A SIGNATURE MOTION LAYER TO THE EXISTING "DIGITAL FIELD." WEBSITE
+
+This is an ENHANCEMENT of a working React project. Do not rebuild, re-template, or rewrite content. Preserve all routes, copy, data, forms, SEO, the Day/Night toggle (Night is already the default), the 3D intro (IntroGate, CurtainReveal, IntroScene, IntroFallback) and the brand identity. Work in the phases in Section 9, keep `npm run lint` and `npm run build` passing after each phase.
+
+Goals, in priority order:
+1. FIX the broken hover behavior and the inconsistent block colors (Section 1).
+2. Build a refined, consistent motion language (Section 2).
+3. Deliver three signature experiences: (a) the interconnected 3D ecosystem in the hero (Section 3), (b) the transforming Data → Context → Intelligence → Action animation (Section 4), (c) the brand logo experience, which already exists in the intro, so only verify and polish it (Section 8).
+4. Upgrade Services, Industries and DF. Studio per Sections 5, 6, 7.
+
+==================================================
+## 0. VERIFIED FACTS (do not contradict; re-verify quickly before editing)
+==================================================
+STACK: Vite 8, React 19, TypeScript strict (`noUnusedLocals`/`noUnusedParameters` on), Tailwind v4 (`@import "tailwindcss"` in src/index.css; `src/styles/globals.css` is UNLAYERED apart from an initial `@layer base`, so its classes override Tailwind utilities), `react-router-dom` v7 HashRouter, `motion` v12 (`motion/react`), `three` ^0.187 (raw; no R3F/Drei), `lucide-react`. Do NOT add dependencies. Do NOT edit the `server` block in vite.config.ts.
+
+EXISTING SYSTEMS TO REUSE:
+- Hover tokens in tokens.css: `--lift`, `--dur-in`, `--dur-out`, `--ease-out`, `--shadow-lift`, `--glow-violet`, `--glow-magenta`.
+- Classes in globals.css: `.df-interactive` (TIER 1), `.df-ambient` (TIER 2), `.df-media`, `.df-card-surface`, `.df-slant-block` (`transform: skewX(var(--slant))`), `.df-unslant`, `.df-glass-dark`, `.df-mesh-dark`, `.df-mesh-hospitality`, `.df-night-mesh-subtle`, `.df-frame-l/-t`, `.df-link-sweep`, `.df-reveal`, `.df-explore-sweep`.
+- Hooks: `src/hooks/useSpotlight.ts` (one delegated pointermove listener for `[data-spotlight]`, plus a touch pulse), `useReducedMotion`, `useInView`, `useTheme` (`theme: 'day'|'night'`), `useBodyScrollLock`.
+- `src/components/brand/dfMark3D.ts` (shared three.js helpers: extruded DF. mark builder, materials, `detectSoftwareGl`), `Hero3DSlot.tsx` + `Hero3DCanvas.tsx` (hero scene, lazy-loaded, defers until the intro's WebGL is disposed via `IntroContext`), `ImageSlot.tsx` (props: src, srcSet, sizes, alt, shotDescription, aspectRatio, tone), `BrandPattern.tsx`.
+- Data: `src/data/ecosystem.ts` (`ECOSYSTEM_NODES`, 10 nodes in order, fields id, order, title, shortTitle, summary, items), `src/data/intelligence.ts` (`INTELLIGENCE_STAGES`), `src/data/industries.ts`, `src/data/studio.ts` (`STUDIO_DISCIPLINES`), `src/data/practices.ts`.
+- Components: `IntelligenceFramework.tsx` (tablist of 4 stages + detail panel), `DashboardContext.tsx`, `EcosystemDiagram.tsx`, `PracticeConstellation.tsx`, `ServicesPage.tsx`, `IndustriesPage.tsx`, `StudioPage.tsx`.
+
+HARD CONSTRAINTS
+- Brand colours only: violet #B34FFF, magenta #E23389, electric blue #0057FF, off-white #F4F1EA, near-black #010102; Sora only; one shared slant (`--slant`). No other hues, no cartoon visuals, no excessive neon.
+- No fabricated content: no invented photos, clients, results or numbers. Image areas stay labelled placeholders with swap-ready `src` fields. The only figures allowed are the already-labelled illustrative "CTR ↑ 12%" example.
+- Animate `transform`, `opacity`, `clip-path` and (sparingly, small elements) `box-shadow`/`filter`. Nothing that triggers layout. No scroll-jacking: native scroll always drives scroll-linked effects.
+- At most ONE WebGL context alive at any time (intro → hero hand-off already exists). All other new animations use Canvas 2D, SVG, CSS, or `motion`.
+- Every effect: pause when off-screen and when the tab is hidden; has a reduced-motion variant (Section 2.6); has a touch equivalent; is keyboard/focus accessible; never hides information that only appears on hover.
+
+==================================================
+## 1. FIX PASS (do this first; these are confirmed bugs)
+==================================================
+F1. SLANT/TRANSFORM CONFLICT. `.df-slant-block { transform: skewX(...) }` is overridden by `.df-interactive:hover/:focus-visible/:active { transform: translate3d(...) }`, which makes every slanted chip, tab and node un-skew and jump on hover (ModelComparison tabs, PracticeConstellation chips and hub, HospitalityEcosystem chips, GrowthMarketingPage chips). FIX: use the INDIVIDUAL transform properties for hover motion (`translate: 0 var(--lift)`, `scale: 0.985`, never the `transform` shorthand) so they compose with the skew. Add `translate`/`scale` to the `transition-property` lists. Verify visually that slanted elements keep their slant before, during and after hover.
+
+F2. REDUCED MOTION KILLS ALL FEEDBACK. The current `prefers-reduced-motion` block removes every hover transform and hides `.df-ambient::after` entirely, leaving no visible feedback. FIX with tiers (spec in 2.6): under reduced motion keep colour, border-illumination, glow and shadow changes (static, no movement); remove only translate/scale/tilt/zoom/sweeps/autoplay.
+
+F3. MEDIA QUERY TOO STRICT. Replace `(hover: hover) and (pointer: fine)` with `(any-hover: hover) and (any-pointer: fine)` for hover styles so hybrid laptops and emulators work. Keep the `(hover: none)` / coarse-pointer press behavior for touch.
+
+F4. TIER-2 (.df-ambient) IS EFFECTIVELY INVISIBLE (a 7.5%-opacity static gradient that only fades in). About 28 blocks use it, so most of the site feels dead. FIX: redesign it so it is clearly perceptible but never looks like a button:
+- on hover/focus-within: border changes to an illuminated hairline gradient (violet→magenta at 45–60% opacity in Night, 35% in Day) via a masked pseudo-element (same technique as `.df-interactive::before`);
+- a soft light band (about 12–16% opacity, slanted at `--slant`) that TRAVELS across the block once over about 900ms (animate `translate`, not opacity-only);
+- the card's eyebrow/number text brightens one step; nothing scales, cursor stays `default`, no arrows;
+- lift at most 2px via `translate`.
+
+F5. SERVICES COLOUR MISMATCH + SITEWIDE CARD CONSISTENCY. In `ServicesPage.tsx` the "Architecture Overview" row mixes a permanently dark `df-mesh-dark` card (raw `text-[var(--magenta)]` label) with two `df-card-surface` cards (labels using `--link-accent` and `--eyebrow-magenta`), so the three blocks look like three different materials and change differently between Day and Night. FIX:
+- One material for sibling cards: all three use the same surface class and the same label style. Express emphasis (the "Core" card) with an accent rim/top-edge (2px violet→magenta gradient) and a slanted marker colour (violet = core, blue = acts, magenta = shows up), NOT a different background.
+- One label token: use a single `Eyebrow`-style class for all small uppercase labels. Replace raw `text-[var(--magenta)]` on light surfaces with `--eyebrow-magenta`, and `--link-accent` for labels with `--eyebrow-blue`. Keep raw magenta only on genuinely dark panels.
+- Audit the same pattern elsewhere and fix it the same way: `ReportingVsIntelligence.tsx:38`, `ModelComparison.tsx:60`, `DigitalTransformationPage.tsx:98`, `HospitalityPage.tsx:130`, `MegaMenu.tsx:80`, `PracticeConstellation.tsx:144`. A dark panel is acceptable as a deliberate FEATURE block (one per grid, larger or spanning), but never as one of several equal siblings. If a grid has mixed materials, unify them. Day and Night must both look consistent (check both).
+
+F6. SERVICES DIRECTORY ROWS ARE INERT. The "Practice Directory" `<article>` rows have no hover class and only a small button is interactive. Apply the row interaction defined in Section 5.
+
+F7. FRAMEWORK TAB HOVER BUG. In `IntelligenceFramework.tsx`, `onMouseEnter` switches the active stage, so content changes as the cursor passes. Remove it. Hover only highlights; click, Enter/Space and arrow keys change the stage (Section 4 redefines this component).
+
+==================================================
+## 2. MOTION LANGUAGE (one system, applied everywhere)
+==================================================
+2.1 TOKENS (tokens.css): `--dur-micro: 140ms; --dur-hover-in: 220ms; --dur-hover-out: 340ms; --dur-reveal: 720ms; --dur-scene: 1100ms; --ease-out: cubic-bezier(.16,1,.3,1); --ease-in-out: cubic-bezier(.65,0,.35,1); --ease-cinematic: cubic-bezier(.77,0,.18,1); --tilt-max: 5deg; --stagger: 60ms;` plus Day-mode variants of glow strengths (about 45% of Night alpha; use soft neutral shadow plus a thin violet ring instead of light-on-dark glow).
+
+2.2 INTERACTIVE STATES BY ELEMENT TYPE (CSS only; transform via individual properties)
+- Primary button: light sheen sweeps along the slant on hover (not looping), lift 2px, arrow nudges 3px; `:active` presses down. Secondary: border fills with a slanted wipe. Ghost/links: `.df-link-sweep` underline.
+- Chips/tags/tabs: fill wipes in along the slant; selected state keeps the illuminated rim.
+- List rows (Services directory, Industries index, footer lists): row background wipes in from the left along the slant (8–10% tint), index number gains the accent colour and a soft glow, arrow slides 4px, a 1px illuminated rule underlines the row.
+- Cards TIER 1 (clickable): lift 4px, illuminated gradient border ring, cursor-following spotlight (`data-spotlight`), optional 3D tilt where allowed (Section 5). TIER 2 (informational): redesigned `.df-ambient` (F4). Contact form container: no hover; inputs: focus ring (violet) and a label that settles upward.
+- Media (`.df-media`): inner image scale 1.045 and drift 6px along the slant over 700ms; placeholders shift their `BrandPattern` layer.
+- Accordions/tabs: height/opacity transitions 280ms; icon rotation; no content jumps.
+- Make whole cards clickable ONLY with the "stretched link" pattern (one real `<a>`/`<Link>` per card whose `::after` covers the card), so there is one tab stop and no nested interactive elements.
+
+2.3 SCROLL AND ENTRANCE
+- Reveal variants via `data-reveal`: `rise` (12px + fade), `slant-wipe` (clip-path polygon wipe along the slant), `fade`; stagger children by `--stagger`; once only; never block content (no-JS and reduced-motion show everything).
+- Thin fixed top progress bar (3px, violet→magenta gradient, `transform: scaleX`) on long pages; not on Home hero.
+- Keep `RouteTransition`; unify its duration to about 380ms.
+
+2.4 MAGNETIC CTA (restraint): only the hero primary CTA and `CtaBand` primary button drift toward the cursor by at most 6px within 80px, desktop fine pointer only, returning smoothly; disabled for reduced motion/touch.
+
+2.5 TOUCH EQUIVALENTS: `:active` press (`scale: .985`, ring 80%), the existing once-per-card touch pulse for TIER 1, no sticky hover (use media gating), tap targets ≥ 44px, `-webkit-tap-highlight-color: transparent`, `touch-action: manipulation`.
+
+2.6 REDUCED-MOTION TIERS (replace the current blanket removal)
+- KEEP (static feedback): colour, border illumination, glow, shadow, underline presence, focus rings.
+- REMOVE: translate/scale/tilt/zoom/parallax, travelling sweeps, magnetic, looped animation, autoplay, scroll-linked movement. Replace transitions with instant or ≤ 150ms opacity changes.
+
+==================================================
+## 3. HERO: SLOWLY MOVING INTERCONNECTED 3D ECOSYSTEM
+==================================================
+Concept: the hero visual becomes a living model of "Nothing performs in isolation". The 3D DF. logo already owns the intro, so the hero shows the ECOSYSTEM instead, resolving to the brand's "dot".
+
+Implementation: create `src/components/brand/HeroEcosystemCanvas.tsx` (raw three, lazy-loaded) and point `Hero3DSlot.tsx` at it (keep the existing intro hand-off logic via `IntroContext`, reduced-motion/WebGL fallback and software-GL detection). Reuse `dfMark3D.ts` for the glossy magenta DOT geometry/material. Remove `Hero3DCanvas.tsx` only if it becomes unreferenced (list it in your summary).
+
+Scene
+- 10 nodes from `ECOSYSTEM_NODES` in order (Business Objectives → … → Commercial Performance), arranged on a loose 3D spiral/orbit around a central core. Core = the glossy magenta DF. dot (slightly oversized), always the brightest element.
+- Node = a small slanted glass shard (parallelogram prism, slant matching `--slant`), tinted by group (objective/brand/content = violet; search/media/experience = electric blue; data/intelligence/performance = magenta); a soft emissive halo sprite behind each.
+- Links: slightly arced curves (QuadraticBezierCurve3 sampled to lines, opacity 0.25–0.35) connecting nodes in chain order, plus fainter links from each node to the core. Traveling light pulses along links (instanced additive points moving along the curves, 1 pulse per link, staggered; speed 0.12–0.2 per second). The chain's end (Commercial Performance) feeds back toward the core.
+- Atmosphere: very sparse dust (≤ 60 points), faint depth fog. No bloom pass, no postprocessing.
+Motion
+- The whole constellation rotates slowly (yaw about 0.035 rad/s) and breathes (scale ±1.5%); nodes drift ±6 units on independent sine phases; gentle pointer parallax (existing feel) and a small scroll-linked camera dolly while the hero is in view.
+- Hover/focus on a node (screen-space proximity test on projected positions, NOT per-frame Raycaster): node scales 1.35, its two links brighten, pulses speed up, a small HTML label (title + `shortTitle`) appears near it; everything else dims to 55%. Click/tap a node → smooth-scroll to the Ecosystem Framework section (give it an id) and activate that node in `EcosystemDiagram` through a small shared context or custom event.
+- Idle state must look finished (no empty, blank or half-built frame at any moment).
+Theme
+- Night (hero on dark mesh): additive blending, glows, violet/magenta/blue light.
+- Day (hero-adaptive light): normal blending, links in near-black at 30–35%, darker node tints, soft drop-shadow glow; same composition.
+Accessibility/performance: canvas `aria-hidden`; add a visually hidden ordered list of the 10 node names; DPR cap 2 (1.5 mobile, 1 on software GL); adaptive quality (if the average of the first 60 frames exceeds 24ms: DPR 1, no dust, no halos); pause off-screen/hidden; dispose everything on unmount; `webglcontextlost` or no WebGL → static SVG constellation (same 10 nodes with CSS-animated pulses), never a blank area. Reduced motion → one still frame, no rotation or pulses.
+
+==================================================
+## 4. FRAMEWORK: DATA → CONTEXT → INTELLIGENCE → ACTION (THE "TRANSFORMATION" ANIMATION)
+==================================================
+Upgrade `IntelligenceFramework.tsx` (keep its copy, the `INTELLIGENCE_STAGES` data, the tablist/tabpanel semantics and the `DashboardContext` component). Add `src/components/diagrams/IntelligenceTransform.tsx` (Canvas 2D, no WebGL) as a hero visual above the stage cards.
+
+Behavior
+- Desktop (height ≥ 700px): a sticky stage inside a section roughly 240vh tall; a progress value p (0→1) from `useScroll` (motion) drives the scene. Native scrolling only. Provide visible stage buttons that smooth-scroll/animate p to each stage (900ms, `--ease-in-out`).
+- Mobile/short viewports and reduced motion: no sticky scrubbing. Mobile auto-plays one pass (about 9s) when the section enters view with tap-to-step controls and a replay button; reduced motion shows four static stage panels with a crossfade on selection.
+Scene (about 140 particles desktop, 70 mobile; cap 30fps on low-end), mapped to the four stages with eased overlaps:
+1. DATA (p 0–0.25) "What happened?": scattered, unconnected small slanted squares (off-white at 35–60% opacity) jittering slightly; a few floating metric chips ("Clicks", "Impressions", "CPC", "CTR ↑ 12%" labelled "Illustrative example") drift apart. Mood: fragmented, cold.
+2. CONTEXT (0.25–0.5) "What influenced it?": particles drift into 5–6 clusters, each tagged with an existing context question as a short label (PR coverage, Search demand, Content mix, Seasonality, Pricing, Offline activity). Thin proximity links draw between neighbours (alpha by distance); clusters take violet/magenta/blue hues.
+3. INTELLIGENCE (0.5–0.75) "Why did it happen?": clusters fuse toward the centre; the link lattice brightens and resolves into the slanted magenta DF. dot shape (everything resolves to one point). One soft pulse (radial glow) when it locks; 2–3 cause tags light up.
+4. ACTION (0.75–1) "What should happen next?": a light beam extends from the dot along the slant to a rising step-chart silhouette labelled "Commercial growth" (no numbers); particles stream along the beam.
+Connected stages with animated light
+- Replace the decorative arrows between the four stage cards with an SVG rail that connects them; a light "comet" travels along it as p advances; completed stages stay lit at 40%, the active stage gets the illuminated border and a glowing index number; upcoming stages are dim. The comet also pulses once when a stage activates.
+- Stage cards keep tab semantics (roles, arrow keys, Home/End, `aria-selected`). Hover only highlights (no content change). Click/Enter/Space or arrow keys select and move p. The detail panel crossfades its text (240ms) with the light-sweep treatment.
+Theme/performance/accessibility: Night uses additive glows; Day uses ink particles with normal blending and soft shadows. Canvas `aria-hidden`; an `aria-live="polite"` line announces the stage name; a text alternative describes the four steps; pause off-screen/tab hidden; DPR ≤ 2; resize via ResizeObserver; remove all listeners on unmount.
+
+==================================================
+## 5. SERVICES: 3D TILT CARDS AND ILLUMINATED BORDERS
+==================================================
+- Create `src/hooks/useTilt.ts` plus CSS: parent `.df-tilt-scene { perspective: 900px }`, child `.df-tilt { transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)) }`. One rAF-throttled pointermove per hovered card sets `--rx/--ry` (max `--tilt-max` 5°); easing back to 0 over 400ms on leave. Inner parallax layers: title/number `translateZ(24px)`, icon/marker `translateZ(12px)`. A glare layer (radial white at 8–10%, violet tint) follows the cursor. Never apply tilt to slanted (`df-slant-block`) elements, to cards wider than 460px, on coarse pointers, or under reduced motion.
+- Illuminated border: on hover/focus an animated gradient ring (a slowly rotating conic gradient using `@property --angle`, with a static linear fallback where unsupported), plus the existing spotlight.
+- Apply to: the three Architecture Overview cards on `ServicesPage` (after the F5 colour unification), the practice cards on Home (`PracticeConstellation` TIER 1 cards) and any card-sized practice/service tiles. Do NOT apply tilt to wide editorial rows.
+- Practice Directory rows (editorial, wide): make each row a TIER 1 interaction with the stretched-link pattern pointing at `practice.path` (keep the existing "Explore" button visible and make it the single link). Row hover: slanted background wipe, number glow, arrow slide, illuminated underline rule, subtle title shift of 4px (use `translate`).
+
+==================================================
+## 6. INDUSTRIES: LARGE EDITORIAL IMAGES WITH ELEGANT REVEALS
+==================================================
+No approved photography exists, so use the `ImageSlot` system with swap-ready data and brand-generated placeholders (never fake photos).
+- Extend the industry records in `src/data/industries.ts` with an optional `image?: { src, srcSet, sizes, alt }` and a `shotDescription` per industry (editorial direction, for example "Modern hotel lobby, natural light, real guests, considered composition" for Hospitality). Nine industries, nine placeholders, each with a distinct brand-generated placeholder (BrandPattern + a gradient variant mixing violet/magenta/blue differently, labelled "PHOTO PLACEHOLDER").
+- Desktop: a large sticky 4:5 media stage beside the existing index list. Active industry (hover/focus preview, click goes to its link as today) changes the stage with a slanted clip-path wipe (polygon sweep along `--slant`, about 760ms, `--ease-cinematic`) while the new image scales 1.12→1 and the old one fades; large editorial industry name and "03 / 09" counter overlay with a line-mask reveal.
+- Mobile/touch: no hover dependence. Each list row expands an inline 16:9 image with a clip reveal when the row enters the viewport centre (once). Tap still navigates as today.
+- Keep the Context Reveal panel content and the "Case studies" placeholder band. Preserve the `aria-live` behavior (announce only when selection changes by click/keyboard, not on passive hover).
+
+==================================================
+## 7. DF. STUDIO: FILM-LIKE TRANSITIONS BETWEEN CREATIVE VISUALS
+==================================================
+Add `src/components/sections/StudioCinema.tsx` to `StudioPage.tsx` above the existing discipline listings (keep all existing discipline copy, lists and the "client work to be added" labelling).
+- Stage: 21:9 on desktop, 16:9 on mobile, six scenes = the six disciplines from `STUDIO_DISCIPLINES`. Each scene uses `ImageSlot` (src optional) and, by default, a generated brand-art placeholder (SVG/CSS only: copywriting = kinetic type forms; photography = frame/aperture lines; videography = film perforations and timecode; graphic design = grid and shape compositions; motion = trailing light streaks; AI content = particle mesh), all labelled "PORTFOLIO PLACEHOLDER: client work to be added".
+- Transitions rotate through five film-like types (never the same twice in a row): (1) slanted wipe (clip-path polygon sweep), (2) cross-dissolve with push-in (scale 1.06→1), (3) letterbox squeeze (top/bottom bars close to 2.39:1 then open), (4) light-leak flash (violet/magenta radial, ≤ 280ms, ≤ 35% opacity), (5) whip-pan (translateX with a brief ≤ 6px blur). Duration about 1100ms with `--ease-cinematic`.
+- Film details: static grain overlay (SVG feTurbulence data-URI, about 6% opacity, `mix-blend-mode: overlay`, optional very slow flicker ≤ 2%), a small slate/timecode label ("SCENE 03 / 06 · PHOTOGRAPHY") in Sora small caps, slanted film-frame progress ticks, title and tagline with a line-mask reveal.
+- Controls: autoplay every 5.5s; pause on hover, focus, off-screen and hidden tab; visible Pause/Play, Previous, Next, clickable frame ticks; arrow keys; touch swipe. Use `aria-roledescription="carousel"`, labelled slides, and no live-region chatter while autoplaying.
+- Reduced motion: no autoplay, simple crossfade, no grain flicker, no letterbox or whip.
+
+==================================================
+## 8. LOGO EXPERIENCE (ALREADY BUILT: VERIFY, DO NOT REWRITE)
+==================================================
+The 3D DF. intro and the curtain reveal exist. Only: (a) confirm Skip, Explore, drag/tap, session gating, scroll lock, `inert`, reduced-motion and no-WebGL still work after your changes; (b) confirm the hero hand-off still mounts the new ecosystem canvas only after the intro's WebGL is disposed; (c) if trivial, add a one-time light sweep across the 3D mark when it first appears. Do not alter the intro's structure.
+
+==================================================
+## 9. PHASES (verify after each)
+==================================================
+1. INSPECT: confirm Section 0 against the code; list discrepancies.
+2. FIX PASS F1–F7; test slanted elements, reduced-motion tiers, Day and Night.
+3. MOTION LANGUAGE (Section 2): tokens, classes, row/button/chip/media states, touch behavior.
+4. SERVICES (Section 5), including F5/F6 colour unification.
+5. FRAMEWORK (Section 4).
+6. HERO ECOSYSTEM (Section 3).
+7. INDUSTRIES (Section 6) and STUDIO (Section 7).
+8. ACCESSIBILITY AND PERFORMANCE PASS, then run every check in Section 10.
+
+==================================================
+## 10. ACCEPTANCE CHECKLIST
+==================================================
+[ ] Hover is clearly visible on: Services overview cards, Services directory rows, Home practice cards, Industries rows, Studio visuals, chips/tabs/buttons, footer and nav links; informational cards visibly respond (illuminated hairline plus travelling light) without scaling or a pointer cursor.
+[ ] Slanted chips/tabs/nodes keep their slant before, during and after hover and press.
+[ ] With OS "reduce motion" ON: colour/border/glow feedback is still visible; no translate, tilt, zoom, autoplay or looped motion.
+[ ] Hover works on hybrid and emulated devices (`any-hover`); touch shows press feedback and no sticky hover.
+[ ] Services overview cards are one consistent material in Day AND Night, with consistent label colours; no mixed-material sibling grids anywhere (audit list in F5).
+[ ] Hero shows the interconnected ecosystem (10 nodes, core dot, pulses); hover or focus dims others and shows a label; click scrolls to and activates the node in the Ecosystem Framework; no blank frame at any time; fallback SVG appears when WebGL is unavailable.
+[ ] Framework: scroll-linked Data → Context → Intelligence → Action morph on desktop; auto-play with tap-to-step on mobile; static panels under reduced motion; a light "comet" connects the four stages; hover no longer changes the active stage; tab/arrow-key semantics intact; "CTR ↑ 12%" stays labelled "Illustrative example".
+[ ] Industries: large stage with slanted-wipe image reveals (placeholders clearly labelled, `image` field swap-ready); mobile inline reveals; no hover-only information.
+[ ] Studio: six-scene film stage, five transition types, grain/timecode/letterbox details, pause control, keyboard and swipe support, labelled placeholders only.
+[ ] Exactly one WebGL context at a time; no listeners, timers or rAF loops left after unmount; effects pause off-screen.
+[ ] Main chunk grows ≤ about 15 KB gzipped; new heavy code is lazy-loaded; `npm run lint` and `npm run build` pass; no console errors; the intro, Day/Night toggle, routes, forms and SEO are unchanged.
+
+==================================================
+## 11. OUTPUT
+==================================================
+When finished, reply with: (1) files created and modified, (2) deviations from this brief and why, (3) any dependency change (expected: none), (4) anything you could not verify.
