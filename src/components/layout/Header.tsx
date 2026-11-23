@@ -64,6 +64,14 @@ export function Header() {
     <>
       <a
         href="#main-content"
+        onClick={(e) => {
+          e.preventDefault();
+          const main = document.getElementById('main-content');
+          if (main) {
+            main.focus({ preventScroll: true });
+            main.scrollIntoView({ behavior: 'auto', block: 'start' });
+          }
+        }}
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[var(--z-skip)] focus:bg-[var(--electric-blue)] focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-[var(--off-white)]"
       >
         Skip to main content
@@ -72,11 +80,11 @@ export function Header() {
       <header
         ref={headerRef}
         onMouseLeave={scheduleCloseMega}
-        className={`sticky top-0 z-[var(--z-header)] border-b border-[var(--border-subtle)] bg-[var(--header-bg)] backdrop-blur-md transition-all duration-300 ${
-          condensed ? 'py-2 shadow-[var(--shadow-subtle)]' : 'py-3'
+        className={`sticky top-0 z-[var(--z-header)] border-b border-[var(--border-subtle)] bg-[var(--header-bg)] backdrop-blur-md py-2.5 transition-[box-shadow,background-color,border-color] duration-300 ${
+          condensed ? 'shadow-[var(--shadow-subtle)]' : ''
         }`}
       >
-        <div className="mx-auto flex max-w-[var(--container-max)] items-center justify-between gap-3 sm:gap-5 px-4 sm:px-8 lg:px-10">
+        <div className="mx-auto flex max-w-[var(--container-max)] items-center justify-between gap-2 sm:gap-5 px-5 sm:px-8 lg:px-10">
           {/* Zone 1: Primary Lockup on Desktop (1X clear space), Compact DF Mark on Mobile */}
           <Link
             to="/"
@@ -153,7 +161,7 @@ export function Header() {
           </nav>
 
           {/* Zone 3: Day / Night Segmented Toggle + Primary Skewed CTA + Mobile Drawer Trigger */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <div
               role="group"
               aria-label="Theme mode"
@@ -164,7 +172,7 @@ export function Header() {
                 aria-pressed={theme === 'day'}
                 title="Switch to Day theme"
                 onClick={() => setTheme('day')}
-                className={`inline-flex items-center gap-1.5 min-h-[34px] px-2.5 py-1 text-xs font-bold tracking-tight whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2 ${
+                className={`inline-flex items-center gap-1 sm:gap-1.5 min-h-[36px] px-2 sm:px-2.5 py-1 text-xs font-bold tracking-tight whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2 ${
                   theme === 'day'
                     ? 'df-gradient-accent text-[var(--near-black)]'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
@@ -179,7 +187,7 @@ export function Header() {
                 aria-pressed={theme === 'night'}
                 title="Switch to Night theme"
                 onClick={() => setTheme('night')}
-                className={`inline-flex items-center gap-1.5 min-h-[34px] px-2.5 py-1 text-xs font-bold tracking-tight whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2 ${
+                className={`inline-flex items-center gap-1 sm:gap-1.5 min-h-[36px] px-2 sm:px-2.5 py-1 text-xs font-bold tracking-tight whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2 ${
                   theme === 'night'
                     ? 'df-gradient-accent text-[var(--near-black)]'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
@@ -203,7 +211,7 @@ export function Header() {
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
-              className="inline-flex lg:hidden h-10 w-10 items-center justify-center border border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)] cursor-pointer"
+              className="inline-flex lg:hidden h-11 w-11 items-center justify-center border border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--link-accent)] cursor-pointer shrink-0"
             >
               <Menu aria-hidden="true" className="h-5 w-5" />
             </button>

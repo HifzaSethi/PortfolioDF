@@ -53,10 +53,11 @@
   }
 }
 
-#root {
-  position: relative;
-  z-index: 1;
-}
+@layer components {
+  #root {
+    position: relative;
+    z-index: 1;
+  }
 
 /* Pre-paint intro cover prevents FOUC before IntroGate mounts */
 html[data-intro='pending'] body::before {
@@ -353,12 +354,15 @@ html[data-intro='pending'] body::before {
 }
 
 /* Animated rotating gradient border for card-sized spotlight / tilt tiles (Section 5) */
+}
+
 @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
 
+@layer components {
 @keyframes df-border-rotate {
   to {
     --angle: 360deg;
@@ -501,11 +505,11 @@ html[data-intro='pending'] body::before {
   }
 
   .df-interactive[data-touch-pulse='true'] {
-    box-shadow: var(--shadow-lift);
+    border-color: color-mix(in srgb, var(--violet) 38%, var(--border-strong));
   }
 
   .df-interactive[data-touch-pulse='true']::before {
-    opacity: 0.85;
+    opacity: 0.42;
   }
 }
 
@@ -1121,6 +1125,7 @@ html[data-intro='pending'] body::before {
   mix-blend-mode: overlay;
   opacity: 0.06;
   animation: df-film-grain-flicker 3.6s steps(4, end) infinite;
+}
 }
 
 /* Tiered Reduced Motion Compliance (Section 2.6)

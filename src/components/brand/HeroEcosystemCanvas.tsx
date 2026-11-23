@@ -738,7 +738,14 @@ export default function HeroEcosystemCanvas({
       rafId = window.requestAnimationFrame(animate);
     }
 
+    let pointerDownState: { x: number; y: number; pointerType: string } | null = null;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      pointerDownState = { x: e.clientX, y: e.clientY, pointerType: e.pointerType };
+    };
+
     const handlePointerMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return;
       const rect = container.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
 
@@ -773,11 +780,17 @@ export default function HeroEcosystemCanvas({
     };
 
     const handleClick = (e: MouseEvent) => {
+      const down = pointerDownState;
+      pointerDownState = null;
+      if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 12) {
+        return;
+      }
+
       const rect = container.getBoundingClientRect();
       const lx = e.clientX - rect.left;
       const ly = e.clientY - rect.top;
-      let bestIdx = activeIdxRef.current;
-      let bestDist = 48;
+      let bestIdx: number | null = null;
+      let bestDist = 44;
       for (let i = 0; i < ECOSYSTEM_NODES.length; i++) {
         const px = projectedRef.current[i * 2];
         const py = projectedRef.current[i * 2 + 1];
@@ -789,9 +802,13 @@ export default function HeroEcosystemCanvas({
       }
       if (bestIdx !== null) {
         activateNodeByIndex(bestIdx);
+        if (down?.pointerType === 'touch') {
+          setHoveredOrFocused(null);
+        }
       }
     };
 
+    container.addEventListener('pointerdown', handlePointerDown, { passive: true });
     container.addEventListener('pointermove', handlePointerMove, { passive: true });
     container.addEventListener('pointerleave', handlePointerLeave);
     container.addEventListener('click', handleClick);
@@ -802,6 +819,7 @@ export default function HeroEcosystemCanvas({
       visibilityObserver.disconnect();
       resizeObserver.disconnect();
       window.removeEventListener('scroll', handleScroll);
+      container.removeEventListener('pointerdown', handlePointerDown);
       container.removeEventListener('pointermove', handlePointerMove);
       container.removeEventListener('pointerleave', handlePointerLeave);
       container.removeEventListener('click', handleClick);
@@ -867,7 +885,7 @@ export default function HeroEcosystemCanvas({
         setHoveredOrFocused(null);
       }}
       onKeyDown={handleKeyDown}
-      className="relative h-full w-full min-h-[300px] cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2"
+      className="relative h-full w-full min-h-[300px] touch-pan-y cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2"
     >
       {/* Projected HTML Tooltip */}
       <div

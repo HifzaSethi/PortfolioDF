@@ -206,39 +206,63 @@ export default function ContactPage() {
                 </ol>
               </div>
 
-              <div className="df-card-surface df-ambient df-frame-l p-6 space-y-4">
+              <div className="df-card-surface df-ambient df-frame-l p-4 sm:p-6 space-y-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
-                  Direct Contact Details
+                  Studio Location &amp; Inquiries
                 </p>
                 <dl className="space-y-3 text-sm">
                   <div>
-                    <dt className="font-bold text-[var(--text-primary)]">Email</dt>
-                    <dd className="text-[var(--text-muted)]">
-                      {SITE_CONFIG.contact.email ?? '[placeholder: to be supplied]'}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="font-bold text-[var(--text-primary)]">Phone</dt>
-                    <dd className="text-[var(--text-muted)]">
-                      {SITE_CONFIG.contact.phone ?? '[placeholder]'}
-                    </dd>
-                  </div>
-                  <div>
                     <dt className="font-bold text-[var(--text-primary)]">Office</dt>
                     <dd className="text-[var(--text-muted)]">
-                      {SITE_CONFIG.location.streetPlaceholder}
+                      {SITE_CONFIG.location.city}, {SITE_CONFIG.location.country}
                     </dd>
                   </div>
-                  <div>
-                    <dt className="font-bold text-[var(--text-primary)]">Social</dt>
-                    <dd className="text-[var(--text-muted)]">placeholder</dd>
-                  </div>
+                  {SITE_CONFIG.contact.email && (
+                    <div>
+                      <dt className="font-bold text-[var(--text-primary)]">Email</dt>
+                      <dd className="text-[var(--text-muted)]">
+                        <a
+                          href={`mailto:${SITE_CONFIG.contact.email}`}
+                          className="df-link-sweep text-[var(--link-accent)]"
+                        >
+                          {SITE_CONFIG.contact.email}
+                        </a>
+                      </dd>
+                    </div>
+                  )}
+                  {SITE_CONFIG.contact.phone && (
+                    <div>
+                      <dt className="font-bold text-[var(--text-primary)]">Phone</dt>
+                      <dd className="text-[var(--text-muted)]">
+                        <a
+                          href={`tel:${SITE_CONFIG.contact.phone.replace(/\s+/g, '')}`}
+                          className="df-link-sweep text-[var(--link-accent)]"
+                        >
+                          {SITE_CONFIG.contact.phone}
+                        </a>
+                      </dd>
+                    </div>
+                  )}
+                  {!SITE_CONFIG.contact.email && !SITE_CONFIG.contact.phone && (
+                    <div>
+                      <dt className="font-bold text-[var(--text-primary)]">Direct Inquiries</dt>
+                      <dd className="mt-1 text-[var(--text-muted)]">
+                        <button
+                          type="button"
+                          onClick={() => document.getElementById('contact-name')?.focus()}
+                          className="df-link-sweep text-left font-semibold text-[var(--link-accent)] cursor-pointer"
+                        >
+                          Use the inquiry form to start a conversation
+                        </button>
+                      </dd>
+                    </div>
+                  )}
                 </dl>
               </div>
             </div>
 
             {/* Right: Accessible Form + Honest Fallback */}
-            <div className="lg:col-span-7 df-card-surface p-6 sm:p-10 space-y-6">
+            <div className="lg:col-span-7 df-card-surface p-4 sm:p-10 space-y-6">
               <form onSubmit={handleSubmit} noValidate className="space-y-5">
                 <div className="hidden" aria-hidden="true">
                   <label htmlFor="contact-website">Website</label>

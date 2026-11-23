@@ -93,7 +93,7 @@ export function DisciplineSelector({ activeId, onSelect }: DisciplineSelectorPro
         id="discipline-selector-panel"
         role="tabpanel"
         aria-live="polite"
-        className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8 grid gap-6 lg:grid-cols-12"
+        className="df-card-surface df-ambient df-panel-hairline df-frame-l p-4 sm:p-8 grid gap-6 lg:grid-cols-12"
       >
         <div className="lg:col-span-5 space-y-3">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">

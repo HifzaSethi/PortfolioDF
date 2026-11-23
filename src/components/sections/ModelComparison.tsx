@@ -38,7 +38,7 @@ export function ModelComparison() {
 
       <div className="space-y-4">
         {selectedModel !== 'df' && (
-          <div className="df-card-surface df-ambient df-frame-t p-6">
+          <div className="df-card-surface df-ambient df-frame-t p-4 sm:p-6">
             <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)] mb-4">
               {MODEL_COMPARISON.traditional.label}
             </p>
@@ -58,7 +58,7 @@ export function ModelComparison() {
         )}
 
         {selectedModel !== 'traditional' && (
-          <div className="df-card-surface df-ambient df-panel-hairline df-accent-top-rim p-6">
+          <div className="df-card-surface df-ambient df-panel-hairline df-accent-top-rim p-4 sm:p-6">
             <p className="df-ambient-eyebrow relative z-10 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)] mb-4">
               {MODEL_COMPARISON.dfModel.label}
             </p>

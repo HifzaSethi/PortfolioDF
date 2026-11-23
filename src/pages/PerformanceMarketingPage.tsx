@@ -29,7 +29,7 @@ export default function PerformanceMarketingPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
             {/* Sticky Side Index */}
-            <aside className="lg:col-span-4 lg:sticky lg:top-24 df-card-surface df-ambient df-panel-hairline df-frame-l p-6 space-y-4">
+            <aside className="lg:col-span-4 lg:sticky lg:top-24 df-card-surface df-ambient df-panel-hairline df-frame-l p-4 sm:p-6 space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                 Channel Index
               </p>
@@ -89,7 +89,7 @@ export default function PerformanceMarketingPage() {
                       {section.subBlocks.map((block) => (
                         <div
                           key={block.id}
-                          className="df-card-surface df-ambient df-frame-l p-6 space-y-4"
+                          className="df-card-surface df-ambient df-frame-l p-4 sm:p-6 space-y-4"
                         >
                           <h3 className="text-xl font-extrabold text-[var(--text-primary)]">
                             {block.title}

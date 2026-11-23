@@ -14,7 +14,7 @@ const TRANSITION_ORDER: FilmTransitionType[] = [
   'whip',
 ];
 
-const SCENE_GRADIENTS: Record<string, string> = {
+export const SCENE_GRADIENTS: Record<string, string> = {
   copywriting:
     'radial-gradient(circle at 22% 78%, rgba(179,79,255,0.62) 0%, transparent 56%), radial-gradient(circle at 80% 24%, rgba(226,51,137,0.44) 0%, transparent 52%), linear-gradient(135deg, #010102 0%, #150821 100%)',
   photography:
@@ -29,7 +29,7 @@ const SCENE_GRADIENTS: Record<string, string> = {
     'radial-gradient(circle at 74% 66%, rgba(0,87,255,0.64) 0%, transparent 54%), radial-gradient(circle at 32% 30%, rgba(226,51,137,0.54) 0%, transparent 54%), linear-gradient(135deg, #010102 0%, #09122e 100%)',
 };
 
-function renderDisciplineArtwork(disciplineId: string): ReactNode {
+export function renderDisciplineArtwork(disciplineId: string): ReactNode {
   switch (disciplineId) {
     case 'copywriting':
       return (
@@ -264,90 +264,92 @@ export function StudioCinema() {
     >
       {/* Cinema Stage (21:9 desktop, 16:9 mobile) */}
       <div
-        className="relative overflow-hidden border border-[var(--border-strong)] bg-[var(--near-black)] aspect-video lg:aspect-[21/9]"
+        className="relative overflow-hidden border border-[var(--border-strong)] bg-[var(--near-black)]"
         aria-live="off"
       >
-        {/* Outgoing Slide Layer */}
-        {prevDiscipline && (
+        <div className="relative overflow-hidden aspect-video lg:aspect-[21/9]">
+          {/* Outgoing Slide Layer */}
+          {prevDiscipline && (
+            <div
+              key={`out-${prevDiscipline.id}-${transitionSeed}`}
+              aria-hidden="true"
+              className={`pointer-events-none absolute inset-0 ${outgoingClass}`}
+            >
+              <ImageSlot
+                src={prevDiscipline.image?.src}
+                srcSet={prevDiscipline.image?.srcSet}
+                sizes={prevDiscipline.image?.sizes}
+                alt=""
+                shotDescription={prevDiscipline.shotDescription}
+                aspectRatio="cinema"
+                tone="dark"
+                badgeLabel=""
+                gradientStyle={SCENE_GRADIENTS[prevDiscipline.id]}
+                artwork={renderDisciplineArtwork(prevDiscipline.id)}
+                hideCaption
+                className="h-full w-full border-0"
+              />
+            </div>
+          )}
+
+          {/* Active Slide Layer */}
           <div
-            key={`out-${prevDiscipline.id}-${transitionSeed}`}
-            aria-hidden="true"
-            className={`pointer-events-none absolute inset-0 ${outgoingClass}`}
+            key={`in-${activeDiscipline.id}-${transitionSeed}`}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`Scene ${activeIndex + 1} of ${total}: ${activeDiscipline.title}`}
+            className={`relative h-full w-full ${incomingClass}`}
           >
             <ImageSlot
-              src={prevDiscipline.image?.src}
-              srcSet={prevDiscipline.image?.srcSet}
-              sizes={prevDiscipline.image?.sizes}
-              alt=""
-              shotDescription={prevDiscipline.shotDescription}
+              src={activeDiscipline.image?.src}
+              srcSet={activeDiscipline.image?.srcSet}
+              sizes={activeDiscipline.image?.sizes}
+              alt={activeDiscipline.altText}
+              shotDescription={activeDiscipline.shotDescription}
               aspectRatio="cinema"
               tone="dark"
-              badgeLabel="PORTFOLIO PLACEHOLDER: client work to be added"
-              gradientStyle={SCENE_GRADIENTS[prevDiscipline.id]}
-              artwork={renderDisciplineArtwork(prevDiscipline.id)}
+              badgeLabel=""
+              gradientStyle={SCENE_GRADIENTS[activeDiscipline.id]}
+              artwork={renderDisciplineArtwork(activeDiscipline.id)}
               hideCaption
               className="h-full w-full border-0"
             />
           </div>
-        )}
 
-        {/* Active Slide Layer */}
-        <div
-          key={`in-${activeDiscipline.id}-${transitionSeed}`}
-          role="group"
-          aria-roledescription="slide"
-          aria-label={`Scene ${activeIndex + 1} of ${total}: ${activeDiscipline.title}`}
-          className={`relative h-full w-full ${incomingClass}`}
-        >
-          <ImageSlot
-            src={activeDiscipline.image?.src}
-            srcSet={activeDiscipline.image?.srcSet}
-            sizes={activeDiscipline.image?.sizes}
-            alt={activeDiscipline.altText}
-            shotDescription={activeDiscipline.shotDescription}
-            aspectRatio="cinema"
-            tone="dark"
-            badgeLabel="PORTFOLIO PLACEHOLDER: client work to be added"
-            gradientStyle={SCENE_GRADIENTS[activeDiscipline.id]}
-            artwork={renderDisciplineArtwork(activeDiscipline.id)}
-            hideCaption
-            className="h-full w-full border-0"
+          {/* Letterbox 2.39:1 Squeeze Bars (triggered during letterbox transition only) */}
+          {transitionSeed > 0 && transitionType === 'letterbox' && !reducedMotion && (
+            <>
+              <div
+                key={`lb-top-${transitionSeed}`}
+                aria-hidden="true"
+                className="df-cinema-letterbox-bar pointer-events-none absolute inset-x-0 top-0 z-20 h-[14%] origin-top bg-[#010102]"
+              />
+              <div
+                key={`lb-bot-${transitionSeed}`}
+                aria-hidden="true"
+                className="df-cinema-letterbox-bar pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[14%] origin-bottom bg-[#010102]"
+              />
+            </>
+          )}
+
+          {/* Brief Light-Leak Radial Wash (triggered during lightleak transition only) */}
+          {transitionSeed > 0 && transitionType === 'lightleak' && !reducedMotion && (
+            <div
+              key={`leak-${transitionSeed}`}
+              aria-hidden="true"
+              className="df-cinema-lightleak pointer-events-none absolute inset-0 z-20"
+            />
+          )}
+
+          {/* Static SVG feTurbulence Film Grain Overlay (~6% opacity) */}
+          <div
+            aria-hidden="true"
+            className="df-film-grain pointer-events-none absolute inset-0 z-20"
           />
         </div>
 
-        {/* Letterbox 2.39:1 Squeeze Bars (triggered during letterbox transition only) */}
-        {transitionSeed > 0 && transitionType === 'letterbox' && !reducedMotion && (
-          <>
-            <div
-              key={`lb-top-${transitionSeed}`}
-              aria-hidden="true"
-              className="df-cinema-letterbox-bar pointer-events-none absolute inset-x-0 top-0 z-20 h-[14%] origin-top bg-[#010102]"
-            />
-            <div
-              key={`lb-bot-${transitionSeed}`}
-              aria-hidden="true"
-              className="df-cinema-letterbox-bar pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[14%] origin-bottom bg-[#010102]"
-            />
-          </>
-        )}
-
-        {/* Brief Light-Leak Radial Wash (triggered during lightleak transition only) */}
-        {transitionSeed > 0 && transitionType === 'lightleak' && !reducedMotion && (
-          <div
-            key={`leak-${transitionSeed}`}
-            aria-hidden="true"
-            className="df-cinema-lightleak pointer-events-none absolute inset-0 z-20"
-          />
-        )}
-
-        {/* Static SVG feTurbulence Film Grain Overlay (~6% opacity) */}
-        <div
-          aria-hidden="true"
-          className="df-film-grain pointer-events-none absolute inset-0 z-20"
-        />
-
-        {/* Editorial Scrim + Slate/Timecode + Title/Tagline Line-Mask Overlay */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 bg-gradient-to-t from-[#010102]/95 via-[#010102]/70 to-transparent p-5 sm:p-8 pt-16 text-[var(--off-white)]">
+        {/* Below stage on mobile (<sm) so 16:9 canvas is unobstructed; scrim overlay on sm+ */}
+        <div className="relative sm:pointer-events-none sm:absolute sm:inset-x-0 sm:bottom-0 z-30 border-t border-[var(--border-dark)] sm:border-t-0 bg-[var(--near-black)] sm:bg-transparent sm:bg-gradient-to-t sm:from-[#010102]/95 sm:via-[#010102]/70 sm:to-transparent p-4 sm:p-8 sm:pt-16 text-[var(--off-white)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--violet)] tabular-nums">
               SCENE {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')} &middot;{' '}
@@ -363,12 +365,12 @@ export function StudioCinema() {
             className="mt-2 max-w-3xl space-y-1.5"
           >
             <div className="overflow-hidden">
-              <h3 className="df-line-mask-rise text-2xl sm:text-4xl font-extrabold tracking-tight text-[var(--off-white)]">
+              <h3 className="df-line-mask-rise text-xl sm:text-4xl font-extrabold tracking-tight text-[var(--off-white)]">
                 {activeDiscipline.title}
               </h3>
             </div>
             <div className="overflow-hidden">
-              <p className="df-line-mask-rise text-sm sm:text-base font-medium text-[var(--off-white)]/88">
+              <p className="df-line-mask-rise text-xs sm:text-base font-medium text-[var(--off-white)]/88">
                 {activeDiscipline.tagline}
               </p>
             </div>
@@ -377,8 +379,12 @@ export function StudioCinema() {
       </div>
 
       {/* Carousel Controls & Slanted Frame Progress Ticks */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2" role="tablist" aria-label="Studio reel scenes">
+      <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+        <div
+          className="grid grid-cols-6 w-full sm:w-auto sm:flex sm:items-center sm:gap-2"
+          role="tablist"
+          aria-label="Studio reel scenes"
+        >
           {STUDIO_DISCIPLINES.map((disc, idx) => {
             const isCurrent = idx === activeIndex;
             return (
@@ -389,14 +395,14 @@ export function StudioCinema() {
                 aria-selected={isCurrent}
                 aria-label={`Scene 0${idx + 1}: ${disc.title}`}
                 onClick={() => goToIndex(idx)}
-                className="group flex h-11 min-w-[44px] items-center justify-center px-1.5 cursor-pointer"
+                className="group flex h-11 min-w-[44px] items-center justify-center px-1 sm:px-1.5 cursor-pointer"
               >
                 <span
                   aria-hidden="true"
                   className={`block h-2.5 df-slant-block transition-[width,background-color,box-shadow] duration-300 ${
                     isCurrent
-                      ? 'w-9 bg-[var(--magenta)] shadow-[0_0_12px_var(--glow-magenta)]'
-                      : 'w-5 bg-[var(--border-strong)] group-hover:bg-[var(--violet)]'
+                      ? 'w-7 sm:w-9 bg-[var(--magenta)] shadow-[0_0_12px_var(--glow-magenta)]'
+                      : 'w-4 sm:w-5 bg-[var(--border-strong)] group-hover:bg-[var(--violet)]'
                   }`}
                 />
               </button>

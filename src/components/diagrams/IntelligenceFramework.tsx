@@ -344,7 +344,7 @@ export function IntelligenceFramework() {
                 onClick={() => selectStage(idx)}
                 onKeyDown={(e) => handleKeyDown(e, idx)}
                 data-spotlight=""
-                className={`group relative text-left p-5 df-interactive df-glass-dark transition-opacity duration-200 ${
+                className={`group relative text-left p-4 sm:p-5 df-interactive df-glass-dark transition-opacity duration-200 ${
                   isActive
                     ? 'border-[var(--magenta)] bg-[color-mix(in_srgb,var(--electric-blue)_16%,var(--near-black))] opacity-100 shadow-[0_0_24px_var(--glow-violet)]'
                     : isCompleted
@@ -392,7 +392,7 @@ export function IntelligenceFramework() {
           id="intel-stage-panel"
           role="tabpanel"
           aria-live="polite"
-          className="df-glass-dark p-5 sm:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-6 overflow-hidden"
+          className="df-glass-dark p-4 sm:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-6 overflow-hidden"
         >
           <div
             key={current.id}

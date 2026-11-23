@@ -37,7 +37,7 @@ export default function HomePage() {
         id="home-hero"
         surface="hero-adaptive"
         withPattern
-        className="pt-10 pb-16 sm:pt-14 sm:pb-24 min-h-[calc(100vh-84px)] flex items-center"
+        className="pt-10 pb-16 sm:pt-14 sm:pb-24 min-h-[calc(100dvh-84px)] flex items-center"
       >
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -112,47 +112,47 @@ export default function HomePage() {
                 <svg
                   aria-label="Diagram showing disconnected channel metrics floating without an objective anchor"
                   role="img"
-                  className="w-full max-w-md h-24 border border-[var(--border-subtle)] bg-[var(--bg-tint)] p-3 text-[var(--text-primary)]"
-                  viewBox="0 0 360 72"
+                  className="w-full max-w-md h-24 sm:h-28 border border-[var(--border-subtle)] bg-[var(--bg-tint)] p-3 text-[var(--text-primary)]"
+                  viewBox="0 0 280 78"
                 >
                   <text
                     x="12"
-                    y="16"
+                    y="20"
                     fill="currentColor"
-                    fillOpacity="0.68"
-                    fontSize="9"
-                    fontWeight="600"
+                    fillOpacity="0.72"
+                    fontSize="12.5"
+                    fontWeight="700"
                   >
                     SILOED CHANNEL REPORTS
                   </text>
-                  <rect x="24" y="34" width="8" height="8" fill="currentColor" fillOpacity="0.55" />
-                  <rect x="92" y="48" width="8" height="8" fill="currentColor" fillOpacity="0.55" />
-                  <rect x="164" y="26" width="8" height="8" fill="currentColor" fillOpacity="0.55" />
-                  <rect x="238" y="44" width="8" height="8" fill="currentColor" fillOpacity="0.55" />
-                  <rect x="308" y="30" width="8" height="8" fill="currentColor" fillOpacity="0.55" />
+                  <rect x="20" y="42" width="9" height="9" fill="currentColor" fillOpacity="0.55" />
+                  <rect x="78" y="56" width="9" height="9" fill="currentColor" fillOpacity="0.55" />
+                  <rect x="136" y="36" width="9" height="9" fill="currentColor" fillOpacity="0.55" />
+                  <rect x="194" y="52" width="9" height="9" fill="currentColor" fillOpacity="0.55" />
+                  <rect x="248" y="38" width="9" height="9" fill="currentColor" fillOpacity="0.55" />
                   <line
-                    x1="36"
-                    y1="38"
-                    x2="78"
-                    y2="50"
+                    x1="32"
+                    y1="46"
+                    x2="72"
+                    y2="58"
                     stroke="currentColor"
-                    strokeOpacity="0.22"
+                    strokeOpacity="0.24"
                     strokeDasharray="3 3"
                   />
                   <line
-                    x1="176"
-                    y1="30"
-                    x2="222"
-                    y2="46"
+                    x1="148"
+                    y1="40"
+                    x2="188"
+                    y2="54"
                     stroke="currentColor"
-                    strokeOpacity="0.22"
+                    strokeOpacity="0.24"
                     strokeDasharray="3 3"
                   />
                 </svg>
               </div>
             </div>
 
-            <div className="lg:col-span-6 df-frame-l pl-6 sm:pl-8 pb-6 space-y-6">
+            <div className="lg:col-span-6 df-frame-l pl-4 sm:pl-8 pb-6 space-y-6">
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                 Claim, Then Reframe
               </p>
@@ -194,7 +194,7 @@ export default function HomePage() {
             </div>
 
             {/* Interactive Scattered Dots -> One Fixed Point */}
-            <div className="lg:col-span-6 df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8 space-y-5">
+            <div className="lg:col-span-6 df-card-surface df-ambient df-panel-hairline df-frame-l p-4 sm:p-8 space-y-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                   Signal Alignment Model
@@ -203,7 +203,7 @@ export default function HomePage() {
                   type="button"
                   aria-pressed={dotsAligned}
                   onClick={() => setDotsAligned((v) => !v)}
-                  className="min-h-[40px] px-4 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-page)] text-xs font-bold uppercase tracking-[0.06em] text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] df-slant-block df-interactive df-chip-wipe"
+                  className="min-h-[44px] sm:min-h-[40px] px-4 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-page)] text-xs font-bold uppercase tracking-[0.06em] text-[var(--text-primary)] hover:border-[var(--link-accent)] hover:text-[var(--link-accent)] df-slant-block df-interactive df-chip-wipe"
                 >
                   <span className="relative z-10 df-unslant inline-block">
                     {dotsAligned ? 'Show Disconnected State' : 'Resolve to Business Objective'}
@@ -218,8 +218,8 @@ export default function HomePage() {
                     : 'Scattered unaligned channel signals'
                 }
                 role="img"
-                className="w-full h-56 border border-[var(--border-subtle)] bg-[var(--bg-page)] text-[var(--text-primary)]"
-                viewBox="0 0 480 220"
+                className="w-full aspect-[340/215] sm:h-60 sm:aspect-auto border border-[var(--border-subtle)] bg-[var(--bg-page)] text-[var(--text-primary)]"
+                viewBox="0 0 340 215"
               >
                 {dotsAligned && (
                   <g
@@ -227,22 +227,22 @@ export default function HomePage() {
                     strokeOpacity="0.62"
                     strokeWidth="1.5"
                   >
-                    <line x1="68" y1="42" x2="240" y2="110" />
-                    <line x1="112" y1="176" x2="240" y2="110" />
-                    <line x1="240" y1="30" x2="240" y2="110" />
-                    <line x1="406" y1="46" x2="240" y2="110" />
-                    <line x1="418" y1="168" x2="240" y2="110" />
-                    <line x1="240" y1="190" x2="240" y2="110" />
+                    <line x1="58" y1="34" x2="170" y2="108" />
+                    <line x1="62" y1="174" x2="170" y2="108" />
+                    <line x1="170" y1="26" x2="170" y2="108" />
+                    <line x1="282" y1="34" x2="170" y2="108" />
+                    <line x1="282" y1="174" x2="170" y2="108" />
+                    <line x1="170" y1="182" x2="170" y2="108" />
                   </g>
                 )}
 
                 {[
-                  { label: 'Brand', x: dotsAligned ? 68 : 42, y: dotsAligned ? 42 : 30 },
-                  { label: 'Media', x: dotsAligned ? 112 : 76, y: dotsAligned ? 176 : 192 },
-                  { label: 'Search', x: dotsAligned ? 240 : 190, y: dotsAligned ? 30 : 46 },
-                  { label: 'Content', x: dotsAligned ? 406 : 434, y: dotsAligned ? 46 : 32 },
-                  { label: 'CX & CRM', x: dotsAligned ? 418 : 412, y: dotsAligned ? 168 : 190 },
-                  { label: 'Offline & PR', x: dotsAligned ? 240 : 300, y: dotsAligned ? 190 : 176 },
+                  { label: 'Brand', x: dotsAligned ? 58 : 38, y: dotsAligned ? 34 : 24 },
+                  { label: 'Media', x: dotsAligned ? 62 : 46, y: dotsAligned ? 174 : 184 },
+                  { label: 'Search', x: dotsAligned ? 170 : 142, y: dotsAligned ? 26 : 42 },
+                  { label: 'Content', x: dotsAligned ? 282 : 292, y: dotsAligned ? 34 : 24 },
+                  { label: 'CX & CRM', x: dotsAligned ? 282 : 288, y: dotsAligned ? 174 : 184 },
+                  { label: 'Offline & PR', x: dotsAligned ? 170 : 210, y: dotsAligned ? 182 : 172 },
                 ].map((pt) => (
                   <g key={pt.label} className="transition-all duration-500">
                     <rect
@@ -255,10 +255,10 @@ export default function HomePage() {
                     />
                     <text
                       x={pt.x}
-                      y={pt.y + 18}
+                      y={pt.y + 21}
                       textAnchor="middle"
                       fill="currentColor"
-                      fontSize="10"
+                      fontSize="16"
                       fontWeight="600"
                     >
                       {pt.label}
@@ -267,13 +267,13 @@ export default function HomePage() {
                 ))}
 
                 {/* Fixed Objective Anchor Dot */}
-                <rect x="231" y="101" width="18" height="18" style={{ fill: 'var(--magenta)' }} />
+                <rect x="161" y="99" width="18" height="18" style={{ fill: 'var(--magenta)' }} />
                 <text
-                  x="240"
-                  y="134"
+                  x="170"
+                  y="136"
                   textAnchor="middle"
                   fill="currentColor"
-                  fontSize="10"
+                  fontSize="16"
                   fontWeight="800"
                 >
                   BUSINESS OBJECTIVE
@@ -373,23 +373,24 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-6 grid grid-cols-2 gap-4">
+            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <ImageSlot
                 aspectRatio="4/3"
                 shotDescription="Creative professionals collaborating in a real working environment, natural light"
-                alt="DF. Studio creative team collaboration placeholder"
+                alt="DF. Studio creative team collaboration visual slot"
               />
               <ImageSlot
                 aspectRatio="4/3"
                 tone="dark"
                 shotDescription="Modern architectural hospitality interior framed for commercial campaign film"
-                alt="DF. Studio hospitality production placeholder"
+                alt="DF. Studio hospitality production visual slot"
+                className="hidden sm:block"
               />
-              <div className="col-span-2">
+              <div className="hidden sm:block sm:col-span-2">
                 <ImageSlot
                   aspectRatio="21/9"
                   shotDescription="Bilingual English and Arabic editorial art direction and campaign layouts"
-                  alt="DF. Studio editorial and campaign production placeholder"
+                  alt="DF. Studio editorial and campaign production visual slot"
                 />
               </div>
             </div>
@@ -443,7 +444,7 @@ export default function HomePage() {
           </div>
 
           {/* Large Visually Distinct Hospitality Feature Block */}
-          <div className="df-mesh-hospitality border border-[var(--border-dark)] p-8 sm:p-12 grid gap-8 lg:grid-cols-12 lg:items-center">
+          <div className="df-mesh-hospitality border border-[var(--border-dark)] p-5 sm:p-12 grid gap-8 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-7 space-y-5">
               <Eyebrow tone="dark">Core Sector Expertise</Eyebrow>
               <SectionHeading as="h3" size="h1" slanted tone="dark">
@@ -469,12 +470,12 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="hidden lg:block lg:col-span-5">
               <ImageSlot
                 tone="dark"
                 aspectRatio="4/3"
                 shotDescription="Contemporary luxury hotel lobby and guest arrival experience at dusk"
-                alt="Hospitality sector expertise placeholder"
+                alt="Hospitality sector expertise visual slot"
               />
             </div>
           </div>

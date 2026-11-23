@@ -5,7 +5,11 @@ import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { CtaBand } from '../components/sections/CtaBand';
 import { PracticeHero } from '../components/sections/PracticeHero';
-import { StudioCinema } from '../components/sections/StudioCinema';
+import {
+  SCENE_GRADIENTS,
+  StudioCinema,
+  renderDisciplineArtwork,
+} from '../components/sections/StudioCinema';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { SITE_CONFIG } from '../config/site';
@@ -105,7 +109,10 @@ export default function StudioPage() {
                     aspectRatio={discipline.aspectRatio}
                     shotDescription={discipline.shotDescription}
                     alt={discipline.image?.alt ?? discipline.altText}
-                    tone={idx % 2 === 1 ? 'dark' : 'light'}
+                    tone="dark"
+                    badgeLabel=""
+                    gradientStyle={SCENE_GRADIENTS[discipline.id]}
+                    artwork={renderDisciplineArtwork(discipline.id)}
                   />
                 </div>
 
@@ -150,7 +157,7 @@ export default function StudioPage() {
             </div>
           )}
 
-          <div className="df-card-surface df-ambient df-frame-l p-6">
+          <div className="df-card-surface df-ambient df-frame-l p-4 sm:p-6">
             <p className="text-sm leading-relaxed text-[var(--text-primary)]">
               {STUDIO_COPY.brandDirectionNote}
             </p>

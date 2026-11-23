@@ -12,7 +12,7 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
 
   return (
     <div
-      className={`border p-6 sm:p-10 ${
+      className={`border p-4 sm:p-10 ${
         isDark
           ? 'df-glass-dark df-panel-hairline border-[var(--border-dark)] text-[var(--off-white)]'
           : 'df-card-surface df-ambient df-panel-hairline text-[var(--text-primary)]'
@@ -34,7 +34,7 @@ export function DashboardContext({ tone = 'dark' }: DashboardContextProps) {
             data-spotlight=""
             onClick={() => setRevealed((r) => !r)}
             aria-expanded={revealed}
-            className={`w-full text-left border p-6 transition-all duration-200 cursor-pointer df-interactive ${
+            className={`w-full text-left border p-4 sm:p-6 transition-all duration-200 cursor-pointer df-interactive ${
               isDark
                 ? 'border-[var(--border-dark-strong)] bg-[var(--near-black)]/80 hover:border-[var(--violet)]'
                 : 'border-[var(--border-strong)] bg-[var(--bg-page)] hover:border-[var(--link-accent)]'

@@ -188,42 +188,98 @@ export function EcosystemDiagram({ compact = false }: EcosystemDiagramProps) {
               </p>
             </div>
 
-            {/* Mobile Vertical Stepped Path */}
+            {/* Mobile Vertical Stepped Accordion */}
             <div className="md:hidden space-y-2">
               {ECOSYSTEM_NODES.map((node, index) => {
                 const isSelected = node.id === activeNode.id;
+                const panelId = `eco-mobile-panel-${node.id}`;
                 return (
+                  <div key={node.id} className="space-y-2">
                     <button
-                      key={node.id}
                       type="button"
                       onClick={() => setActiveId(node.id)}
                       aria-expanded={isSelected}
+                      aria-controls={panelId}
                       className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left border min-h-[48px] df-interactive ${
                         isSelected
                           ? 'border-[var(--magenta)] bg-[var(--bg-card-active)] text-[var(--text-on-card-active)]'
                           : 'border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-primary)]'
                       }`}
                     >
-                      <span className="flex items-center gap-3">
-                        <span className="text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
+                      <span className="flex items-center gap-3 min-w-0">
+                        <span className="text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)] shrink-0">
                           {String(node.order).padStart(2, '0')}
                         </span>
                         <span className="text-sm font-bold">{node.title}</span>
                       </span>
-                      <span className="text-xs opacity-75">{index === 0 ? 'Anchor' : 'Inspect'}</span>
+                      <span className="text-xs opacity-75 shrink-0">
+                        {isSelected ? 'Active' : index === 0 ? 'Anchor' : 'Inspect'}
+                      </span>
                     </button>
-                  );
-                })}
-              </div>
-            </div>
 
-            {/* Detail Panel with architectural L-frame */}
-            <div
-              aria-live="polite"
-              className={`lg:col-span-5 df-card-surface df-ambient df-panel-hairline df-frame-l ${
-                compact ? 'p-6' : 'p-7 sm:p-8'
-              }`}
-            >
+                    {isSelected && (
+                      <div
+                        id={panelId}
+                        aria-live="polite"
+                        className="df-card-surface df-panel-hairline df-frame-l p-4 space-y-3"
+                      >
+                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+                          <span className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--eyebrow-blue)] tabular-nums">
+                            Node {String(node.order).padStart(2, '0')} / 10
+                          </span>
+                          <span className="text-xs font-semibold text-[var(--text-muted)]">
+                            {node.order === 1
+                              ? 'Objective Anchor'
+                              : `Connected to ${ECOSYSTEM_NODES[node.order - 2]?.shortTitle}`}
+                          </span>
+                        </div>
+
+                        <p className="text-sm leading-relaxed text-[var(--text-primary)]">
+                          {node.summary}
+                        </p>
+
+                        <ul className="flex flex-wrap gap-x-4 gap-y-1.5 border-y border-[var(--border-subtle)] py-3">
+                          {node.items.map((item) => (
+                            <li
+                              key={item}
+                              className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--text-muted)]"
+                            >
+                              <span aria-hidden="true" className="h-1.5 w-1.5 bg-[var(--magenta)]" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <p className="text-xs sm:text-sm font-semibold text-[var(--text-primary)]">
+                          {node.closingLine}
+                        </p>
+
+                        {node.linkTo && (
+                          <div className="pt-1">
+                            <Link
+                              to={node.linkTo.path}
+                              className="inline-flex items-center gap-2 text-sm font-bold text-[var(--link-accent)] df-link-sweep"
+                            >
+                              <span>{node.linkTo.label}</span>
+                              <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Desktop Detail Panel with architectural L-frame */}
+          <div
+            aria-live="polite"
+            className={`hidden md:block lg:col-span-5 df-card-surface df-ambient df-panel-hairline df-frame-l ${
+              compact ? 'p-6' : 'p-7 sm:p-8'
+            }`}
+          >
             <div className="flex items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
               <span className="df-ambient-eyebrow text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)] tabular-nums">
                 Node {String(activeNode.order).padStart(2, '0')} / 10

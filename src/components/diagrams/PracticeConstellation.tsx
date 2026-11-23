@@ -165,7 +165,7 @@ export function PracticeConstellation() {
         <Link
           to={core.path}
           data-spotlight=""
-          className="block df-card-surface df-panel-hairline df-accent-top-rim df-interactive p-6"
+          className="block df-card-surface df-panel-hairline df-accent-top-rim df-interactive p-4 sm:p-6"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
             {core.roleLabel}
@@ -177,13 +177,13 @@ export function PracticeConstellation() {
           <p className="mt-2 text-sm text-[var(--text-muted)]">{core.summary}</p>
         </Link>
 
-        <div className="space-y-3 df-frame-l pl-4 pb-3">
+        <div className="space-y-3 df-frame-l pl-3 sm:pl-4 pb-3">
           {orbiting.map((practice) => (
             <Link
               key={practice.id}
               to={practice.path}
               data-spotlight=""
-              className="block df-card-surface df-interactive p-5"
+              className="block df-card-surface df-interactive p-4 sm:p-5"
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--eyebrow-blue)]">
                 {practice.roleLabel}
@@ -200,7 +200,7 @@ export function PracticeConstellation() {
         <Link
           to={STUDIO_PRACTICE_SUMMARY.path}
           data-spotlight=""
-          className="block df-card-surface df-frame-t df-interactive p-5"
+          className="block df-card-surface df-frame-t df-interactive p-4 sm:p-5"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--eyebrow-magenta)]">
             Brought to life by DF. Studio

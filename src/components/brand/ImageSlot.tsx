@@ -81,17 +81,21 @@ export function ImageSlot({
         </div>
       )}
 
-      <div className="relative z-10 flex h-full w-full flex-col justify-between p-5 sm:p-6">
+      <div className="relative z-10 flex h-full w-full flex-col justify-between p-3.5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
-          <span
-            className={`inline-block px-2.5 py-0.5 text-[10px] font-bold tracking-[0.14em] uppercase df-slant-block ${
-              isDarkMesh
-                ? 'bg-[var(--violet)] text-[var(--near-black)]'
-                : 'bg-[var(--bg-tint)] text-[var(--text-muted)] border border-[var(--border-strong)]'
-            }`}
-          >
-            <span className="df-unslant block">{badgeLabel}</span>
-          </span>
+          {badgeLabel ? (
+            <span
+              className={`inline-block px-2.5 py-0.5 text-[10px] font-bold tracking-[0.14em] uppercase df-slant-block ${
+                isDarkMesh
+                  ? 'bg-[var(--violet)] text-[var(--near-black)]'
+                  : 'bg-[var(--bg-tint)] text-[var(--text-muted)] border border-[var(--border-strong)]'
+              }`}
+            >
+              <span className="df-unslant block">{badgeLabel}</span>
+            </span>
+          ) : (
+            <span aria-hidden="true" />
+          )}
           <span
             aria-hidden="true"
             className="h-2.5 w-2.5 bg-[var(--magenta)] shrink-0 df-slant-block"
@@ -100,7 +104,7 @@ export function ImageSlot({
 
         {!hideCaption && (
           <figcaption
-            className={`max-w-[38ch] text-sm font-medium leading-relaxed ${
+            className={`max-w-[38ch] text-xs sm:text-sm font-medium leading-relaxed ${
               isDarkMesh ? 'text-[var(--off-white)]/92' : 'text-[var(--text-muted)]'
             }`}
           >

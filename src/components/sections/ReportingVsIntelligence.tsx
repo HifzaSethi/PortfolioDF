@@ -14,7 +14,7 @@ export function ReportingVsIntelligence() {
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* Reporting Column */}
-        <div className="df-card-surface df-ambient df-frame-t p-7 sm:p-8 space-y-5">
+        <div className="df-card-surface df-ambient df-frame-t p-4 sm:p-8 space-y-5">
           <div>
             <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-blue)]">
               {reporting.subtitle}
@@ -35,7 +35,7 @@ export function ReportingVsIntelligence() {
         </div>
 
         {/* Intelligence Column */}
-        <div className="df-card-surface df-ambient df-panel-hairline df-accent-top-rim p-7 sm:p-8 space-y-5">
+        <div className="df-card-surface df-ambient df-panel-hairline df-accent-top-rim p-4 sm:p-8 space-y-5">
           <div className="relative z-10">
             <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
               {intelligence.subtitle}

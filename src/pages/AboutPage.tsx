@@ -43,7 +43,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="lg:col-span-6 space-y-4 df-frame-l pl-6 pt-4 lg:pt-0 lg:pl-10">
+            <div className="lg:col-span-6 space-y-4 df-frame-l pl-4 sm:pl-6 pt-4 lg:pt-0 lg:pl-10">
               <Eyebrow number="02" accent="blue">
                 Our Positioning
               </Eyebrow>
@@ -76,9 +76,10 @@ export default function AboutPage() {
             <div className="lg:col-span-5">
               <ImageSlot
                 aspectRatio="3/4"
-                shotDescription="FOUNDER PORTRAIT PLACEHOLDER (pending client approval)"
-                alt="Founder portrait placeholder for Islam Helal, pending client approval"
-                className="max-w-sm mx-auto"
+                badgeLabel="FOUNDER · DUBAI"
+                shotDescription="Islam Helal, Founder — Digital Field., Dubai (Founded 2021)"
+                alt="Islam Helal, Founder of Digital Field."
+                className="max-w-[260px] sm:max-w-sm mx-auto"
               />
             </div>
           </div>
@@ -99,7 +100,7 @@ export default function AboutPage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {FIELD_MEANINGS.map((meaning) => (
-              <div key={meaning.aspect} className="df-glass-dark p-6 space-y-3">
+              <div key={meaning.aspect} className="df-glass-dark p-4 sm:p-6 space-y-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--magenta)]">
                   {meaning.aspect}
                 </p>
@@ -111,7 +112,7 @@ export default function AboutPage() {
             ))}
           </div>
 
-          <div className="df-glass-dark p-8 grid gap-6 lg:grid-cols-12 lg:items-center">
+          <div className="df-glass-dark p-5 sm:p-8 grid gap-6 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-2 flex items-center gap-3">
               <span
                 aria-hidden="true"
@@ -209,7 +210,7 @@ export default function AboutPage() {
 
           <ModelComparison />
 
-          <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-8 text-center">
+          <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-5 sm:p-8 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
               Commercial Philosophy
             </p>

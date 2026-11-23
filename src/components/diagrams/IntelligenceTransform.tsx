@@ -648,55 +648,55 @@ export function IntelligenceTransform({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="relative space-y-2.5 md:space-y-0">
+      {/* Quick visible stage jump buttons + Replay: above canvas on <md, overlaid top bar at md+ */}
+      <div className="md:absolute md:left-3 md:right-3 md:top-3 z-10 flex flex-wrap items-center justify-between gap-2 md:pointer-events-none">
+        <div
+          className="flex flex-wrap gap-1.5 md:pointer-events-auto"
+          role="group"
+          aria-label="Jump to transformation stage"
+        >
+          {INTELLIGENCE_STAGES.map((stage, idx) => {
+            const current = idx === activeIndex;
+            return (
+              <button
+                key={stage.id}
+                type="button"
+                onClick={() => onSelectStage(idx)}
+                className={`min-h-[44px] md:min-h-[34px] px-3 md:px-2.5 py-2 md:py-1 text-[10px] font-bold uppercase tracking-[0.12em] border df-slant-block transition-colors cursor-pointer ${
+                  current
+                    ? 'border-[var(--magenta)] bg-[var(--magenta)] text-[var(--near-black)]'
+                    : 'border-[var(--border-dark-strong)] bg-[var(--near-black)]/85 text-[var(--off-white)]/85 hover:border-[var(--violet)]'
+                }`}
+              >
+                <span className="df-unslant block">
+                  0{idx + 1} {stage.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {mode === 'autoplay' && (
+          <button
+            type="button"
+            onClick={onReplay}
+            className="md:pointer-events-auto min-h-[44px] md:min-h-[34px] px-3 md:px-2.5 py-2 md:py-1 text-[10px] font-bold uppercase tracking-[0.12em] border border-[var(--border-dark-strong)] bg-[var(--near-black)]/85 text-[var(--off-white)] hover:border-[var(--electric-blue)] df-slant-block cursor-pointer"
+          >
+            <span className="df-unslant block">Replay</span>
+          </button>
+        )}
+      </div>
+
       <div
         ref={hostRef}
-        className="relative df-glass-dark overflow-hidden h-[220px] sm:h-[250px] xl:h-[280px] border border-[var(--border-dark-strong)]"
+        className="relative df-glass-dark overflow-hidden h-[240px] sm:h-[260px] xl:h-[280px] border border-[var(--border-dark-strong)]"
       >
         <canvas
           ref={canvasRef}
           aria-hidden="true"
           className="block h-full w-full"
         />
-
-        {/* Quick visible stage jump buttons + Replay when in autoplay */}
-        <div className="absolute left-3 right-3 top-3 z-10 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-          <div
-            className="flex flex-wrap gap-1.5 pointer-events-auto"
-            role="group"
-            aria-label="Jump to transformation stage"
-          >
-            {INTELLIGENCE_STAGES.map((stage, idx) => {
-              const current = idx === activeIndex;
-              return (
-                <button
-                  key={stage.id}
-                  type="button"
-                  onClick={() => onSelectStage(idx)}
-                  className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] border df-slant-block transition-colors ${
-                    current
-                      ? 'border-[var(--magenta)] bg-[var(--magenta)] text-[var(--near-black)]'
-                      : 'border-[var(--border-dark-strong)] bg-[var(--near-black)]/75 text-[var(--off-white)]/85 hover:border-[var(--violet)]'
-                  }`}
-                >
-                  <span className="df-unslant block">
-                    0{idx + 1} {stage.label}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {mode === 'autoplay' && (
-            <button
-              type="button"
-              onClick={onReplay}
-              className="pointer-events-auto px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] border border-[var(--border-dark-strong)] bg-[var(--near-black)]/80 text-[var(--off-white)] hover:border-[var(--electric-blue)] df-slant-block"
-            >
-              <span className="df-unslant block">Replay</span>
-            </button>
-          )}
-        </div>
 
         <p className="sr-only">
           Interactive transformation visualization: Data shows scattered signals and metric chips

@@ -95,7 +95,7 @@ export default function DigitalTransformationPage() {
 
             {/* Connected Nodes & Active Group Deliverables */}
             <div className="lg:col-span-7 space-y-6" aria-live="polite">
-              <div className="df-card-surface df-ambient df-panel-hairline df-frame-t df-accent-top-rim p-6 space-y-4">
+              <div className="df-card-surface df-ambient df-panel-hairline df-frame-t df-accent-top-rim p-4 sm:p-6 space-y-4">
                 <p className="df-ambient-eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
                   Connected Ecosystem Nodes · {activeGroup.title}
                 </p>
@@ -118,7 +118,7 @@ export default function DigitalTransformationPage() {
                 </div>
               </div>
 
-              <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8 space-y-4">
+              <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-4 sm:p-8 space-y-4">
                 <h2 className="text-2xl font-extrabold text-[var(--text-primary)]">
                   {activeGroup.title}
                 </h2>
@@ -146,7 +146,7 @@ export default function DigitalTransformationPage() {
               {TRANSFORMATION_GROUPS.map((group) => (
                 <div
                   key={group.id}
-                  className="df-card-surface df-ambient df-frame-t p-6 space-y-4"
+                  className="df-card-surface df-ambient df-frame-t p-4 sm:p-6 space-y-4"
                 >
                   <h3 className="text-base font-extrabold uppercase tracking-[0.06em] text-[var(--text-primary)]">
                     {group.title}

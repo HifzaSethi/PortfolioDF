@@ -72,6 +72,8 @@ function MobileIndustryMedia({
     return () => observer.disconnect();
   }, [reducedMotion, revealed]);
 
+  if (!industry.image?.src) return null;
+
   return (
     <div ref={hostRef} className="mt-3 lg:hidden">
       <div className={`df-mobile-clip ${revealed || reducedMotion ? 'is-revealed' : ''}`}>
@@ -167,12 +169,12 @@ export default function IndustriesPage() {
                           : 'text-[var(--text-primary)] hover:text-[var(--link-accent)]'
                       }`}
                     >
-                      <div className="flex min-h-[44px] items-center justify-between gap-4">
-                        <span className="flex items-baseline gap-4">
-                          <span className="df-row-num text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
+                      <div className="flex min-h-[44px] flex-wrap items-center justify-between gap-x-4 gap-y-1.5">
+                        <span className="flex min-w-0 items-baseline gap-3 sm:gap-4">
+                          <span className="df-row-num shrink-0 text-xs font-bold tabular-nums text-[var(--eyebrow-magenta)]">
                             0{idx + 1}
                           </span>
-                          <span className="df-row-title text-xl sm:text-2xl font-extrabold tracking-tight">
+                          <span className="df-row-title min-w-0 text-xl sm:text-2xl font-extrabold tracking-tight">
                             {industry.name}
                           </span>
                         </span>
@@ -181,18 +183,20 @@ export default function IndustriesPage() {
                           <ArrowUpRight aria-hidden="true" className="df-row-arrow h-4 w-4" />
                         </span>
                       </div>
-                      <p className="mt-1.5 pl-8 text-xs leading-relaxed text-[var(--text-muted)] lg:hidden">
+                      <p className="mt-1.5 pl-6 sm:pl-8 text-xs leading-relaxed text-[var(--text-muted)] lg:hidden">
                         {industry.approachNote}
                       </p>
                     </Link>
 
-                    <div className="px-3 pb-4 lg:hidden">
-                      <MobileIndustryMedia
-                        industry={industry}
-                        index={idx}
-                        reducedMotion={reducedMotion}
-                      />
-                    </div>
+                    {industry.image?.src && (
+                      <div className="px-3 pb-4 lg:hidden">
+                        <MobileIndustryMedia
+                          industry={industry}
+                          index={idx}
+                          reducedMotion={reducedMotion}
+                        />
+                      </div>
+                    )}
                   </li>
                 );
               })}
@@ -259,7 +263,7 @@ export default function IndustriesPage() {
               </div>
 
               {/* Context Reveal Panel (live announcements handled via selection-only sr-only region) */}
-              <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-7 space-y-4">
+              <div className="df-card-surface df-ambient df-panel-hairline df-frame-l p-4 sm:p-7 space-y-4">
                 <Eyebrow number="02" accent="blue">
                   Objective &rarr; Ecosystem &rarr; Intelligence &rarr; Action
                 </Eyebrow>
@@ -289,7 +293,7 @@ export default function IndustriesPage() {
           </div>
 
           {/* Labeled Case Studies Placeholder Band */}
-          <div className="border border-dashed border-[var(--border-strong)] bg-[var(--bg-elevated)] p-8 space-y-2">
+          <div className="border border-dashed border-[var(--border-strong)] bg-[var(--bg-elevated)] p-4 sm:p-8 space-y-2">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
               {INDUSTRIES_COPY.caseStudiesPlaceholderTitle}
             </p>

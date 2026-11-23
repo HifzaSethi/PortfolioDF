@@ -77,7 +77,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Placeholder Contact Block */}
+          {/* Contact Block */}
           <div className="lg:col-span-3 space-y-4">
             <h2 className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--on-dark-subtle)]">
               03 Contact
@@ -85,20 +85,49 @@ export function Footer() {
             <dl className="space-y-2.5 text-xs leading-relaxed text-[var(--on-dark-muted)]">
               <div>
                 <dt className="font-semibold text-[var(--off-white)]">Location</dt>
-                <dd>{SITE_CONFIG.location.streetPlaceholder}</dd>
+                <dd>
+                  {SITE_CONFIG.location.city}, {SITE_CONFIG.location.country}
+                </dd>
               </div>
-              <div>
-                <dt className="font-semibold text-[var(--off-white)]">Email</dt>
-                <dd>{SITE_CONFIG.contact.email ?? SITE_CONFIG.contact.emailPlaceholder}</dd>
-              </div>
-              <div>
-                <dt className="font-semibold text-[var(--off-white)]">Phone</dt>
-                <dd>{SITE_CONFIG.contact.phone ?? SITE_CONFIG.contact.phonePlaceholder}</dd>
-              </div>
-              <div>
-                <dt className="font-semibold text-[var(--off-white)]">Social</dt>
-                <dd>{SITE_CONFIG.contact.socialPlaceholder}</dd>
-              </div>
+              {SITE_CONFIG.contact.email && (
+                <div>
+                  <dt className="font-semibold text-[var(--off-white)]">Email</dt>
+                  <dd>
+                    <a
+                      href={`mailto:${SITE_CONFIG.contact.email}`}
+                      className="df-link-sweep text-[var(--off-white)]/90 hover:text-[var(--off-white)]"
+                    >
+                      {SITE_CONFIG.contact.email}
+                    </a>
+                  </dd>
+                </div>
+              )}
+              {SITE_CONFIG.contact.phone && (
+                <div>
+                  <dt className="font-semibold text-[var(--off-white)]">Phone</dt>
+                  <dd>
+                    <a
+                      href={`tel:${SITE_CONFIG.contact.phone.replace(/\s+/g, '')}`}
+                      className="df-link-sweep text-[var(--off-white)]/90 hover:text-[var(--off-white)]"
+                    >
+                      {SITE_CONFIG.contact.phone}
+                    </a>
+                  </dd>
+                </div>
+              )}
+              {!SITE_CONFIG.contact.email && !SITE_CONFIG.contact.phone && (
+                <div>
+                  <dt className="font-semibold text-[var(--off-white)]">Inquiries</dt>
+                  <dd className="mt-1">
+                    <Link
+                      to="/contact"
+                      className="df-link-sweep inline-block font-semibold text-[var(--off-white)] hover:text-[var(--violet)]"
+                    >
+                      Start a conversation
+                    </Link>
+                  </dd>
+                </div>
+              )}
             </dl>
           </div>
         </div>

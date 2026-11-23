@@ -70,7 +70,7 @@ export default function GrowthMarketingPage() {
             {visibleStages.map((stage, idx) => (
               <section
                 key={stage.id}
-                className="df-card-surface df-ambient df-panel-hairline df-frame-l p-6 sm:p-8"
+                className="df-card-surface df-ambient df-panel-hairline df-frame-l p-4 sm:p-8"
               >
                 <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
                   <div className="lg:col-span-4 space-y-2">
