@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { BrandPattern } from './BrandPattern';
 
 export interface ImageSlotProps {
@@ -41,6 +41,11 @@ export function ImageSlot({
   className = '',
 }: ImageSlotProps) {
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [src]);
+
   const aspectClass = ASPECT_CLASS_MAP[aspectRatio];
   const isDarkMesh = tone === 'dark' || Boolean(gradientStyle);
 

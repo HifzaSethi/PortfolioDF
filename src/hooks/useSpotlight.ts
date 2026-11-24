@@ -70,7 +70,7 @@ export function useInteractionPolish() {
       );
 
       const scan = () => {
-        document.querySelectorAll('.df-interactive[data-spotlight]').forEach((el) => {
+        document.querySelectorAll('.df-interactive[data-spotlight]:not([role="tab"])').forEach((el) => {
           if (!pulsed.has(el)) observer.observe(el);
         });
       };

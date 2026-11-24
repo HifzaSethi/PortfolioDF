@@ -13,6 +13,7 @@ const StudioPage = lazy(() => import('../pages/StudioPage'));
 const IndustriesPage = lazy(() => import('../pages/IndustriesPage'));
 const HospitalityPage = lazy(() => import('../pages/HospitalityPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
+const AdminPage = lazy(() => import('../pages/AdminPage'));
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
 export function AppRoutes() {
@@ -31,6 +32,7 @@ export function AppRoutes() {
         <Route path="/industries" element={<IndustriesPage />} />
         <Route path="/hospitality" element={<HospitalityPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>

@@ -5,9 +5,9 @@ export const INDUSTRIES_COPY = {
   headline: 'Nine sectors. One connected perspective.',
   lead: 'Every sector carries distinct demand cycles, buying journeys, and commercial pressures. DF. applies Performance in Context across each ecosystem — aligning objective, data, intelligence, and action.',
   philosophyNote: 'Business outcomes always take priority over vanity metrics.',
-  caseStudiesPlaceholderTitle: 'Case studies: coming soon / to be supplied',
+  caseStudiesPlaceholderTitle: 'Selected Case Studies · Available Upon Request',
   caseStudiesPlaceholderBody:
-    'Verified client case studies and commercial outcomes will be added here once approved for public release.',
+    'Digital Field. shares detailed commercial engagements, attribution models, and verified sector outcomes privately during executive briefings. Request a walkthrough tailored to your industry.',
 };
 
 export const INDUSTRIES: IndustryItem[] = [

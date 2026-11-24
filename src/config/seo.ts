@@ -124,6 +124,12 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       { name: 'Contact', path: '/contact' },
     ],
   },
+  '/admin': {
+    title: 'Content Admin | Digital Field. (DF.)',
+    description: 'Private content administration for Digital Field.',
+    canonicalPath: '/admin',
+    noIndex: true,
+  },
   '/404': {
     title: 'Page Not Found | Digital Field. (DF.)',
     description: 'The requested route could not be found. Return to Digital Field.',

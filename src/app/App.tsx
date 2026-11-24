@@ -2,6 +2,7 @@ import { MotionConfig } from 'motion/react';
 import { HashRouter } from 'react-router-dom';
 import { IntroProvider, useIntro } from '../components/intro/IntroContext';
 import { IntroGate } from '../components/intro/IntroGate';
+import { ContentProvider } from '../context/ContentContext';
 import { ThemeProvider } from '../hooks/useTheme';
 import { ErrorBoundary } from './ErrorBoundary';
 import { Layout } from './Layout';
@@ -27,11 +28,13 @@ export default function App() {
     <ErrorBoundary>
       <ThemeProvider>
         <MotionConfig reducedMotion="user">
-          <IntroProvider>
-            <HashRouter>
-              <AppShell />
-            </HashRouter>
-          </IntroProvider>
+          <ContentProvider>
+            <IntroProvider>
+              <HashRouter>
+                <AppShell />
+              </HashRouter>
+            </IntroProvider>
+          </ContentProvider>
         </MotionConfig>
       </ThemeProvider>
     </ErrorBoundary>

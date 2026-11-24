@@ -18,8 +18,7 @@ import { GradientText } from '../components/ui/GradientText';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { Tag } from '../components/ui/Tag';
 import { ECOSYSTEM_INTRO } from '../data/ecosystem';
-import { INDUSTRIES } from '../data/industries';
-import { STUDIO_DISCIPLINES } from '../data/studio';
+import { useContent } from '../context/ContentContext';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
@@ -27,6 +26,9 @@ export default function HomePage() {
   usePageMeta('/');
   const [dotsAligned, setDotsAligned] = useState(true);
   const { contentRevealAllowed } = useIntro();
+  const { content } = useContent();
+  const studioDisciplines = content.studio.disciplines;
+  const industries = content.industries.items;
   const reducedMotion = useReducedMotion();
   const showHeroContent = contentRevealAllowed || reducedMotion;
 
@@ -358,7 +360,7 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-wrap gap-3 pt-2">
-                {STUDIO_DISCIPLINES.map((disc, idx) => (
+                {studioDisciplines.map((disc, idx) => (
                   <Tag key={disc.id} accent={idx % 2 === 0 ? 'violet' : 'magenta'}>
                     {disc.title}
                   </Tag>
@@ -423,7 +425,7 @@ export default function HomePage() {
 
             <div className="lg:col-span-7">
               <ul className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
-                {INDUSTRIES.map((ind, idx) => (
+                {industries.map((ind, idx) => (
                   <li key={ind.id} className="df-row">
                     <Link
                       to={ind.path}

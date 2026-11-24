@@ -37,10 +37,12 @@ export function PracticeHero({
         <Breadcrumbs routePath={routePath} tone={isDarkMesh ? 'dark' : 'auto'} />
 
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-9 space-y-5">
-            <div className="flex items-center gap-3">
-              <TridiMark size={26} tone={isDarkMesh ? 'dark' : 'auto'} />
-              <Eyebrow number={number} tone={isDarkMesh ? 'dark' : 'auto'}>
+          <div className="lg:col-span-9 space-y-5 min-w-0">
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="shrink-0">
+                <TridiMark size={26} tone={isDarkMesh ? 'dark' : 'auto'} />
+              </span>
+              <Eyebrow number={number} tone={isDarkMesh ? 'dark' : 'auto'} className="min-w-0">
                 {eyebrow}
               </Eyebrow>
             </div>

@@ -31,18 +31,18 @@ export function Eyebrow({
 
   return (
     <p
-      className={`inline-flex items-center gap-2.5 text-xs font-bold tracking-[0.18em] uppercase ${textColor} ${className}`}
+      className={`inline-flex max-w-full items-center gap-2 sm:gap-2.5 text-xs font-bold tracking-[0.12em] sm:tracking-[0.18em] uppercase ${textColor} ${className}`}
     >
       <span
         aria-hidden="true"
         className={`inline-block h-2.5 w-2.5 shrink-0 df-slant-block ${accentColor}`}
       />
       {number && (
-        <span className="tabular-nums font-extrabold text-[var(--eyebrow-magenta)]">
+        <span className="shrink-0 tabular-nums font-extrabold text-[var(--eyebrow-magenta)]">
           {number}
         </span>
       )}
-      <span>{children}</span>
+      <span className="min-w-0">{children}</span>
     </p>
   );
 }

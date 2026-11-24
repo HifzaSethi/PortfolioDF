@@ -8,7 +8,7 @@ import { Button } from '../components/ui/Button';
 import { FormField } from '../components/ui/FormField';
 import { InlineStatus } from '../components/ui/InlineStatus';
 import { SITE_CONFIG } from '../config/site';
-import { INDUSTRIES } from '../data/industries';
+import { useContent } from '../context/ContentContext';
 import { usePageMeta } from '../hooks/usePageMeta';
 import {
   MESSAGE_MAX_LENGTH,
@@ -30,14 +30,16 @@ const SERVICE_OPTIONS = [
   'Not sure yet',
 ];
 
-const INDUSTRY_OPTIONS = [...INDUSTRIES.map((i) => i.name), 'Other'];
-
 const FIELD_INPUT_CLASSES =
   'w-full min-h-[44px] border border-[var(--border-strong)] bg-[var(--input-bg)] px-3.5 py-2.5 text-sm text-[var(--input-text)] placeholder:text-[var(--text-subtle)] df-input-focus focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)] focus-visible:outline-offset-2';
 
 export default function ContactPage() {
   usePageMeta('/contact');
   const [searchParams] = useSearchParams();
+  const { content } = useContent();
+  const { email: effectiveEmail, phone: effectivePhone, socialLinks } = content.siteSettings.contact;
+  const industryOptions = [...content.industries.items.map((i) => i.name), 'Other'];
+  const hasDirectContact = Boolean(effectiveEmail || effectivePhone || socialLinks.length > 0);
 
   const [values, setValues] = useState<ContactFormValues>({
     name: '',
@@ -104,7 +106,7 @@ export default function ContactPage() {
     }
 
     const endpoint = SITE_CONFIG.contact.contactEndpoint;
-    const realEmail = SITE_CONFIG.contact.email;
+    const realEmail = effectiveEmail;
     const plaintext = composeContactPlaintext(values);
     setComposedText(plaintext);
 
@@ -141,7 +143,7 @@ export default function ContactPage() {
 
     // Honest Fallback (default when no backend or email address is configured)
     setStatus('fallback');
-    setStatusMessage("This form isn't connected to email yet.");
+    setStatusMessage('Your inquiry summary is ready below.');
   };
 
   const handleCopy = async () => {
@@ -217,33 +219,51 @@ export default function ContactPage() {
                       {SITE_CONFIG.location.city}, {SITE_CONFIG.location.country}
                     </dd>
                   </div>
-                  {SITE_CONFIG.contact.email && (
+                  {effectiveEmail && (
                     <div>
                       <dt className="font-bold text-[var(--text-primary)]">Email</dt>
                       <dd className="text-[var(--text-muted)]">
                         <a
-                          href={`mailto:${SITE_CONFIG.contact.email}`}
-                          className="df-link-sweep text-[var(--link-accent)]"
+                          href={`mailto:${effectiveEmail}`}
+                          className="df-link-sweep text-[var(--link-accent)] break-all"
                         >
-                          {SITE_CONFIG.contact.email}
+                          {effectiveEmail}
                         </a>
                       </dd>
                     </div>
                   )}
-                  {SITE_CONFIG.contact.phone && (
+                  {effectivePhone && (
                     <div>
                       <dt className="font-bold text-[var(--text-primary)]">Phone</dt>
                       <dd className="text-[var(--text-muted)]">
                         <a
-                          href={`tel:${SITE_CONFIG.contact.phone.replace(/\s+/g, '')}`}
+                          href={`tel:${effectivePhone.replace(/\s+/g, '')}`}
                           className="df-link-sweep text-[var(--link-accent)]"
                         >
-                          {SITE_CONFIG.contact.phone}
+                          {effectivePhone}
                         </a>
                       </dd>
                     </div>
                   )}
-                  {!SITE_CONFIG.contact.email && !SITE_CONFIG.contact.phone && (
+                  {socialLinks.length > 0 && (
+                    <div>
+                      <dt className="font-bold text-[var(--text-primary)]">Social</dt>
+                      <dd className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[var(--text-muted)]">
+                        {socialLinks.map((social) => (
+                          <a
+                            key={`${social.label}-${social.url}`}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="df-link-sweep text-[var(--link-accent)]"
+                          >
+                            {social.label}
+                          </a>
+                        ))}
+                      </dd>
+                    </div>
+                  )}
+                  {!hasDirectContact && (
                     <div>
                       <dt className="font-bold text-[var(--text-primary)]">Direct Inquiries</dt>
                       <dd className="mt-1 text-[var(--text-muted)]">
@@ -338,7 +358,7 @@ export default function ContactPage() {
                       className={FIELD_INPUT_CLASSES}
                     >
                       <option value="">Select an industry</option>
-                      {INDUSTRY_OPTIONS.map((opt) => (
+                      {industryOptions.map((opt) => (
                         <option key={opt} value={opt}>
                           {opt}
                         </option>
@@ -431,9 +451,8 @@ export default function ContactPage() {
               {status === 'fallback' && (
                 <InlineStatus variant="info" title={statusMessage}>
                   <p className="mb-3">
-                    No backend endpoint or verified email address is configured in{' '}
-                    <code>src/config/site.ts</code> yet. Your composed inquiry is ready below so
-                    you can copy or download it directly.
+                    Direct email delivery is not connected yet. Your composed inquiry is ready
+                    below so you can copy or download it directly.
                   </p>
                   <textarea
                     readOnly

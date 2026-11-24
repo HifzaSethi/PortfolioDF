@@ -8,30 +8,27 @@ import { CtaBand } from '../components/sections/CtaBand';
 import { PracticeHero } from '../components/sections/PracticeHero';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import {
-  SEARCH_DISCIPLINES,
-  SEARCH_INTELLIGENCE_COPY,
-  SEARCH_MEASUREMENT_VOCABULARY,
-} from '../data/searchIntelligence';
+import { useContent } from '../context/ContentContext';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { buildSearchDisciplinesJsonLd } from '../lib/seo';
 import type { SearchDiscipline } from '../types/content';
 
 export default function SearchIntelligencePage() {
-  const extraJsonLd = useMemo(() => buildSearchDisciplinesJsonLd(), []);
+  const { content } = useContent();
+  const { copy, measurementVocabulary, disciplines } = content.searchIntelligence;
+
+  const extraJsonLd = useMemo(() => buildSearchDisciplinesJsonLd(disciplines), [disciplines]);
   usePageMeta('/services/search-intelligence', extraJsonLd);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const paramVal = searchParams.get('discipline') as SearchDiscipline['id'] | null;
-  const isValidParam = SEARCH_DISCIPLINES.some((d) => d.id === paramVal);
-  const [activeDiscipline, setActiveDiscipline] = useState<SearchDiscipline['id']>(
-    isValidParam && paramVal ? paramVal : 'seo'
+  const isValidParam = disciplines.some((d) => d.id === paramVal);
+  const [activeDiscipline, setActiveDiscipline] = useState<SearchDiscipline['id'] | null>(
+    isValidParam && paramVal ? paramVal : null
   );
 
   useEffect(() => {
-    if (isValidParam && paramVal) {
-      setActiveDiscipline(paramVal);
-    }
+    setActiveDiscipline(isValidParam && paramVal ? paramVal : null);
   }, [isValidParam, paramVal]);
 
   const handleSelectDiscipline = (id: SearchDiscipline['id']) => {
@@ -46,27 +43,28 @@ export default function SearchIntelligencePage() {
         number="01"
         eyebrow="Practice 03 · How DF. Acts"
         title="Search Intelligence."
-        lead={SEARCH_INTELLIGENCE_COPY.lead}
-        principle={SEARCH_INTELLIGENCE_COPY.impact}
+        lead={copy.lead}
+        principle={copy.impact}
       />
 
       {/* Context + Interactive DisciplineSelector */}
       <Section surface="tint" compact>
         <Container className="space-y-8">
           <p className="max-w-[66ch] text-lg font-semibold text-[var(--text-primary)]">
-            {SEARCH_INTELLIGENCE_COPY.context}
+            {copy.context}
           </p>
           <DisciplineSelector
+            disciplines={disciplines}
             activeId={activeDiscipline}
             onSelect={handleSelectDiscipline}
           />
         </Container>
       </Section>
 
-      {/* Indexed Long-Scroll Sections for All Six Separate Disciplines */}
+      {/* Indexed Long-Scroll Sections for All Disciplines */}
       <Section surface="off-white">
         <Container className="space-y-14">
-          {SEARCH_DISCIPLINES.map((discipline, idx) => (
+          {disciplines.map((discipline, idx) => (
             <section
               key={discipline.id}
               id={`discipline-${discipline.id}`}
@@ -74,7 +72,7 @@ export default function SearchIntelligencePage() {
             >
               <div className="lg:col-span-5 space-y-3">
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
-                  Discipline 0{idx + 1} · {discipline.fullName}
+                  Discipline {String(idx + 1).padStart(2, '0')} · {discipline.fullName}
                 </p>
                 <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
                   {discipline.acronym}
@@ -138,7 +136,7 @@ export default function SearchIntelligencePage() {
               Measurement vocabulary across search, AI answers, and booking agents.
             </SectionHeading>
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 pt-2">
-              {SEARCH_MEASUREMENT_VOCABULARY.map((item) => (
+              {measurementVocabulary.map((item) => (
                 <li
                   key={item}
                   className="df-card-surface df-ambient px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
@@ -151,10 +149,10 @@ export default function SearchIntelligencePage() {
 
           <div className="border-t border-[var(--border-strong)] pt-8 space-y-4">
             <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-primary)] max-w-4xl">
-              {SEARCH_INTELLIGENCE_COPY.closingLine}
+              {copy.closingLine}
             </p>
             <p className="text-xs leading-relaxed text-[var(--text-muted)] max-w-3xl">
-              {SEARCH_INTELLIGENCE_COPY.note}
+              {copy.note}
             </p>
             <div>
               <Link

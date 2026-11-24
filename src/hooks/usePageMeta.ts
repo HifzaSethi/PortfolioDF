@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ROUTE_META } from '../config/seo';
-import { SITE_CONFIG } from '../config/site';
+import { useContent } from '../context/ContentContext';
 import { buildBreadcrumbJsonLd, buildOrganizationJsonLd } from '../lib/seo';
 
 function upsertMetaTag(attr: 'name' | 'property', key: string, content: string): void {
@@ -11,6 +11,10 @@ function upsertMetaTag(attr: 'name' | 'property', key: string, content: string):
     document.head.appendChild(tag);
   }
   tag.setAttribute('content', content);
+}
+
+function removeMetaTag(attr: 'name' | 'property', key: string): void {
+  document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`)?.remove();
 }
 
 function upsertCanonical(href: string): void {
@@ -40,6 +44,9 @@ function upsertJsonLd(id: string, data: Record<string, unknown> | null): void {
 }
 
 export function usePageMeta(routePath: string, extraJsonLd?: Record<string, unknown>): void {
+  const { content } = useContent();
+  const { siteSettings } = content;
+
   useEffect(() => {
     const meta = ROUTE_META[routePath] ?? ROUTE_META['/404'];
     document.title = meta.title;
@@ -51,8 +58,14 @@ export function usePageMeta(routePath: string, extraJsonLd?: Record<string, unkn
     upsertMetaTag('name', 'twitter:title', meta.title);
     upsertMetaTag('name', 'twitter:description', meta.description);
 
-    const origin = SITE_CONFIG.baseUrl
-      ? SITE_CONFIG.baseUrl.replace(/\/$/, '')
+    if (meta.noIndex) {
+      upsertMetaTag('name', 'robots', 'noindex, nofollow, noarchive');
+    } else {
+      removeMetaTag('name', 'robots');
+    }
+
+    const origin = siteSettings.baseUrl
+      ? siteSettings.baseUrl.replace(/\/$/, '')
       : typeof window !== 'undefined'
         ? window.location.origin
         : '';
@@ -60,8 +73,11 @@ export function usePageMeta(routePath: string, extraJsonLd?: Record<string, unkn
     upsertCanonical(canonicalUrl);
     upsertMetaTag('property', 'og:url', canonicalUrl);
 
-    upsertJsonLd('df-jsonld-org', buildOrganizationJsonLd());
-    upsertJsonLd('df-jsonld-breadcrumbs', buildBreadcrumbJsonLd(meta.breadcrumbs));
+    upsertJsonLd('df-jsonld-org', buildOrganizationJsonLd(siteSettings));
+    upsertJsonLd(
+      'df-jsonld-breadcrumbs',
+      buildBreadcrumbJsonLd(meta.breadcrumbs, siteSettings.baseUrl)
+    );
     upsertJsonLd('df-jsonld-extra', extraJsonLd ?? null);
-  }, [routePath, extraJsonLd]);
+  }, [routePath, extraJsonLd, siteSettings]);
 }

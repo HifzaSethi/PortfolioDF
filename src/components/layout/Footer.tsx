@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FOOTER_COMPANY_LINKS, FOOTER_PRACTICE_LINKS } from '../../config/nav';
 import { SITE_CONFIG } from '../../config/site';
+import { useContent } from '../../context/ContentContext';
 import { BrandPattern } from '../brand/BrandPattern';
 import { Logo } from '../brand/Logo';
 import { TridiMark } from '../brand/TridiMark';
@@ -8,6 +9,9 @@ import { Container } from './Container';
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const { content } = useContent();
+  const { email, phone, socialLinks } = content.siteSettings.contact;
+  const hasDirectContact = Boolean(email || phone || socialLinks.length > 0);
 
   return (
     <footer className="relative overflow-hidden df-mesh-dark df-mesh-animate border-t border-[var(--border-dark)] text-[var(--off-white)] py-16 sm:py-20">
@@ -89,33 +93,51 @@ export function Footer() {
                   {SITE_CONFIG.location.city}, {SITE_CONFIG.location.country}
                 </dd>
               </div>
-              {SITE_CONFIG.contact.email && (
+              {email && (
                 <div>
                   <dt className="font-semibold text-[var(--off-white)]">Email</dt>
                   <dd>
                     <a
-                      href={`mailto:${SITE_CONFIG.contact.email}`}
-                      className="df-link-sweep text-[var(--off-white)]/90 hover:text-[var(--off-white)]"
+                      href={`mailto:${email}`}
+                      className="df-link-sweep text-[var(--off-white)]/90 hover:text-[var(--off-white)] break-all"
                     >
-                      {SITE_CONFIG.contact.email}
+                      {email}
                     </a>
                   </dd>
                 </div>
               )}
-              {SITE_CONFIG.contact.phone && (
+              {phone && (
                 <div>
                   <dt className="font-semibold text-[var(--off-white)]">Phone</dt>
                   <dd>
                     <a
-                      href={`tel:${SITE_CONFIG.contact.phone.replace(/\s+/g, '')}`}
+                      href={`tel:${phone.replace(/\s+/g, '')}`}
                       className="df-link-sweep text-[var(--off-white)]/90 hover:text-[var(--off-white)]"
                     >
-                      {SITE_CONFIG.contact.phone}
+                      {phone}
                     </a>
                   </dd>
                 </div>
               )}
-              {!SITE_CONFIG.contact.email && !SITE_CONFIG.contact.phone && (
+              {socialLinks.length > 0 && (
+                <div>
+                  <dt className="font-semibold text-[var(--off-white)]">Social</dt>
+                  <dd className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={`${social.label}-${social.url}`}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="df-link-sweep text-[var(--off-white)]/90 hover:text-[var(--off-white)]"
+                      >
+                        {social.label}
+                      </a>
+                    ))}
+                  </dd>
+                </div>
+              )}
+              {!hasDirectContact && (
                 <div>
                   <dt className="font-semibold text-[var(--off-white)]">Inquiries</dt>
                   <dd className="mt-1">

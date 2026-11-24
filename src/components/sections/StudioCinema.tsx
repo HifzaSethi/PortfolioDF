@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
-import { STUDIO_DISCIPLINES } from '../../data/studio';
+import { useContent } from '../../context/ContentContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { getPortfolioImageUrl } from '../../lib/supabase';
 import { ImageSlot } from '../brand/ImageSlot';
 
 type FilmTransitionType = 'wipe' | 'push' | 'letterbox' | 'lightleak' | 'whip';
@@ -136,12 +137,26 @@ export function StudioCinema() {
   const [isOffscreen, setIsOffscreen] = useState(false);
   const [isTabHidden, setIsTabHidden] = useState(false);
 
-  const total = STUDIO_DISCIPLINES.length;
-  const activeDiscipline = STUDIO_DISCIPLINES[activeIndex] ?? STUDIO_DISCIPLINES[0];
+  const { content, portfolioItems } = useContent();
+  const disciplines = content.studio.disciplines;
+  const total = Math.max(1, disciplines.length);
+  const safeIndex = activeIndex % total;
+  const activeDiscipline = disciplines[safeIndex] ?? disciplines[0];
   const prevDiscipline =
-    prevIndex !== null && prevIndex !== activeIndex
-      ? STUDIO_DISCIPLINES[prevIndex] ?? null
+    prevIndex !== null && prevIndex !== safeIndex
+      ? disciplines[prevIndex] ?? null
       : null;
+
+  const resolveDisciplineSrc = (disc: (typeof disciplines)[number] | null) => {
+    if (!disc) return null;
+    if (disc.image?.src) return disc.image.src;
+    const match = portfolioItems.find(
+      (item) =>
+        item.discipline.toLowerCase() === disc.id.toLowerCase() ||
+        item.discipline.toLowerCase() === disc.title.toLowerCase()
+    );
+    return match ? getPortfolioImageUrl(match.imagePath) : null;
+  };
 
   const isPlaying =
     !reducedMotion &&
@@ -276,7 +291,7 @@ export function StudioCinema() {
               className={`pointer-events-none absolute inset-0 ${outgoingClass}`}
             >
               <ImageSlot
-                src={prevDiscipline.image?.src}
+                src={resolveDisciplineSrc(prevDiscipline)}
                 srcSet={prevDiscipline.image?.srcSet}
                 sizes={prevDiscipline.image?.sizes}
                 alt=""
@@ -297,11 +312,11 @@ export function StudioCinema() {
             key={`in-${activeDiscipline.id}-${transitionSeed}`}
             role="group"
             aria-roledescription="slide"
-            aria-label={`Scene ${activeIndex + 1} of ${total}: ${activeDiscipline.title}`}
+            aria-label={`Scene ${safeIndex + 1} of ${total}: ${activeDiscipline.title}`}
             className={`relative h-full w-full ${incomingClass}`}
           >
             <ImageSlot
-              src={activeDiscipline.image?.src}
+              src={resolveDisciplineSrc(activeDiscipline)}
               srcSet={activeDiscipline.image?.srcSet}
               sizes={activeDiscipline.image?.sizes}
               alt={activeDiscipline.altText}
@@ -385,8 +400,8 @@ export function StudioCinema() {
           role="tablist"
           aria-label="Studio reel scenes"
         >
-          {STUDIO_DISCIPLINES.map((disc, idx) => {
-            const isCurrent = idx === activeIndex;
+          {disciplines.map((disc, idx) => {
+            const isCurrent = idx === safeIndex;
             return (
               <button
                 key={disc.id}

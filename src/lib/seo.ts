@@ -1,9 +1,17 @@
 import { SITE_CONFIG } from '../config/site';
 import { PRACTICES } from '../data/practices';
 import { SEARCH_DISCIPLINES } from '../data/searchIntelligence';
-import type { RouteMeta } from '../types/content';
+import type { SiteSettingsContent } from '../types/cms';
+import type { RouteMeta, SearchDiscipline } from '../types/content';
 
-export function buildOrganizationJsonLd(): Record<string, unknown> {
+export function buildOrganizationJsonLd(
+  siteSettings?: SiteSettingsContent
+): Record<string, unknown> {
+  const effectiveBaseUrl = siteSettings ? siteSettings.baseUrl : SITE_CONFIG.baseUrl;
+  const effectiveEmail = siteSettings ? siteSettings.contact.email : SITE_CONFIG.contact.email;
+  const effectivePhone = siteSettings ? siteSettings.contact.phone : SITE_CONFIG.contact.phone;
+  const effectiveSocials = siteSettings?.contact.socialLinks ?? [];
+
   const org: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
@@ -23,14 +31,17 @@ export function buildOrganizationJsonLd(): Record<string, unknown> {
     },
   };
 
-  if (SITE_CONFIG.baseUrl) {
-    org.url = SITE_CONFIG.baseUrl;
+  if (effectiveBaseUrl) {
+    org.url = effectiveBaseUrl;
   }
-  if (SITE_CONFIG.contact.email) {
-    org.email = SITE_CONFIG.contact.email;
+  if (effectiveEmail) {
+    org.email = effectiveEmail;
   }
-  if (SITE_CONFIG.contact.phone) {
-    org.telephone = SITE_CONFIG.contact.phone;
+  if (effectivePhone) {
+    org.telephone = effectivePhone;
+  }
+  if (effectiveSocials.length > 0) {
+    org.sameAs = effectiveSocials.map((item) => item.url);
   }
 
   return org;
@@ -54,12 +65,14 @@ export function buildPracticesItemListJsonLd(): Record<string, unknown> {
   };
 }
 
-export function buildSearchDisciplinesJsonLd(): Record<string, unknown> {
+export function buildSearchDisciplinesJsonLd(
+  disciplines: SearchDiscipline[] = SEARCH_DISCIPLINES
+): Record<string, unknown> {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Digital Field. Search Intelligence Disciplines',
-    itemListElement: SEARCH_DISCIPLINES.map((discipline, index) => ({
+    itemListElement: disciplines.map((discipline, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       item: {
@@ -72,9 +85,11 @@ export function buildSearchDisciplinesJsonLd(): Record<string, unknown> {
 }
 
 export function buildBreadcrumbJsonLd(
-  breadcrumbs?: RouteMeta['breadcrumbs']
+  breadcrumbs?: RouteMeta['breadcrumbs'],
+  baseUrl?: string
 ): Record<string, unknown> | null {
   if (!breadcrumbs || breadcrumbs.length === 0) return null;
+  const effectiveBaseUrl = (baseUrl ?? SITE_CONFIG.baseUrl).trim();
 
   return {
     '@context': 'https://schema.org',
@@ -83,8 +98,8 @@ export function buildBreadcrumbJsonLd(
       '@type': 'ListItem',
       position: index + 1,
       name: crumb.name,
-      ...(SITE_CONFIG.baseUrl
-        ? { item: `${SITE_CONFIG.baseUrl.replace(/\/$/, '')}${crumb.path}` }
+      ...(effectiveBaseUrl
+        ? { item: `${effectiveBaseUrl.replace(/\/$/, '')}${crumb.path}` }
         : {}),
     })),
   };

@@ -77,8 +77,8 @@ export interface PerformanceSection {
 }
 
 export interface SearchDiscipline {
-  id: 'seo' | 'aeo' | 'aio' | 'geo' | 'gaio' | 'axo';
-  acronym: 'SEO' | 'AEO' | 'AIO' | 'GEO' | 'GAIO' | 'AXO';
+  id: string;
+  acronym: string;
   fullName: string;
   tagline: string;
   explanation: string;
@@ -162,6 +162,7 @@ export interface RouteMeta {
   description: string;
   canonicalPath: string;
   ogType?: 'website' | 'article';
+  noIndex?: boolean;
   breadcrumbs?: Array<{
     name: string;
     path: string;

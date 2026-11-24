@@ -8,7 +8,7 @@ import { CtaBand } from '../components/sections/CtaBand';
 import { PracticeHero } from '../components/sections/PracticeHero';
 import { LinkButton } from '../components/ui/Button';
 import { Eyebrow } from '../components/ui/Eyebrow';
-import { INDUSTRIES, INDUSTRIES_COPY } from '../data/industries';
+import { useContent } from '../context/ContentContext';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import type { IndustryItem } from '../types/content';
@@ -96,19 +96,19 @@ function MobileIndustryMedia({
 export default function IndustriesPage() {
   usePageMeta('/industries');
   const reducedMotion = useReducedMotion();
+  const { content } = useContent();
+  const { copy: industriesCopy, items: industries } = content.industries;
 
-  const [hoveredId, setHoveredId] = useState<string>(INDUSTRIES[0].id);
+  const [hoveredId, setHoveredId] = useState<string>(industries[0]?.id ?? '');
   const [previousId, setPreviousId] = useState<string | null>(null);
   const [announcedIndustry, setAnnouncedIndustry] = useState<string>('');
   const pointerInteractingRef = useRef(false);
 
-  const activeIndex = Math.max(
-    0,
-    INDUSTRIES.findIndex((i) => i.id === hoveredId)
-  );
-  const activeIndustry = INDUSTRIES[activeIndex] ?? INDUSTRIES[0];
+  const foundIndex = industries.findIndex((i) => i.id === hoveredId);
+  const activeIndex = foundIndex >= 0 ? foundIndex : 0;
+  const activeIndustry = industries[activeIndex] ?? industries[0];
   const prevIndustry = previousId
-    ? INDUSTRIES.find((i) => i.id === previousId) ?? null
+    ? industries.find((i) => i.id === previousId) ?? null
     : null;
 
   const selectVisualIndustry = (id: string, announce = false) => {
@@ -117,7 +117,7 @@ export default function IndustriesPage() {
       setHoveredId(id);
     }
     if (announce) {
-      const target = INDUSTRIES.find((i) => i.id === id);
+      const target = industries.find((i) => i.id === id);
       if (target) {
         setAnnouncedIndustry(`${target.name}: ${target.approachNote}`);
       }
@@ -129,10 +129,10 @@ export default function IndustriesPage() {
       <PracticeHero
         routePath="/industries"
         number="01"
-        eyebrow={INDUSTRIES_COPY.eyebrow}
-        title={INDUSTRIES_COPY.headline}
-        lead={INDUSTRIES_COPY.lead}
-        principle={INDUSTRIES_COPY.philosophyNote}
+        eyebrow={industriesCopy.eyebrow}
+        title={industriesCopy.headline}
+        lead={industriesCopy.lead}
+        principle={industriesCopy.philosophyNote}
       />
 
       {/* Typographic Index with Desktop 4:5 Media Stage & Mobile Inline Reveals */}
@@ -148,7 +148,7 @@ export default function IndustriesPage() {
                 pointerInteractingRef.current = false;
               }}
             >
-              {INDUSTRIES.map((industry, idx) => {
+              {industries.map((industry, idx) => {
                 const isSelected = industry.id === activeIndustry.id;
                 return (
                   <li
@@ -247,7 +247,7 @@ export default function IndustriesPage() {
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-[#010102]/95 via-[#010102]/72 to-transparent p-6 pt-14 text-[var(--off-white)]">
                     <div className="overflow-hidden">
                       <p className="df-line-mask-rise text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--magenta)] tabular-nums">
-                        {String(activeIndex + 1).padStart(2, '0')} / {String(INDUSTRIES.length).padStart(2, '0')} · SECTOR BRIEF
+                        {String(activeIndex + 1).padStart(2, '0')} / {String(industries.length).padStart(2, '0')} · SECTOR BRIEF
                       </p>
                     </div>
                     <div className="overflow-hidden mt-1">
@@ -292,13 +292,13 @@ export default function IndustriesPage() {
             </aside>
           </div>
 
-          {/* Labeled Case Studies Placeholder Band */}
-          <div className="border border-dashed border-[var(--border-strong)] bg-[var(--bg-elevated)] p-4 sm:p-8 space-y-2">
+          {/* Editorial Case Studies Briefings Band */}
+          <div className="df-card-surface df-ambient df-frame-l p-4 sm:p-8 space-y-2">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--eyebrow-magenta)]">
-              {INDUSTRIES_COPY.caseStudiesPlaceholderTitle}
+              {industriesCopy.caseStudiesPlaceholderTitle}
             </p>
             <p className="max-w-2xl text-sm text-[var(--text-muted)]">
-              {INDUSTRIES_COPY.caseStudiesPlaceholderBody}
+              {industriesCopy.caseStudiesPlaceholderBody}
             </p>
           </div>
         </Container>

@@ -89,13 +89,13 @@ export function Header() {
           <Link
             to="/"
             aria-label="Digital Field. Home"
-            className="shrink-0 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)]"
+            className="df-header-logo-link shrink-0 whitespace-nowrap focus-visible:outline-2 focus-visible:outline-[var(--electric-blue)]"
           >
             <span className="hidden sm:inline-flex">
-              <Logo variant="lockup-standard" theme="auto" size="md" />
+              <Logo variant="lockup-standard" theme="auto" size="md" interactive />
             </span>
             <span className="inline-flex sm:hidden">
-              <Logo variant="icon" theme="auto" size="md" />
+              <Logo variant="icon" theme="auto" size="md" interactive />
             </span>
           </Link>
 

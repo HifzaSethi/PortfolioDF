@@ -1,18 +1,21 @@
+import { BrandLogo } from '../components/brand/BrandLogo';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { CtaBand } from '../components/sections/CtaBand';
 import { PracticeHero } from '../components/sections/PracticeHero';
 import { Eyebrow } from '../components/ui/Eyebrow';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import {
-  PERFORMANCE_MARKETING_LEAD,
-  PERFORMANCE_SECTIONS,
-} from '../data/performanceMarketing';
+import { PERFORMANCE_CHANNEL_BRAND_LOOKUP } from '../data/performanceMarketing';
+import { useContent } from '../context/ContentContext';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { scrollToSection } from '../lib/scroll';
 
+const BRANDED_SECTION_IDS = new Set(['paid-social', 'additional-media-channels']);
+
 export default function PerformanceMarketingPage() {
   usePageMeta('/services/performance-marketing');
+  const { content } = useContent();
+  const { lead: leadCopy, sections } = content.performanceMarketing;
 
   return (
     <>
@@ -21,8 +24,8 @@ export default function PerformanceMarketingPage() {
         number="01"
         eyebrow="Practice 02 · How DF. Acts"
         title="Performance Marketing."
-        lead={PERFORMANCE_MARKETING_LEAD.lead}
-        principle={PERFORMANCE_MARKETING_LEAD.principle}
+        lead={leadCopy.lead}
+        principle={leadCopy.principle}
       />
 
       <Section surface="off-white" className="pt-8">
@@ -35,7 +38,7 @@ export default function PerformanceMarketingPage() {
               </p>
               <nav aria-label="Performance Marketing sections">
                 <ul className="space-y-1.5">
-                  {PERFORMANCE_SECTIONS.map((sec, idx) => (
+                  {sections.map((sec, idx) => (
                     <li key={sec.id}>
                       <button
                         type="button"
@@ -55,34 +58,57 @@ export default function PerformanceMarketingPage() {
 
             {/* Six Practice Sections */}
             <div className="lg:col-span-8 space-y-16">
-              {PERFORMANCE_SECTIONS.map((section, idx) => (
-                <section
-                  key={section.id}
-                  id={section.id}
-                  className="df-frame-t pt-10 space-y-6"
-                >
-                  <div className="space-y-3">
-                    <Eyebrow number={`0${idx + 1}`}>Channel Practice</Eyebrow>
-                    <SectionHeading as="h2" size="h2">
-                      {section.title}
-                    </SectionHeading>
-                    <p className="max-w-[66ch] text-base leading-relaxed text-[var(--text-muted)]">
-                      {section.summary}
-                    </p>
-                  </div>
+              {sections.map((section, idx) => {
+                const showBrandLogos = BRANDED_SECTION_IDS.has(section.id);
 
-                  {section.items && (
-                    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                      {section.items.map((item) => (
-                        <li
-                          key={item}
-                          className="df-card-surface df-ambient px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                return (
+                  <section
+                    key={section.id}
+                    id={section.id}
+                    className="df-frame-t pt-10 space-y-6"
+                  >
+                    <div className="space-y-3">
+                      <Eyebrow number={`0${idx + 1}`}>Channel Practice</Eyebrow>
+                      <SectionHeading as="h2" size="h2">
+                        {section.title}
+                      </SectionHeading>
+                      <p className="max-w-[66ch] text-base leading-relaxed text-[var(--text-muted)]">
+                        {section.summary}
+                      </p>
+                    </div>
+
+                    {section.items && (
+                      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        {section.items.map((item) => {
+                          const logoId = showBrandLogos
+                            ? PERFORMANCE_CHANNEL_BRAND_LOOKUP[item]
+                            : undefined;
+
+                          if (logoId) {
+                            return (
+                              <li
+                                key={item}
+                                className="df-card-surface df-ambient df-brand-card flex items-center gap-3 px-3.5 sm:px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
+                              >
+                                <BrandLogo logoId={logoId} />
+                                <span className="min-w-0 flex-1 leading-snug break-words">
+                                  {item}
+                                </span>
+                              </li>
+                            );
+                          }
+
+                          return (
+                            <li
+                              key={item}
+                              className="df-card-surface df-ambient px-4 py-3 text-sm font-semibold text-[var(--text-primary)]"
+                            >
+                              {item}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
 
                   {section.subBlocks && (
                     <div className="space-y-6">
@@ -115,15 +141,16 @@ export default function PerformanceMarketingPage() {
                       ))}
                     </div>
                   )}
-                </section>
-              ))}
+                  </section>
+                );
+              })}
 
               <div className="border-t border-[var(--border-strong)] pt-8 space-y-3">
                 <p className="text-2xl font-extrabold tracking-tight text-[var(--text-primary)]">
-                  {PERFORMANCE_MARKETING_LEAD.closingNote}
+                  {leadCopy.closingNote}
                 </p>
                 <p className="text-xs leading-relaxed text-[var(--text-muted)]">
-                  {PERFORMANCE_MARKETING_LEAD.disclaimer}
+                  {leadCopy.disclaimer}
                 </p>
               </div>
             </div>

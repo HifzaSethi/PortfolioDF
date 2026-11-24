@@ -18,6 +18,7 @@ interface LogoProps {
   variant?: LogoVariant;
   theme?: LogoTheme;
   size?: 'sm' | 'md' | 'lg';
+  interactive?: boolean;
   className?: string;
 }
 
@@ -65,6 +66,7 @@ export function Logo({
   variant = 'lockup-standard',
   theme = 'auto',
   size = 'md',
+  interactive = false,
   className = '',
 }: LogoProps) {
   const { theme: appTheme } = useTheme();
@@ -77,7 +79,9 @@ export function Logo({
 
   return (
     <span
-      className={`inline-flex items-center justify-center shrink-0 select-none ${CLEAR_SPACE_CLASSES[size]} ${className}`}
+      className={`inline-flex items-center justify-center shrink-0 select-none ${CLEAR_SPACE_CLASSES[size]} ${
+        interactive ? 'df-header-logo' : ''
+      } ${className}`}
     >
       <img
         src={src}

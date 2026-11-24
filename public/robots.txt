@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin
 
 # PLACEHOLDER: Replace example.digitalfield.co with verified production domain before launch
 Sitemap: https://PLACEHOLDER-DOMAIN.digitalfield.co/sitemap.xml

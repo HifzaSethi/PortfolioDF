@@ -1,3 +1,4 @@
+import type { BrandLogoId } from '../components/brand/BrandLogo';
 import type { PerformanceSection } from '../types/content';
 
 export const PERFORMANCE_MARKETING_LEAD = {
@@ -138,3 +139,26 @@ export const PERFORMANCE_SECTIONS: PerformanceSection[] = [
     ],
   },
 ];
+
+export const PERFORMANCE_CHANNEL_BRAND_LOOKUP: Record<string, BrandLogoId> = {
+  // Paid Social
+  'Meta (Facebook & Instagram)': 'meta',
+  TikTok: 'tiktok',
+  Snapchat: 'snapchat',
+  'X (Formerly Twitter)': 'x',
+  LinkedIn: 'linkedin',
+  Pinterest: 'pinterest',
+  'Influencer & Creator Amplification': 'channel-influencer',
+  // Additional Media Channels
+  'Microsoft Advertising (Bing)': 'microsoft',
+  'Amazon Ads': 'amazon',
+  'Apple Search Ads': 'apple',
+  'Programmatic Advertising': 'channel-programmatic',
+  'Native Advertising (Taboola & Outbrain)': 'native-taboola-outbrain',
+  'CTV & OTT Advertising': 'channel-ctv',
+  'Spotify & Podcast Advertising': 'spotify',
+  'DOOH Advertising': 'channel-dooh',
+  'Affiliate Marketing': 'channel-affiliate',
+  'Retail Media Networks': 'channel-retail-media',
+  'Marketplace Advertising': 'channel-marketplace',
+};

@@ -1126,6 +1126,70 @@ html[data-intro='pending'] body::before {
   opacity: 0.06;
   animation: df-film-grain-flicker 3.6s steps(4, end) infinite;
 }
+
+/* Header Logo Transform-Only Forward Glide along -12deg Slant (Hover & Focus-Visible Only) */
+.df-header-logo {
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform 280ms cubic-bezier(0.22, 1.35, 0.36, 1);
+  will-change: transform;
+}
+
+@media (any-hover: hover) and (any-pointer: fine) {
+  .df-header-logo-link:hover .df-header-logo {
+    transform: translate3d(4px, -1px, 0) scale(1.045);
+  }
+}
+
+.df-header-logo-link:focus-visible .df-header-logo {
+  transform: translate3d(4px, -1px, 0) scale(1.045);
+}
+
+/* Reusable BrandLogo Square Tile (monochrome default; Day/Night brand colors on fine hover / focus-visible) */
+.df-brand-tile {
+  border: 1px solid var(--border-strong);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: color 200ms var(--ease-out), background-color 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+
+@media (any-hover: hover) and (any-pointer: fine) {
+  [data-theme="day"] .df-brand-card:hover .df-brand-tile {
+    color: var(--brand-fg-day);
+    background-color: var(--brand-bg-day);
+    border-color: var(--brand-border-day);
+  }
+
+  [data-theme="night"] .df-brand-card:hover .df-brand-tile {
+    color: var(--brand-fg-night);
+    background-color: var(--brand-bg-night);
+    border-color: var(--brand-border-night);
+  }
+}
+
+[data-theme="day"] .df-brand-card:focus-visible .df-brand-tile,
+[data-theme="day"] .df-brand-card:focus-within .df-brand-tile {
+  color: var(--brand-fg-day);
+  background-color: var(--brand-bg-day);
+  border-color: var(--brand-border-day);
+}
+
+[data-theme="night"] .df-brand-card:focus-visible .df-brand-tile,
+[data-theme="night"] .df-brand-card:focus-within .df-brand-tile {
+  color: var(--brand-fg-night);
+  background-color: var(--brand-bg-night);
+  border-color: var(--brand-border-night);
+}
+
+/* Discipline Selector Tab Hover (fine hover-capable pointers & keyboard focus-visible only) */
+@media (any-hover: hover) and (any-pointer: fine) {
+  .df-tab-hover:hover {
+    border-color: var(--link-accent);
+  }
+}
+
+.df-tab-hover:focus-visible {
+  border-color: var(--link-accent);
+}
 }
 
 /* Tiered Reduced Motion Compliance (Section 2.6)
@@ -1171,6 +1235,11 @@ html[data-intro='pending'] body::before {
   .df-mobile-clip {
     clip-path: none !important;
     opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .df-header-logo {
+    transform: none !important;
     transition: none !important;
   }
 
